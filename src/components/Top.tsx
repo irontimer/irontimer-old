@@ -22,8 +22,15 @@ const icons = [
 function Top() {
   return (
     <div className="top">
-      <div className="logo">test</div>
-      <h1 className="title">IronTimer</h1>
+      <div className="logo">
+        <div className="icon">test</div>
+        <div className="title">
+          <Link to={"/"} className="title-link">
+            <h1>IronTimer</h1>
+          </Link>
+        </div>
+      </div>
+
       <div className="nav">
         {pages.map((page, index) => (
           <div key={page} className="page">
