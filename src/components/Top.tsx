@@ -1,50 +1,43 @@
 /** @format */
 
-import { Link } from "react-router-dom";
+import { For } from "solid-js";
+import { Link } from "solid-app-router";
 import "./Top.scss";
-import {
-  faUser,
-  faHouse,
-  faRightToBracket,
-  faCube
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const pages = ["Timer", "Home", "Account", "Login"];
 
 const icons = [
-  <FontAwesomeIcon icon={faCube} />,
-  <FontAwesomeIcon icon={faHouse} />,
-  <FontAwesomeIcon icon={faUser} />,
-  <FontAwesomeIcon icon={faRightToBracket} />
+  "fa-solid fa-cube",
+  "fa-solid fa-house",
+  "fa-solid fa-user",
+  "fa-solid fa-right-to-bracket"
 ];
 
 function Top() {
   return (
-    <div className="top">
-      <div className="logo">
-        <div className="icon">test</div>
-        <div className="title">
-          <Link to={"/"} className="title-link">
+    <div class="top">
+      <div class="logo">
+        <div class="icon">test</div>
+        <div class="title">
+          <Link href={"/"} class="title-link">
             <h1>IronTimer</h1>
           </Link>
         </div>
       </div>
 
-      <div className="nav">
-        {pages.map((page, index) => (
-          <div key={page} className="page">
-            <Link
-              className="page-link"
-              to={`/${page === "Home" ? "" : page.toLowerCase()}`}
-            >
-              {icons[index]}
+      <div class="nav">
+        <For each={pages}>
+          {page => (
+            <Link href={`/${page.toLowerCase()}`} class="nav-item">
+              <div>
+                <i class={icons[pages.indexOf(page)]}></i>
+              </div>
             </Link>
-          </div>
-        ))}
+          )}
+        </For>
       </div>
-      <div className="space"></div>
-      <div className="config"></div>
+      <div class="space"></div>
+      <div class="config"></div>
     </div>
   );
 }

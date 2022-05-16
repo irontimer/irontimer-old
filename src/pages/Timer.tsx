@@ -4,7 +4,7 @@ import "./Timer.scss";
 
 function Timer() {
   return (
-    <div className="timer-page">
+    <div class="timer-page">
       <p>some text</p>
     </div>
   );

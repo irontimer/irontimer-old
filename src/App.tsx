@@ -1,6 +1,6 @@
 /** @format */
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "solid-app-router";
 import "./App.scss";
 
 // components
@@ -13,18 +13,16 @@ import Timer from "./pages/Timer";
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Top />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/account" element={<Account />}></Route>
-            <Route path="/timer" element={<Timer />}></Route>
-          </Routes>
-        </div>
+    <div class="App">
+      <Top />
+      <div class="content">
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/account" element={<Account />}></Route>
+          <Route path="/timer" element={<Timer />}></Route>
+        </Routes>
       </div>
-    </BrowserRouter>
+    </div>
   );
 }
 

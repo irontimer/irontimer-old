@@ -4,7 +4,7 @@ import "./Button.scss";
 
 function Button() {
   return (
-    <div className="button">
+    <div class="button">
       <button onClick={() => console.log("Test")}>Test Button</button>
     </div>
   );
