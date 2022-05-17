@@ -5,12 +5,12 @@ import { Route, Routes } from "solid-app-router";
 import "./App.scss";
 
 // components
-import Top from "./components/Top";
+import { Top } from "./components/Top";
 
 // pages
-import Home from "./pages/Home";
-import Account from "./pages/Account";
-import Timer from "./pages/Timer";
+import { Home } from "./pages/Home";
+import { Account } from "./pages/Account";
+import { Timer } from "./pages/Timer";
 
 export const App: Component = () => {
   return (
@@ -26,5 +26,3 @@ export const App: Component = () => {
     </div>
   );
 };
-
-export default App;

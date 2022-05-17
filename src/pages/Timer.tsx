@@ -47,5 +47,3 @@ export const Timer: Component = () => {
     </div>
   );
 };
-
-export default Timer;

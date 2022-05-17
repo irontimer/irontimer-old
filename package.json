@@ -7,10 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "pretty": "prettier 'src/**/*.ts'",
-    "pretty-fix": "prettier --write 'src/**/*.ts'",
-    "lint": "eslint -c .eslintrc.json 'src/**/*.ts'",
-    "lint-fix": "eslint --fix -c .eslintrc.json 'src/**/*.ts'"
+    "pretty": "prettier 'src/**/*.{ts,tsx}'",
+    "pretty-fix": "prettier --write 'src/**/*.{ts,tsx}'",
+    "lint": "eslint -c .eslintrc.json 'src/**/*.{ts,tsx}'",
+    "lint-fix": "eslint --fix -c .eslintrc.json 'src/**/*.{ts,tsx}'"
   },
   "license": "MIT",
   "devDependencies": {

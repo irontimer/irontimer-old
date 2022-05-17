@@ -1,6 +1,6 @@
 /** @format */
 
-import { For } from "solid-js";
+import { Component, For } from "solid-js";
 import { Link } from "solid-app-router";
 import "./Top.scss";
 
@@ -13,7 +13,7 @@ const icons = [
   "fa-solid fa-right-to-bracket"
 ];
 
-function Top() {
+export const Top: Component = () => {
   return (
     <div class="top">
       <div class="logo">
@@ -27,7 +27,7 @@ function Top() {
 
       <div class="nav">
         <For each={pages}>
-          {page => (
+          {(page) => (
             <Link href={`/${page.toLowerCase()}`} class="nav-item">
               <div>
                 <i class={icons[pages.indexOf(page)]}></i>
@@ -40,6 +40,4 @@ function Top() {
       <div class="config"></div>
     </div>
   );
-}
-
-export default Top;
+};

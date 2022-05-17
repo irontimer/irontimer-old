@@ -6,5 +6,3 @@ import "./Home.scss";
 export const Home: Component = () => {
   return <div class="home-page"></div>;
 };
-
-export default Home;

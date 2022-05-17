@@ -1,13 +1,12 @@
 /** @format */
 
+import { Component } from "solid-js";
 import "./Button.scss";
 
-function Button() {
+export const Button: Component = () => {
   return (
     <div class="button">
       <button onClick={() => console.log("Test")}>Test Button</button>
     </div>
   );
-}
-
-export default Button;
+};
