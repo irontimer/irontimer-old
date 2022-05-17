@@ -3,3 +3,4 @@ dist
 
 # Firebase
 .firebaserc
+.firebase/
