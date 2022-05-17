@@ -3,7 +3,9 @@ import { Component, For } from "solid-js";
 import { addResult, clearResults, getResults } from "../signal/result";
 import "./Timer.scss";
 
-function stringifyDate(date: Date): [string, string] {
+function stringifyDate(timestamp: number): [string, string] {
+  const date = new Date(timestamp);
+
   return [
     `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
     `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
@@ -22,8 +24,8 @@ export const Timer: Component = () => {
               <tr>
                 <td>{getResults().length - getIndex()}</td>
                 <td>{result.time}</td>
-                <td>{stringifyDate(result.date)[0]}</td>
-                <td>{stringifyDate(result.date)[1]}</td>
+                <td>{stringifyDate(result.timestamp)[0]}</td>
+                <td>{stringifyDate(result.timestamp)[1]}</td>
               </tr>
             )}
           </For>
@@ -33,7 +35,7 @@ export const Timer: Component = () => {
         onClick={() =>
           addResult({
             time: Math.round(Math.random() * 100000) / 1000,
-            date: new Date(),
+            timestamp: new Date().getTime(),
             scramble: [],
             puzzle: {
               type: "Cube",

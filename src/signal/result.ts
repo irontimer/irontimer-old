@@ -4,10 +4,7 @@ import type { Result } from "../types/types";
 // TODO setup mongodb
 
 const [getResults, setResultsTemp] = createSignal<Result[]>(
-  JSON.parse(localStorage.getItem("results") ?? "[]").map((result: Result) => ({
-    ...result,
-    date: new Date(result.date)
-  }))
+  JSON.parse(localStorage.getItem("results") ?? "[]")
 );
 
 export function setResults(results: Result[]): void {

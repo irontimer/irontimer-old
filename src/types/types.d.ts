@@ -32,7 +32,7 @@ export interface Move {
 
 export interface Result {
   time: number; // float seconds for how long the solve was
-  date: Date;
+  timestamp: number;
   puzzle: Puzzle;
   scramble: Move[];
   solution?: Move[];
