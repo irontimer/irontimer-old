@@ -1,7 +1,39 @@
 /** @format */
 
 .timer-page {
-  display: flex;
-  justify-content: space-around;
-  background-color: powderblue;
+  display: grid;
+  grid-template-columns: 1.5fr 5fr 1.5fr;
+
+  #results {
+    padding: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: lightgray;
+
+    h1 {
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    button {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    tr {
+      border-width: 1px;
+      border-style: solid;
+      border-color: black;
+      align-items: center;
+
+      td {
+        border-width: thin;
+        border-style: solid;
+        background-color: white;
+        padding: 5px;
+      }
+    }
+  }
 }

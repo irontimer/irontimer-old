@@ -1,5 +1,6 @@
 /** @format */
 
+import { Component } from "solid-js";
 import { Route, Routes } from "solid-app-router";
 import "./App.scss";
 
@@ -11,7 +12,7 @@ import Home from "./pages/Home";
 import Account from "./pages/Account";
 import Timer from "./pages/Timer";
 
-function App() {
+export const App: Component = () => {
   return (
     <div class="App">
       <Top />
@@ -24,6 +25,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;

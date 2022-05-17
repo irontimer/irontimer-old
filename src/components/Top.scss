@@ -1,10 +1,14 @@
 /** @format */
 
+$text-color: #fafafa;
+
 .top {
   display: grid;
   grid-template-columns: 1fr 1fr 5fr 1fr;
   place-items: center;
   padding: 1rem;
+  background-color: black;
+  color: $text-color;
 
   .logo {
     display: grid;
@@ -17,16 +21,11 @@
       grid-gap: 0.5rem;
       padding: 0.5rem;
       border-radius: 50%;
-      background-color: #fff;
-      color: #000;
+      background-color: white;
+      color: black;
       font-size: 1.5rem;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
-
-      &:hover {
-        background-color: #000;
-        color: #fff;
-      }
     }
 
     .title {
@@ -34,7 +33,7 @@
       padding: 1rem;
 
       .title-link {
-        color: black;
+        color: $text-color;
         text-decoration: none;
       }
     }
@@ -46,7 +45,7 @@
 
     .nav-item {
       padding: 1rem;
-      color: black;
+      color: $text-color;
       text-decoration: none;
     }
   }

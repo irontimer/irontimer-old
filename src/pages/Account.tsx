@@ -1,9 +1,10 @@
 /** @format */
 
+import { Component } from "solid-js";
 import "./Account.scss";
 
-function Account() {
+export const Account: Component = () => {
   return <div class="account-page"></div>;
-}
+};
 
 export default Account;
