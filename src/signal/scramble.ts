@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { Move, FACES, DIRECTIONS, Face } from "../structures/move";
+import { Move, FACES, DIRECTIONS, Face } from "../structures/Move";
 import { Puzzle } from "../types/types";
 
 export function generateScramble(puzzle: Puzzle, length?: number): Move[] {

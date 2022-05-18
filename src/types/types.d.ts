@@ -1,6 +1,6 @@
 /** @format */
 
-import { Move } from "../structures/move";
+import { Move } from "../structures/Move";
 
 export type PuzzleType =
   | "Cube"
