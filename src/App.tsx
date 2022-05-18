@@ -1,6 +1,6 @@
 /** @format */
 
-import { Component } from "solid-js";
+import { Component, onMount } from "solid-js";
 import { Route, Routes } from "solid-app-router";
 import "./App.scss";
 
@@ -11,7 +11,15 @@ import { Top } from "./components/Top";
 import { Account } from "./pages/Account";
 import { Timer } from "./pages/Timer";
 
+// signals
+import { generateScramble, setScramble } from "./signal/scramble";
+import { getPuzzle } from "./signal/puzzle";
+
 export const App: Component = () => {
+  onMount(() => {
+    setScramble(generateScramble(getPuzzle()));
+  });
+
   return (
     <div class="App">
       <Top />

@@ -1,5 +1,7 @@
 import { createSignal } from "solid-js";
 import type { Result } from "../types/types";
+import { getPuzzle } from "./puzzle";
+import { generateScramble, setScramble } from "./scramble";
 
 // TODO setup mongodb
 
@@ -15,6 +17,8 @@ export function setResults(results: Result[]): void {
 
 export function addResult(result: Result): void {
   setResults([...getResults(), result]);
+
+  setScramble(generateScramble(getPuzzle()));
 }
 
 export function clearResults(): void {
