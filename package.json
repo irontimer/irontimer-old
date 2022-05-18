@@ -10,7 +10,8 @@
     "pretty": "prettier 'src/**/*.{ts,tsx}'",
     "pretty-fix": "prettier --write 'src/**/*.{ts,tsx}'",
     "lint": "eslint -c .eslintrc.json 'src/**/*.{ts,tsx}'",
-    "lint-fix": "eslint --fix -c .eslintrc.json 'src/**/*.{ts,tsx}'"
+    "lint-fix": "eslint --fix -c .eslintrc.json 'src/**/*.{ts,tsx}'",
+    "deploy": "yarn build && firebase deploy"
   },
   "license": "MIT",
   "devDependencies": {
