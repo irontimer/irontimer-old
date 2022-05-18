@@ -68,22 +68,18 @@ export const Timer: Component = () => {
 
             if (isNaN(float)) {
               alert("Entered time is not a number");
+            } else {
+              if (float % 1 === 0 && !val.includes(".")) {
+                float /= 1000;
+              }
 
-              e.currentTarget.value = "";
-
-              return;
+              addResult({
+                time: float,
+                timestamp: Date.now(),
+                puzzle: getPuzzle(),
+                scramble: getScramble()
+              });
             }
-
-            if (float % 1 === 0 && !val.includes(".")) {
-              float /= 1000;
-            }
-
-            addResult({
-              time: float,
-              timestamp: Date.now(),
-              puzzle: getPuzzle(),
-              scramble: getScramble()
-            });
 
             e.currentTarget.value = "";
           }}

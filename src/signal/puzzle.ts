@@ -3,5 +3,5 @@ import type { Puzzle } from "../types/types";
 
 export const [getPuzzle, setPuzzle] = createSignal<Puzzle>({
   type: "Cube",
-  layers: 3
+  size: 3
 });

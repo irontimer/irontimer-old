@@ -6,12 +6,12 @@
 
   #results {
     padding: 5px;
-    height: 90vh;
+    height: 87vh;
     border-width: 1px;
     border-style: solid;
     border-color: black;
     background-color: lightgray;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: auto;
 
     h1 {
@@ -46,7 +46,7 @@
   }
 
   #timer {
-    height: 90vh;
+    height: 87vh;
 
     input {
       position: absolute;

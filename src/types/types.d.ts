@@ -11,7 +11,7 @@ export type PuzzleType =
 
 export interface Puzzle {
   type: PuzzleType;
-  layers: number;
+  size: number;
 }
 
 export interface Result {

@@ -13,7 +13,7 @@ export function generateScramble(puzzle: Puzzle, length?: number): Move[] {
       // return generatePyraminxScramble(length ?? 15);
       // return generateSkewbScramble(length ?? 15);
       // return generateSquare1Scramble(length ?? 20);
-      return generateCubeScramble(length ?? 20);
+      return generateCubeScramble(length ?? 25);
   }
 }
 
