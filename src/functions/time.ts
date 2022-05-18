@@ -15,21 +15,17 @@ export function timeFormat(time: number): string {
   );
 
   const hoursString = hours.toString();
-  let minutesString = minutes.toString();
-  let secondsString = seconds.toString();
+  const minutesString = minutes.toString();
+  const secondsString = seconds.toString();
   const millisecondsString = milliseconds.toString().padStart(3, "0");
 
   let output = "";
   if (hours > 0) {
     output += hoursString + ":";
-
-    minutesString = minutesString.padStart(2, "0");
   }
 
   if (minutes > 0) {
     output += minutesString + ":";
-
-    secondsString = secondsString.padStart(2, "0");
   }
 
   output += secondsString + "." + millisecondsString;

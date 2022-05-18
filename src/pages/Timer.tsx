@@ -48,6 +48,7 @@ export const Timer: Component = () => {
 
       <div id="timer">
         <input
+          placeholder="Enter time"
           onKeyPress={(e) => {
             if (e.key !== "Enter") {
               if (/[^0-9.:,]/.test(e.key)) {
