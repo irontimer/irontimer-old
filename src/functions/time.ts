@@ -38,7 +38,7 @@ export function timeFormat(time: number): string {
 }
 
 export function roundMilliseconds(time: number): number {
-  return Math.round(time * 1000) / 1000;
+  return Math.floor(time * 1000) / 1000;
 }
 
 export function parseTimeString(timeString: string): number {
