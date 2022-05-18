@@ -6,10 +6,13 @@
 
   #results {
     padding: 5px;
+    height: 90vh;
     border-width: 1px;
     border-style: solid;
     border-color: black;
     background-color: lightgray;
+    overflow-y: scroll;
+    overflow-x: auto;
 
     h1 {
       text-align: center;
@@ -20,6 +23,11 @@
     button {
       margin-top: 5px;
       margin-bottom: 5px;
+      background-color: white;
+      border-color: black;
+      border-style: solid;
+      border-width: thin;
+      border-radius: 5px;
     }
 
     tr {
@@ -34,6 +42,24 @@
         background-color: white;
         padding: 5px;
       }
+    }
+  }
+
+  #timer {
+    height: 90vh;
+
+    input {
+      position: absolute;
+      top: 50vh;
+      height: 5rem;
+      width: 50vw;
+      left: 25vw;
+      font-size: 5rem;
+      text-align: center;
+      border-width: thin;
+      border-style: solid;
+      border-color: black;
+      border-radius: 5px;
     }
   }
 }

@@ -8,7 +8,6 @@ import "./App.scss";
 import { Top } from "./components/Top";
 
 // pages
-import { Home } from "./pages/Home";
 import { Account } from "./pages/Account";
 import { Timer } from "./pages/Timer";
 
@@ -18,9 +17,8 @@ export const App: Component = () => {
       <Top />
       <div class="content">
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<Timer />}></Route>
           <Route path="/account" element={<Account />}></Route>
-          <Route path="/timer" element={<Timer />}></Route>
         </Routes>
       </div>
     </div>

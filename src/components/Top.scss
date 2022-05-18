@@ -4,10 +4,9 @@ $text-color: #fafafa;
 
 .top {
   display: grid;
-  grid-template-columns: 1fr 1fr 5fr 1fr;
+  grid-template-columns: 1fr 5fr 1fr;
   grid-gap: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 1rem 1rem 0 1rem;
   place-items: center;
   height: 10vh;
   background-color: black;
@@ -41,9 +40,14 @@ $text-color: #fafafa;
     }
   }
 
+  #scramble {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
   .nav {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
     .nav-item {
       padding-left: 1rem;

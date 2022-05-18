@@ -1,5 +1,7 @@
 /** @format */
 
+import { Move } from "../structures/move";
+
 export type PuzzleType =
   | "Cube"
   | "Megaminx"
@@ -10,24 +12,6 @@ export type PuzzleType =
 export interface Puzzle {
   type: PuzzleType;
   layers: number;
-}
-
-export interface Move {
-  side:
-    | "Up"
-    | "Down"
-    | "Left"
-    | "Right"
-    | "Front"
-    | "Back"
-    | "UpWide"
-    | "DownWide"
-    | "LeftWide"
-    | "RightWide"
-    | "FrontWide"
-    | "BackWide";
-  count: number;
-  direction: "Clockwise" | "CounterClockwise";
 }
 
 export interface Result {

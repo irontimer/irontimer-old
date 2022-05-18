@@ -2,16 +2,11 @@
 
 import { Component, For } from "solid-js";
 import { Link } from "solid-app-router";
+import { getScramble } from "../signal/scramble";
 import "./Top.scss";
 
-const pages = ["Timer", "Home", "Account", "Login"];
-
-const icons = [
-  "fa-solid fa-cube",
-  "fa-solid fa-house",
-  "fa-solid fa-user",
-  "fa-solid fa-right-to-bracket"
-];
+const pages = ["Timer", "Account"];
+const icons = ["fa-cube", "fa-user"];
 
 export const Top: Component = () => {
   return (
@@ -25,13 +20,16 @@ export const Top: Component = () => {
         </div>
       </div>
 
+      <div id="scramble">{getScramble().join(" ")}</div>
+
       <div class="nav">
         <For each={pages}>
-          {(page) => (
-            <Link href={`/${page.toLowerCase()}`} class="nav-item">
-              <div>
-                <i class={icons[pages.indexOf(page)]}></i>
-              </div>
+          {(page, getIndex) => (
+            <Link
+              href={page === "Timer" ? "/" : `/${page.toLowerCase()}`}
+              class="nav-item"
+            >
+              <i class={`fa-solid ${icons[getIndex()]}`}></i>
             </Link>
           )}
         </For>
