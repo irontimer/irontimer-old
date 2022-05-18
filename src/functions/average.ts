@@ -4,9 +4,6 @@ export function calculateAverage(
   results: Result[],
   averageOf = 5
 ): number | undefined {
-  if (averageOf === 5) {
-    console.log(results);
-  }
   if (results.length < averageOf) {
     return;
   }
