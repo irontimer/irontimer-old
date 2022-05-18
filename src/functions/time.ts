@@ -15,11 +15,26 @@ export function timeFormat(time: number): string {
   );
 
   const hoursString = hours.toString();
-  const minutesString = minutes.toString().padStart(2, "0");
-  const secondsString = seconds.toString().padStart(2, "0");
+  let minutesString = minutes.toString();
+  let secondsString = seconds.toString();
   const millisecondsString = milliseconds.toString().padStart(3, "0");
 
-  return `${hoursString}:${minutesString}:${secondsString}.${millisecondsString}`;
+  let output = "";
+  if (hours > 0) {
+    output += hoursString + ":";
+
+    minutesString = minutesString.padStart(2, "0");
+  }
+
+  if (minutes > 0) {
+    output += minutesString + ":";
+
+    secondsString = secondsString.padStart(2, "0");
+  }
+
+  output += secondsString + "." + millisecondsString;
+
+  return output;
 }
 
 export function roundMilliseconds(time: number): number {

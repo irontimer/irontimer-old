@@ -9,6 +9,10 @@ const [getResults, setResultsTemp] = createSignal<Result[]>(
   JSON.parse(localStorage.getItem("results") ?? "[]")
 );
 
+export const getResultsReverse = (): Result[] => {
+  return getResults().sort((a, b) => b.timestamp - a.timestamp);
+};
+
 export function setResults(results: Result[]): void {
   localStorage.setItem("results", JSON.stringify(results));
 

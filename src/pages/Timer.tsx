@@ -1,8 +1,14 @@
 /** @format */
-import { Component, For } from "solid-js";
+import { Component } from "solid-js";
+import { calculateAverage } from "../functions/average";
 import { parseTimeString, timeFormat } from "../functions/time";
 import { getPuzzle } from "../signal/puzzle";
-import { addResult, clearResults, getResults } from "../signal/result";
+import {
+  addResult,
+  clearResults,
+  getResults,
+  getResultsReverse
+} from "../signal/result";
 import { getScramble } from "../signal/scramble";
 import "./Timer.scss";
 
@@ -22,36 +28,20 @@ export const Timer: Component = () => {
             </tr>
           </thead>
           <tbody>
-            <For each={getResults().sort((a, b) => b.timestamp - a.timestamp)}>
-              {(result, getIndex) => {
-                function i(): number {
-                  return getResults().length - getIndex();
-                }
+            {getResultsReverse().map((result, index) => {
+              const [ao5, ao12] = [5, 12].map((n) =>
+                calculateAverage(getResults().slice(index, index + n), n)
+              );
 
-                const lastFiveResults = getResults()
-                  .slice(i() - 5, i())
-                  .map((r) => r.time);
-
-                const lastTwelveResults = getResults()
-                  .slice(i() - 12, i())
-                  .map((r) => r.time);
-
-                const ao5 =
-                  lastFiveResults.reduce((acc, cur) => acc + cur, 0) / 5;
-
-                const ao12 =
-                  lastTwelveResults.reduce((acc, cur) => acc + cur, 0) / 12;
-
-                return (
-                  <tr>
-                    <td>{i()}</td>
-                    <td>{timeFormat(result.time)}</td>
-                    <td>{i() >= 5 ? timeFormat(ao5) : "-"}</td>
-                    <td>{i() >= 12 ? timeFormat(ao12) : "-"}</td>
-                  </tr>
-                );
-              }}
-            </For>
+              return (
+                <tr>
+                  <td>{getResults().length - index}</td>
+                  <td>{timeFormat(result.time)}</td>
+                  <td>{ao5 !== undefined ? timeFormat(ao5) : "-"}</td>
+                  <td>{ao12 !== undefined ? timeFormat(ao12) : "-"}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -60,10 +50,14 @@ export const Timer: Component = () => {
         <input
           onKeyPress={(e) => {
             if (e.key !== "Enter") {
+              if (/[^0-9.:,]/.test(e.key)) {
+                e.preventDefault();
+              }
+
               return;
             }
 
-            const val = e.currentTarget.value;
+            const val = e.currentTarget.value.replace(/,/g, "");
 
             let float = /[^0-9.]/.test(val) ? NaN : parseFloat(val);
 
