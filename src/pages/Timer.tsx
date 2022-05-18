@@ -1,5 +1,6 @@
 /** @format */
 import { Component } from "solid-js";
+import { Button } from "../components/Button";
 import { calculateAverage } from "../functions/average";
 import { parseTimeString, timeFormat } from "../functions/time";
 import { getPuzzle } from "../signal/puzzle";
@@ -17,7 +18,9 @@ export const Timer: Component = () => {
     <div class="timer-page">
       <div id="results">
         <h1>Results</h1>
-        <button onClick={() => clearResults()}>Clear</button>
+        <Button color="light" onClick={clearResults}>
+          Clear
+        </Button>
         <table>
           <thead>
             <tr>

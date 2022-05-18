@@ -7,8 +7,8 @@ import "./Top.scss";
 import type { PuzzleType } from "../types/types";
 import { getPuzzle, setPuzzle } from "../signal/puzzle";
 
-const pages = ["Timer", "Account"];
-const icons = ["fa-cube", "fa-user"];
+const pages = ["Timer", "Account", "Settings"];
+const icons = ["fa-cube", "fa-user", "fa-cog"];
 
 export const Top: Component = () => {
   return (
