@@ -4,3 +4,4 @@ dist
 # Firebase
 .firebaserc
 .firebase/
+src/config/firebase-config.ts
