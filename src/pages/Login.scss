@@ -1,0 +1,32 @@
+/** @format */
+
+.login-page {
+  .sign-up {
+    .sign-up-form {
+      .sign-up-form-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+      .sign-up-form-input {
+        margin-bottom: 1rem;
+      }
+      .sign-up-form-input-label {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .sign-up-form-input-error {
+        color: red;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .sign-up-form-button {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

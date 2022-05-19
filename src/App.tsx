@@ -15,6 +15,7 @@ import { Settings } from "./pages/Settings";
 // signals
 import { generateScramble, setScramble } from "./signal/scramble";
 import { getPuzzle } from "./signal/puzzle";
+import { Login } from "./pages/Login";
 
 export const App: Component = () => {
   onMount(() => {
@@ -28,6 +29,7 @@ export const App: Component = () => {
         <Routes>
           <Route path="/" element={<Timer />}></Route>
           <Route path="/account" element={<Account />}></Route>
+          <Route path="/login" element={<Login />}></Route>
           <Route path="/settings" element={<Settings />}></Route>
         </Routes>
       </div>
