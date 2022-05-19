@@ -21,10 +21,3 @@ export interface Result {
   scramble: Move[];
   solution?: Move[];
 }
-
-export interface User {
-  email: string;
-  userID: string;
-  displayName: string;
-  discordUserID?: string;
-}

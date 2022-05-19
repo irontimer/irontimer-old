@@ -15,7 +15,6 @@ export const Login: Component = () => {
             e.preventDefault();
 
             const email = e.currentTarget.email.value as string;
-            // const username = e.currentTarget.username.value as string;
             const password = e.currentTarget.password.value as string;
             const confirmPassword = e.currentTarget["password-confirm"]
               .value as string;
@@ -28,17 +27,9 @@ export const Login: Component = () => {
 
             signUp(email, password).catch(() => {
               alert("Error signing up");
-
-              return undefined;
             });
 
             e.currentTarget.reset();
-
-            // if (user !== undefined) {
-            //   const dbUser = await createUser(email, user.uid, username);
-
-            //   console.log(dbUser);
-            // }
 
             window.location.reload();
           }}
@@ -53,16 +44,6 @@ export const Login: Component = () => {
             type="email"
             class="sign-up-form-input"
             placeholder="Enter email"
-          />
-
-          <label for="username" class="sign-up-form-input-label">
-            Username
-          </label>
-          <input
-            name="username"
-            type="text"
-            class="sign-up-form-input"
-            placeholder="Username"
           />
 
           <label for="password" class="sign-up-form-input-label">
