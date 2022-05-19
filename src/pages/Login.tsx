@@ -3,6 +3,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Component } from "solid-js";
 import { auth, signUp } from "../functions/auth";
+import { createUser } from "../functions/client";
 import "./Login.scss";
 
 export const Login: Component = () => {
@@ -11,10 +12,11 @@ export const Login: Component = () => {
       <div class="sign-up">
         <form
           class="sign-up-form"
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
 
             const email = e.currentTarget.email.value as string;
+            const username = e.currentTarget.username.value as string;
             const password = e.currentTarget.password.value as string;
             const confirmPassword = e.currentTarget["password-confirm"]
               .value as string;
@@ -25,11 +27,15 @@ export const Login: Component = () => {
               return;
             }
 
-            signUp(email, password).catch(() => {
+            const user = await signUp(email, password).catch(() => {
               alert("Error signing up");
+
+              return undefined;
             });
 
-            e.currentTarget.reset();
+            if (user !== undefined) {
+              await createUser(email, username, user.uid);
+            }
 
             window.location.reload();
           }}
@@ -44,6 +50,16 @@ export const Login: Component = () => {
             type="email"
             class="sign-up-form-input"
             placeholder="Enter email"
+          />
+
+          <label for="username" class="sign-up-form-input-label">
+            Username
+          </label>
+          <input
+            name="username"
+            type="text"
+            class="sign-up-form-input"
+            placeholder="Enter username"
           />
 
           <label for="password" class="sign-up-form-input-label">

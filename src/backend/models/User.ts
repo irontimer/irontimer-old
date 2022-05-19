@@ -1,16 +1,10 @@
 import { Schema, model } from "mongoose";
-
-interface IUser {
-  email: string;
-  userID: string;
-  displayName: string;
-  discordUserID: string;
-}
+import { User as IUser } from "../../types/types";
 
 const UserSchema = new Schema<IUser>({
   email: String,
   userID: String,
-  displayName: String,
+  username: String,
   discordUserID: String
 });
 
