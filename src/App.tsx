@@ -13,8 +13,8 @@ import { Timer } from "./pages/Timer";
 import { Settings } from "./pages/Settings";
 
 // signals
-import { generateScramble, setScramble } from "./signal/scramble";
-import { getPuzzle } from "./signal/puzzle";
+import { generateScramble, setScramble } from "./state/scramble";
+import { getPuzzle } from "./state/puzzle";
 import { Login } from "./pages/Login";
 
 export const App: Component = () => {

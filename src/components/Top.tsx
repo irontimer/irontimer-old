@@ -2,10 +2,10 @@
 
 import { Component, For } from "solid-js";
 import { Link } from "solid-app-router";
-import { generateScramble, getScramble, setScramble } from "../signal/scramble";
+import { generateScramble, getScramble, setScramble } from "../state/scramble";
 import "./Top.scss";
 import type { PuzzleType } from "../types/types";
-import { getPuzzle, setPuzzle } from "../signal/puzzle";
+import { getPuzzle, setPuzzle } from "../state/puzzle";
 
 const pages = ["Timer", "Account", "Settings"];
 const icons = ["fa-cube", "fa-user", "fa-cog"];

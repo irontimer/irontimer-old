@@ -3,14 +3,14 @@ import { Component } from "solid-js";
 import { Button } from "../components/Button";
 import { calculateAverage } from "../functions/average";
 import { parseTimeString, timeFormat } from "../functions/time";
-import { getPuzzle } from "../signal/puzzle";
+import { getPuzzle } from "../state/puzzle";
 import {
   addResult,
   clearResults,
   getResults,
   getResultsReverse
-} from "../signal/result";
-import { getScramble } from "../signal/scramble";
+} from "../state/result";
+import { getScramble } from "../state/scramble";
 import "./Timer.scss";
 
 export const Timer: Component = () => {
