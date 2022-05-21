@@ -3,7 +3,7 @@ import { User } from "../types/types";
 const backendURI =
   window.location.hostname === "localhost"
     ? "http://localhost:3005"
-    : "http://api.irontimer.com";
+    : "http://api.irontimer.com:3005";
 
 export async function createUser(
   email: string,

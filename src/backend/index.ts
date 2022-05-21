@@ -4,6 +4,8 @@ import express from "express";
 import { User } from "./models/User";
 import cors from "cors";
 
+const PORT = 3005;
+
 config({
   path: `${process.cwd()}/.env`
 });
@@ -47,6 +49,6 @@ app.post("/users", async (req, res) => {
   res.json(user);
 });
 
-app.listen(3005, () => {
-  console.log("Example app listening on port 3005!");
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}!`);
 });
