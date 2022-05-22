@@ -28,8 +28,6 @@ export const Top: Component = () => {
         onChange={(e) => {
           const val = e.currentTarget.value;
 
-          console.log(val);
-
           let type: PuzzleType = "Cube";
           let size = 3;
 

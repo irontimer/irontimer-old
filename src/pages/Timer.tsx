@@ -1,15 +1,10 @@
 /** @format */
 import { Component } from "solid-js";
-import { Button } from "../components/Button";
+import { auth } from "../functions/auth";
 import { calculateAverage } from "../functions/average";
 import { parseTimeString, timeFormat } from "../functions/time";
 import { getPuzzle } from "../state/puzzle";
-import {
-  addResult,
-  clearResults,
-  getResults,
-  getResultsReverse
-} from "../state/result";
+import { addResult, getResults, getResultsReverse } from "../state/result";
 import { getScramble } from "../state/scramble";
 import "./Timer.scss";
 
@@ -18,9 +13,6 @@ export const Timer: Component = () => {
     <div class="timer-page">
       <div id="results">
         <h1>Results</h1>
-        <Button color="light" onClick={clearResults}>
-          Clear
-        </Button>
         <table>
           <thead>
             <tr>
@@ -32,9 +24,19 @@ export const Timer: Component = () => {
           </thead>
           <tbody>
             {getResultsReverse().map((result, index) => {
-              const [ao5, ao12] = [5, 12].map((n) =>
-                calculateAverage(getResults().slice(index, index + n), n)
-              );
+              const [ao5, ao12] = [5, 12].map((n) => {
+                const results = getResultsReverse().slice(index, index + n);
+
+                if (results.length !== n) {
+                  return;
+                }
+
+                if (n === 12) {
+                  console.log(results);
+                }
+
+                return calculateAverage(results);
+              });
 
               return (
                 <tr>
@@ -76,12 +78,15 @@ export const Timer: Component = () => {
                 float /= 1000;
               }
 
-              addResult({
-                time: float,
-                timestamp: Date.now(),
-                puzzle: getPuzzle(),
-                scramble: getScramble()
-              });
+              addResult(
+                {
+                  time: float,
+                  timestamp: Date.now(),
+                  puzzle: getPuzzle(),
+                  scramble: getScramble()
+                },
+                auth.currentUser?.uid
+              );
             }
 
             e.currentTarget.value = "";

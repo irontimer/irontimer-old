@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import express from "express";
 import { User } from "./models/User";
 import cors from "cors";
+import { Result } from "./models/Result";
 
 const PORT = 3005;
 
@@ -37,6 +38,7 @@ app.post("/users", async (req, res) => {
 
   if (email === undefined || username === undefined || userID === undefined) {
     res.status(400).send("Missing email, username, or userID");
+
     return;
   }
 
@@ -47,6 +49,67 @@ app.post("/users", async (req, res) => {
   });
 
   res.json(user);
+});
+
+app.get("/results", async (req, res) => {
+  const { userID } = req.query;
+
+  if (userID === undefined) {
+    res.status(400).send("Missing userID");
+
+    return;
+  }
+
+  const results = await Result.find({ userID });
+
+  res.json(results);
+});
+
+app.post("/results", async (req, res) => {
+  const { userID, result } = req.body;
+
+  if (userID === undefined || result === undefined) {
+    res.status(400).send("Missing userID or result");
+
+    return;
+  }
+
+  const user = await User.findOne({ userID });
+
+  if (user === undefined) {
+    res.status(400).send("User not found");
+
+    return;
+  }
+
+  const newResult = await Result.create({
+    userID,
+    ...result
+  });
+
+  res.json(newResult);
+});
+
+app.delete("/results", async (req, res) => {
+  const { resultID } = req.query;
+
+  if (resultID === undefined) {
+    res.status(400).send("Missing resultID");
+
+    return;
+  }
+
+  const result = await Result.findOne({ resultID });
+
+  if (result === undefined) {
+    res.status(400).send("Result not found");
+
+    return;
+  }
+
+  await Result.deleteOne({ resultID });
+
+  res.json(result);
 });
 
 app.listen(PORT, () => {

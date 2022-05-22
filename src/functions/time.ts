@@ -6,13 +6,9 @@ export function timeFormat(time: number): string {
   const roundedTime = roundToMilliseconds(time);
 
   const hours = Math.floor(roundedTime / HOUR);
-  const minutes = Math.floor((roundedTime - hours * HOUR) / MINUTE);
-  const seconds = Math.floor(
-    (roundedTime - hours * HOUR - minutes * MINUTE) / SECOND
-  );
-  const milliseconds = Math.floor(
-    (roundedTime - hours * HOUR - minutes * MINUTE - seconds * SECOND) * 1000
-  );
+  const minutes = Math.floor((roundedTime % HOUR) / MINUTE);
+  const seconds = Math.floor((roundedTime % MINUTE) / SECOND);
+  const milliseconds = Math.round((roundedTime % SECOND) * 1000);
 
   const hoursString = hours.toString();
   const minutesString = minutes.toString();
@@ -34,7 +30,7 @@ export function timeFormat(time: number): string {
 }
 
 export function roundToMilliseconds(time: number): number {
-  return Math.floor(time * 1000) / 1000;
+  return Math.round(time * 1000) / 1000;
 }
 
 export function parseTimeString(timeString: string): number {
@@ -43,7 +39,7 @@ export function parseTimeString(timeString: string): number {
     .map((str) => parseFloat(str))
     .reverse();
 
-  // settings values to 0 if they are undefined
+  // setting values to 0 if they are NaN
   seconds ??= 0;
   minutes ??= 0;
   hours ??= 0;

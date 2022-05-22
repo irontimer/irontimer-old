@@ -1,23 +1,17 @@
 import { Result } from "../types/types";
 
-export function calculateAverage(
-  results: Result[],
-  averageOf = 5
-): number | undefined {
-  if (results.length < averageOf) {
-    return;
-  }
+export function calculateAverage(results: Result[]): number {
+  const sorted = results.sort((a, b) => a.time - b.time);
 
-  const meanLength = averageOf - 2;
+  const middle = sorted.slice(1, results.length - 1); // this gets rid of the best and worst results respectively
 
-  const sortedResultsWithoutBestAndWorst = results
-    .slice(results.length - averageOf)
-    .sort((a, b) => a.time - b.time)
-    .slice(1, results.length - 1);
+  return mean(middle); // means the three middle results
+}
 
-  const mean =
-    sortedResultsWithoutBestAndWorst.reduce((acc, curr) => acc + curr.time, 0) /
-    meanLength;
+export function mean(results: Result[]): number {
+  return sum(results) / results.length;
+}
 
-  return mean;
+export function sum(results: Result[]): number {
+  return results.reduce((acc, curr) => acc + curr.time, 0);
 }

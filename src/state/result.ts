@@ -1,32 +1,25 @@
 import { createSignal } from "solid-js";
+import { saveResult } from "../functions/client";
 import type { Result } from "../types/types";
 import { getPuzzle } from "./puzzle";
 import { generateScramble, setScramble } from "./scramble";
 
 // TODO setup mongodb
 
-const [getResults, setResultsTemp] = createSignal<Result[]>(
-  JSON.parse(localStorage.getItem("results") ?? "[]")
-);
+export const [getResults, setResults] = createSignal<Result[]>([]);
 
-export const getResultsReverse = (): Result[] => {
+export function getResultsReverse(): Result[] {
   return getResults().sort((a, b) => b.timestamp - a.timestamp);
-};
-
-export function setResults(results: Result[]): void {
-  localStorage.setItem("results", JSON.stringify(results));
-
-  setResultsTemp(results);
 }
 
-export function addResult(result: Result): void {
+export function addResult(result: Result, userID?: string): void {
   setResults([...getResults(), result]);
+
+  if (userID !== undefined) {
+    saveResult(userID, result);
+
+    console.log("Saved result to database");
+  }
 
   setScramble(generateScramble(getPuzzle()));
 }
-
-export function clearResults(): void {
-  setResults([]);
-}
-
-export { getResults };
