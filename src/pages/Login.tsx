@@ -7,6 +7,14 @@ import { createUser } from "../functions/client";
 import "./Login.scss";
 
 export const Login: Component = () => {
+  let signUpEmail = "";
+  let signUpUsername = "";
+  let signUpPassword = "";
+  let signUpConfirmPassword = "";
+
+  let signInEmail = "";
+  let signInPassword = "";
+
   return (
     <div class="login-page">
       <div class="sign-up">
@@ -15,26 +23,20 @@ export const Login: Component = () => {
           onSubmit={async (e) => {
             e.preventDefault();
 
-            const email = e.currentTarget.email.value as string;
-            const username = e.currentTarget.username.value as string;
-            const password = e.currentTarget.password.value as string;
-            const confirmPassword = e.currentTarget["password-confirm"]
-              .value as string;
-
-            if (password !== confirmPassword) {
+            if (signUpPassword !== signUpConfirmPassword) {
               alert("Passwords do not match");
 
               return;
             }
 
-            const user = await signUp(email, password).catch(() => {
+            const user = await signUp(signUpEmail, signUpPassword).catch(() => {
               alert("Error signing up");
 
               return undefined;
             });
 
             if (user !== undefined) {
-              await createUser(email, username, user.uid);
+              await createUser(signUpEmail, signUpUsername, user.uid);
             }
 
             window.location.reload();
@@ -50,6 +52,7 @@ export const Login: Component = () => {
             type="email"
             class="sign-up-form-input"
             placeholder="Enter email"
+            ref={(el) => (signUpEmail = el.value)}
           />
 
           <label for="username" class="sign-up-form-input-label">
@@ -60,6 +63,7 @@ export const Login: Component = () => {
             type="text"
             class="sign-up-form-input"
             placeholder="Enter username"
+            ref={(el) => (signUpUsername = el.value)}
           />
 
           <label for="password" class="sign-up-form-input-label">
@@ -70,6 +74,7 @@ export const Login: Component = () => {
             type="password"
             class="sign-up-form-input"
             placeholder="Password"
+            ref={(el) => (signUpPassword = el.value)}
           />
 
           <label for="password-confirm" class="sign-up-form-input-label">
@@ -80,6 +85,7 @@ export const Login: Component = () => {
             type="password"
             class="sign-up-form-input"
             placeholder="Confirm Password"
+            ref={(el) => (signUpConfirmPassword = el.value)}
           />
 
           <button class="sign-up-form-button">Sign Up</button>
@@ -91,14 +97,13 @@ export const Login: Component = () => {
           onSubmit={(e) => {
             e.preventDefault();
 
-            const email = e.currentTarget.email.value as string;
-            const password = e.currentTarget.password.value as string;
+            signInWithEmailAndPassword(auth, signInEmail, signInPassword).catch(
+              (err) => {
+                console.log(err);
 
-            signInWithEmailAndPassword(auth, email, password).catch((err) => {
-              console.log(err);
-
-              alert("Error signing in");
-            });
+                alert("Error signing in");
+              }
+            );
 
             e.currentTarget.reset();
 
@@ -115,6 +120,7 @@ export const Login: Component = () => {
             type="email"
             class="log-in-form-input"
             placeholder="Enter email"
+            ref={(el) => (signInEmail = el.value)}
           />
 
           <label for="password" class="log-in-form-input-label">
@@ -125,6 +131,7 @@ export const Login: Component = () => {
             type="password"
             class="log-in-form-input"
             placeholder="Password"
+            ref={(el) => (signInPassword = el.value)}
           />
 
           <button class="log-in-form-button">Log In</button>
