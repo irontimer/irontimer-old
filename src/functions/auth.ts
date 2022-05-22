@@ -4,9 +4,9 @@ import { getAuth, createUserWithEmailAndPassword, User } from "firebase/auth";
 import { getResults } from "./client";
 import { setResults } from "../state/result";
 
-initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
 
-export const auth = getAuth();
+export const auth = getAuth(firebaseApp);
 
 export async function signUp(email: string, password: string): Promise<User> {
   const credential = await createUserWithEmailAndPassword(
@@ -28,6 +28,12 @@ auth.onAuthStateChanged(async (user) => {
       return;
     }
 
+    if (window.location.pathname === "/login") {
+      window.location.replace("/account");
+
+      return;
+    }
+
     const results = await getResults(user.uid);
 
     if (results === undefined) {
@@ -37,6 +43,12 @@ auth.onAuthStateChanged(async (user) => {
     setResults(results);
   } else {
     console.log("user logged out");
+
+    if (window.location.pathname === "/account") {
+      window.location.replace("/login");
+
+      return;
+    }
   }
 
   return user;

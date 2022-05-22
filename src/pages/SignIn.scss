@@ -1,6 +1,6 @@
 /** @format */
 
-.login-page {
+.signin-page {
   .sign-up {
     .sign-up-form {
       .sign-up-form-title {
@@ -23,6 +23,35 @@
         margin-bottom: 0.5rem;
       }
       .sign-up-form-button {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .sign-in {
+    .sign-in-form {
+      .sign-in-form-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+      .sign-in-form-input {
+        margin-bottom: 1rem;
+      }
+      .sign-in-form-input-label {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .sign-in-form-input-error {
+        color: red;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .sign-in-form-button {
         font-size: 1.2rem;
         font-weight: bold;
         margin-bottom: 1rem;
