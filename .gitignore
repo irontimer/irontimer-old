@@ -1,3 +1,6 @@
+# In case anyone uses npm install by accident
+package-lock.json
+
 node_modules
 dist
 .env
