@@ -1,18 +1,23 @@
 /** @format */
 
+$remaining_height: 86.75vh;
+
 .timer-page {
   display: grid;
   grid-template-columns: 1.5fr 5fr 1.5fr;
 
   #results {
     padding: 5px;
-    height: 87vh;
     border-width: 1px;
     border-style: solid;
     border-color: black;
     background-color: lightgray;
-    overflow-y: auto;
     overflow-x: auto;
+    overflow-y: auto;
+    width: fit-content;
+    max-width: 25vw;
+    height: fit-content;
+    max-height: $remaining_height;
 
     h1 {
       text-align: center;
@@ -20,23 +25,26 @@
       margin-bottom: 5px;
     }
 
-    tr {
-      border-width: 1px;
-      border-style: solid;
-      border-color: black;
-      align-items: center;
+    table {
+      thead,
+      tbody {
+        tr {
+          align-items: center;
 
-      td {
-        border-width: thin;
-        border-style: solid;
-        background-color: white;
-        padding: 5px;
+          td {
+            border-width: thin;
+            border-style: solid;
+            border-color: black;
+            background-color: white;
+            padding: 5px;
+          }
+        }
       }
     }
   }
 
   #timer {
-    height: 87vh;
+    height: $remaining_height;
 
     input {
       position: absolute;
