@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createMemo, createSignal } from "solid-js";
 import { saveResult } from "../functions/client";
 import type { Result } from "../types/types";
 import { getPuzzle } from "./puzzle";
@@ -8,9 +8,9 @@ import { generateScramble, setScramble } from "./scramble";
 
 export const [getResults, setResults] = createSignal<Result[]>([]);
 
-export function getResultsReverse(): Result[] {
-  return getResults().sort((a, b) => b.timestamp - a.timestamp);
-}
+export const getResultsReverse = createMemo(() =>
+  getResults().sort((a, b) => b.timestamp - a.timestamp)
+);
 
 export function addResult(result: Result, userID?: string): void {
   setResults([...getResults(), result]);
