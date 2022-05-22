@@ -28,8 +28,8 @@ auth.onAuthStateChanged(async (user) => {
       return;
     }
 
-    if (window.location.pathname === "/login") {
-      window.location.replace("/account");
+    if (window.location.pathname === "/sign-in") {
+      window.location.replace("/");
 
       return;
     }
@@ -45,7 +45,7 @@ auth.onAuthStateChanged(async (user) => {
     console.log("user logged out");
 
     if (window.location.pathname === "/account") {
-      window.location.replace("/login");
+      window.location.replace("/sign-in");
 
       return;
     }
