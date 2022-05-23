@@ -8,11 +8,14 @@ export const Button: Component<{
       currentTarget: HTMLDivElement;
       target: Element;
     }
-  ) => any;
-  color: "light" | "dark";
+  ) => void;
+  class?: string;
 }> = (props) => {
   return (
-    <div class={`button ${props.color}`} onClick={props.onClick}>
+    <div
+      class={`button${props.class === undefined ? "" : " " + props.class}`}
+      onClick={props.onClick}
+    >
       <span>{props.children}</span>
     </div>
   );

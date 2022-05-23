@@ -8,19 +8,9 @@
   text-align: center;
   font-size: 1.5rem;
 
-  &.light {
+  background-color: lightgray;
+
+  &:hover {
     background-color: white;
-
-    &:hover {
-      background-color: lightgray;
-    }
-  }
-
-  &.dark {
-    background-color: lightgray;
-
-    &:hover {
-      background-color: white;
-    }
   }
 }

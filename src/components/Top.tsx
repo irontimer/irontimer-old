@@ -4,7 +4,7 @@ import { Component, For } from "solid-js";
 import { Link } from "solid-app-router";
 import { generateScramble, getScramble, setScramble } from "../state/scramble";
 import "./Top.scss";
-import type { PuzzleType } from "../types/types";
+import { Puzzle, PuzzleType } from "../structures/Puzzle";
 import { getPuzzle, setPuzzle } from "../state/puzzle";
 
 const pages = ["Timer", "Account", "Settings"];
@@ -71,10 +71,7 @@ export const Top: Component = () => {
               break;
           }
 
-          setPuzzle({
-            type,
-            size
-          });
+          setPuzzle(new Puzzle(type, size));
 
           setScramble(generateScramble(getPuzzle()));
         }}

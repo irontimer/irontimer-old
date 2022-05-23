@@ -1,7 +1,6 @@
 import { createSignal } from "solid-js";
-import type { Puzzle } from "../types/types";
+import { Puzzle } from "../structures/Puzzle";
 
-export const [getPuzzle, setPuzzle] = createSignal<Puzzle>({
-  type: "Cube",
-  size: 3
-});
+export const [getPuzzle, setPuzzle] = createSignal<Puzzle>(
+  new Puzzle("Cube", 3)
+);

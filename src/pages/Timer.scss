@@ -19,6 +19,40 @@ $remaining_height: 86.75vh;
     height: fit-content;
     max-height: $remaining_height;
 
+    #result-popup-wrapper {
+      #result-popup {
+        padding: 5px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: black;
+        border-radius: 2rem;
+        background-color: lightgray;
+        overflow-x: auto;
+        overflow-y: auto;
+        width: 50vw;
+        height: 50vh;
+
+        .popup-title {
+          font-size: 2rem;
+          font-weight: bold;
+          margin-bottom: 1rem;
+        }
+
+        .popup-content {
+          text-align: center;
+          font-size: 1.25rem;
+        }
+
+        .popup-copy-button {
+          display: inline;
+          margin-left: 0.5rem;
+          &:hover {
+            color: white;
+          }
+        }
+      }
+    }
+
     h1 {
       text-align: center;
       margin-top: 5px;
@@ -36,9 +70,15 @@ $remaining_height: 86.75vh;
             border-style: solid;
             border-color: black;
             background-color: white;
+            text-align: center;
             padding: 5px;
           }
         }
+      }
+
+      tbody tr td:hover {
+        background-color: lightgray;
+        cursor: pointer;
       }
     }
   }

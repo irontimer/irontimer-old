@@ -3,6 +3,7 @@
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Component } from "solid-js";
+import { Button } from "../components/Button";
 import { auth, signUp } from "../functions/auth";
 import { createUser } from "../functions/client";
 import "./SignIn.scss";
@@ -66,7 +67,7 @@ export const SignIn: Component = () => {
             onChange={(e) => (signUpConfirmPassword = e.currentTarget.value)}
           />
 
-          <button
+          <Button
             class="sign-up-form-button"
             onClick={async () => {
               if (signUpPassword !== signUpConfirmPassword) {
@@ -89,7 +90,7 @@ export const SignIn: Component = () => {
             }}
           >
             Sign Up
-          </button>
+          </Button>
         </div>
       </div>
       <div class="sign-in">
@@ -118,7 +119,7 @@ export const SignIn: Component = () => {
             onChange={(e) => (signInPassword = e.currentTarget.value)}
           />
 
-          <button
+          <Button
             class="sign-in-form-button"
             onClick={() => {
               signInWithEmailAndPassword(
@@ -133,7 +134,7 @@ export const SignIn: Component = () => {
             }}
           >
             Sign In
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@
 
 import { Navigate } from "solid-app-router";
 import { Component, Show } from "solid-js";
+import { Button } from "../components/Button";
 import { auth } from "../functions/auth";
 import "./Account.scss";
 
@@ -12,7 +13,7 @@ export const Account: Component = () => {
         <Navigate href="/sign-in" />
       </Show>
 
-      <button
+      <Button
         class="logout-button"
         onClick={() => {
           auth.signOut();
@@ -21,7 +22,7 @@ export const Account: Component = () => {
         }}
       >
         Logout
-      </button>
+      </Button>
     </div>
   );
 };
