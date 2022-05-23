@@ -99,17 +99,13 @@ app.delete("/results", async (req, res) => {
     return;
   }
 
-  const result = await Result.findOne({ resultID });
+  await Result.deleteOne({
+    _id: resultID
+  });
 
-  if (result === undefined) {
-    res.status(400).send("Result not found");
-
-    return;
-  }
-
-  await Result.deleteOne({ resultID });
-
-  res.json(result);
+  res.json({
+    message: "Successfully deleted result"
+  });
 });
 
 app.listen(PORT, () => {

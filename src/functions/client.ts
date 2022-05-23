@@ -34,7 +34,7 @@ export async function createUser(
   });
 
   if (response === undefined) {
-    return undefined;
+    return;
   }
 
   const user = (await response.json()) as User;
@@ -90,10 +90,35 @@ export async function getResults(
   });
 
   if (response === undefined) {
-    return undefined;
+    return;
   }
 
   const results = (await response.json()) as Result[];
 
   return results;
+}
+
+export async function deleteResult(result: Result): Promise<void> {
+  if (result._id === undefined) {
+    return;
+  }
+
+  const idToken = auth.currentUser && (await getIdToken(auth.currentUser));
+
+  await fetch(
+    `${backendURI}/results?${new URLSearchParams({
+      resultID: result._id
+    })}`,
+    {
+      method: "DELETE",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        ...(idToken && { Authorization: `Bearer ${idToken}` })
+      }
+    }
+  ).catch((err) => {
+    console.error(err);
+  });
 }

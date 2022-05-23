@@ -3,6 +3,7 @@ import { Component, createSignal } from "solid-js";
 import { Popup } from "../components/Popup";
 import { auth } from "../functions/auth";
 import { calculateAverage } from "../functions/average";
+import { deleteResult } from "../state/result";
 import { parseTimeString, timeFormat } from "../functions/time";
 import { getPuzzle } from "../state/puzzle";
 import { addResult, getResults, getResultsReverse } from "../state/result";
@@ -22,7 +23,7 @@ export const Timer: Component = () => {
       return;
     }
 
-    const result = getResults()[getResults().length - currentOpen];
+    const result = getResults().at(-currentOpen);
 
     if (result === undefined) {
       return;
@@ -42,6 +43,22 @@ export const Timer: Component = () => {
           children={
             <div class="popup-content">
               <div class="popup-title">Result #{getCurrentOpen()}</div>
+              <div class="popup-buttons">
+                <i
+                  class="fas fa-trash"
+                  onClick={() => {
+                    const result = getResultFromCurrentOpen();
+
+                    if (result === undefined) {
+                      return;
+                    }
+
+                    deleteResult(result, auth.currentUser?.uid);
+
+                    setCurrentOpen();
+                  }}
+                ></i>
+              </div>
               <div class="popup-content">
                 Time: {getResultFromCurrentOpen()?.time}
               </div>
@@ -75,7 +92,7 @@ export const Timer: Component = () => {
           }
           isOpen={[
             () => getCurrentOpen() !== undefined,
-            (isOpen) => !isOpen && setCurrentOpen(undefined)
+            (isOpen) => !isOpen && setCurrentOpen()
           ]}
           id="result-popup"
           wrapperID="result-popup-wrapper"
