@@ -21,9 +21,9 @@ export async function getApiKey(userID: string): Promise<IApiKey | undefined> {
 }
 
 export async function countApiKeysForUser(uid: string): Promise<number> {
-  const apeKeys = await getApiKeys(uid);
+  const apiKeys = await getApiKeys(uid);
 
-  return _.size(apeKeys);
+  return _.size(apiKeys);
 }
 
 export async function addApiKey(apiKey: IApiKey): Promise<string> {

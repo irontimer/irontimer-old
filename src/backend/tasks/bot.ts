@@ -51,15 +51,15 @@ async function addToQueue(taskName: string, task: BotTask): Promise<void> {
   await jobQueue.add(taskName, task);
 }
 
-async function addToQueueBulk(
-  tasks: { name: string; data: BotTask }[]
-): Promise<void> {
-  if (!jobQueue) {
-    return;
-  }
+// async function addToQueueBulk(
+//   tasks: { name: string; data: BotTask }[]
+// ): Promise<void> {
+//   if (!jobQueue) {
+//     return;
+//   }
 
-  await jobQueue.addBulk(tasks);
-}
+//   await jobQueue.addBulk(tasks);
+// }
 
 export async function updateDiscordRole(
   discordUserID: string,
@@ -95,30 +95,4 @@ export async function awardChallenge(
   const task = "awardChallenge";
   const awardChallengeTask = buildBotTask(task, [discordUserID, challengeName]);
   await addToQueue(task, awardChallengeTask);
-}
-
-export async function announceLeaderboardUpdate(
-  newRecords: any[],
-  leaderboardId: string
-): Promise<void> {
-  const task = "announceLeaderboardUpdate";
-
-  const leaderboardUpdateTasks = newRecords.map((record) => {
-    const taskData = buildBotTask(task, [
-      record.discordUserID ?? record.name,
-      record.rank,
-      leaderboardId,
-      record.wpm,
-      record.raw,
-      record.acc,
-      record.consistency
-    ]);
-
-    return {
-      name: task,
-      data: taskData
-    };
-  });
-
-  await addToQueueBulk(leaderboardUpdateTasks);
 }

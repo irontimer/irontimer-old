@@ -36,81 +36,6 @@ export const configGet = rateLimit({
   handler: customHandler
 });
 
-// Leaderboards Routing
-export const leaderboardsGet = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 60 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-// New Quotes Routing
-export const newQuotesGet = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 500 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const newQuotesAdd = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 60 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const newQuotesAction = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 500 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-// Quote Ratings Routing
-export const quoteRatingsGet = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 500 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const quoteRatingsSubmit = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 500 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-// Quote reporting
-export const quoteReportSubmit = rateLimit({
-  windowMs: 30 * 60 * 1000, // 30 min
-  max: 50 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-// Quote favorites
-export const quoteFavoriteGet = rateLimit({
-  windowMs: 30 * 60 * 1000, // 30 min
-  max: 50 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const quoteFavoritePost = rateLimit({
-  windowMs: 30 * 60 * 1000, // 30 min
-  max: 50 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const quoteFavoriteDelete = rateLimit({
-  windowMs: 30 * 60 * 1000, // 30 min
-  max: 50 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
 // Presets Routing
 export const presetsGet = rateLimit({
   windowMs: ONE_HOUR,
@@ -163,30 +88,9 @@ export const resultsAdd = rateLimit({
   handler: customHandler
 });
 
-export const resultsTagsUpdate = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 30 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
 export const resultsDeleteAll = rateLimit({
   windowMs: ONE_HOUR,
   max: 10 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const resultsLeaderboardGet = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 60 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const resultsLeaderboardQualificationGet = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 60 * REQUEST_MULTIPLIER,
   keyGenerator: getAddress,
   handler: customHandler
 });
@@ -227,13 +131,6 @@ export const userUpdateName = rateLimit({
   handler: customHandler
 });
 
-export const userUpdateLBMemory = rateLimit({
-  windowMs: 60 * 1000,
-  max: 60 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
 export const userUpdateEmail = rateLimit({
   windowMs: ONE_HOUR,
   max: 60 * REQUEST_MULTIPLIER,
@@ -244,41 +141,6 @@ export const userUpdateEmail = rateLimit({
 export const userClearPB = rateLimit({
   windowMs: ONE_HOUR,
   max: 60 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const userTagsGet = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 60 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const userTagsRemove = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 30 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const userTagsClearPB = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 60 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const userTagsEdit = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 30 * REQUEST_MULTIPLIER,
-  keyGenerator: getAddress,
-  handler: customHandler
-});
-
-export const userTagsAdd = rateLimit({
-  windowMs: ONE_HOUR,
-  max: 30 * REQUEST_MULTIPLIER,
   keyGenerator: getAddress,
   handler: customHandler
 });
@@ -317,8 +179,6 @@ export const userDiscordLink = rateLimit({
   keyGenerator: getAddress,
   handler: customHandler
 });
-
-export const usersTagsEdit = userDiscordLink;
 
 export const userDiscordUnlink = rateLimit({
   windowMs: ONE_HOUR,

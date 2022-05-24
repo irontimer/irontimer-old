@@ -41,7 +41,9 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
   const user = await getUser(userID, "add result");
 
   const result = Object.assign({}, req.body.result);
+
   result.userID = userID;
+
   if (isResultTooFast(result)) {
     const status = IronTimerStatusCodes.TEST_TOO_SHORT;
     throw new IronTimerError(status.code, status.message);
@@ -109,45 +111,42 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
   updateTypingStats(userID, result.restartCount, tt);
   PublicStatsDAL.updateStats(tt);
 
-  if (result.bailedOut === false) {
-    delete result.bailedOut;
-  }
-  if (result.blindMode === false) {
-    delete result.blindMode;
-  }
-  if (result.lazyMode === false) {
-    delete result.lazyMode;
-  }
-  if (result.difficulty === "normal") {
-    delete result.difficulty;
-  }
-  if (result.funbox === "none") {
-    delete result.funbox;
-  }
-  if (result.language === "english") {
-    delete result.language;
-  }
-  if (result.numbers === false) {
-    delete result.numbers;
-  }
-  if (result.punctuation === false) {
-    delete result.punctuation;
-  }
-  if (result.mode !== "custom") {
-    delete result.customText;
-  }
-  if (result.restartCount === 0) {
-    delete result.restartCount;
-  }
-  if (result.incompleteTestSeconds === 0) {
-    delete result.incompleteTestSeconds;
-  }
-  if (result.afkDuration === 0) {
-    delete result.afkDuration;
-  }
-  if (result.tags.length === 0) {
-    delete result.tags;
-  }
+  // if (result.bailedOut === false) {
+  //   delete result.bailedOut;
+  // }
+  // if (result.blindMode === false) {
+  //   delete result.blindMode;
+  // }
+  // if (result.lazyMode === false) {
+  //   delete result.lazyMode;
+  // }
+  // if (result.difficulty === "normal") {
+  //   delete result.difficulty;
+  // }
+  // if (result.funbox === "none") {
+  //   delete result.funbox;
+  // }
+  // if (result.language === "english") {
+  //   delete result.language;
+  // }
+  // if (result.numbers === false) {
+  //   delete result.numbers;
+  // }
+  // if (result.punctuation === false) {
+  //   delete result.punctuation;
+  // }
+  // if (result.mode !== "custom") {
+  //   delete result.customText;
+  // }
+  // if (result.restartCount === 0) {
+  //   delete result.restartCount;
+  // }
+  // if (result.incompleteTestSeconds === 0) {
+  //   delete result.incompleteTestSeconds;
+  // }
+  // if (result.afkDuration === 0) {
+  //   delete result.afkDuration;
+  // }
 
   const addedResult = await ResultDAL.addResult(userID, result);
 

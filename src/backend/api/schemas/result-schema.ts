@@ -54,7 +54,6 @@ const RESULT_SCHEMA = joi
     rawWpm: joi.number().required(),
     restartCount: joi.number().required(),
     smoothConsistency: joi.number().required(),
-    tags: joi.array().items(joi.string()).required(),
     testDuration: joi.number().required(),
     timestamp: joi.date().timestamp().required(),
     userID: joi.string().required(),

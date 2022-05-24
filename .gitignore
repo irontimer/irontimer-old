@@ -10,3 +10,7 @@ dist
 .firebase/
 src/config/firebase-config.ts
 src/backend/credentials/serviceAccountKey.json
+
+#backend
+server.version
+yarn-error.log

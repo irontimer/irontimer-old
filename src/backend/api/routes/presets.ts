@@ -32,9 +32,7 @@ router.post(
   validateRequest({
     body: {
       name: presetNameSchema,
-      config: configSchema.keys({
-        tags: joi.array().items(joi.string())
-      })
+      config: configSchema
     }
   }),
   asyncHandler(PresetController.addPreset)
@@ -48,11 +46,7 @@ router.patch(
     body: {
       _id: joi.string().required(),
       name: presetNameSchema,
-      config: configSchema
-        .keys({
-          tags: joi.array().items(joi.string())
-        })
-        .allow(null)
+      config: configSchema.allow(null)
     }
   }),
   asyncHandler(PresetController.editPreset)

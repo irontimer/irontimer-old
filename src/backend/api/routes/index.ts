@@ -26,10 +26,6 @@ const API_ROUTE_MAP = {
 };
 
 function addApiRoutes(app: Application): void {
-  app.get("/leaderboard", (_req, res) => {
-    res.sendStatus(404);
-  });
-
   app.use((req: Request, res: Response, next: NextFunction): void => {
     const inMaintenance =
       process.env.MAINTENANCE === "true" || req.ctx.configuration.maintenance;

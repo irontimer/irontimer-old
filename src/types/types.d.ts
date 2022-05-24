@@ -124,9 +124,111 @@ export interface Config {
   scrambleType: "3x3x3";
 }
 
+export type ConfigChanges = Partial<Config>;
+
 export interface Preset {
   _id: ObjectId;
   userID: string;
   name: string;
   config: Config;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// API
+////////////////////////////////////////////////////////////////////////////////
+
+export type ClientMethod = (
+  endpoint: string,
+  config?: RequestOptions
+) => Promise<Response>;
+
+export interface ApiResponse {
+  message: string;
+  data: any | null;
+}
+
+export interface Client {
+  get: ClientMethod;
+  post: ClientMethod;
+  put: ClientMethod;
+  patch: ClientMethod;
+  delete: ClientMethod;
+}
+
+export type MethodTypes = keyof Client;
+
+export interface RequestOptions {
+  headers?: Record<string, string>;
+  searchQuery?: Record<string, any>;
+  payload?: any;
+}
+
+export interface Response {
+  status: number;
+  message: string;
+  data?: any;
+}
+
+export type EndpointData = Promise<Response>;
+export type Endpoint = () => EndpointData;
+
+export interface Endpoints {
+  configs: {
+    get: Endpoint;
+    save: (config: Config) => EndpointData;
+  };
+
+  presets: {
+    get: Endpoint;
+    add: (presetName: string, configChanges: ConfigChanges) => EndpointData;
+    edit: (
+      presetId: string,
+      presetName: string,
+      configChanges: ConfigChanges
+    ) => EndpointData;
+    delete: (presetId: string) => EndpointData;
+  };
+
+  psas: {
+    get: Endpoint;
+  };
+
+  users: {
+    getData: Endpoint;
+    create: (name: string, email?: string, uid?: string) => EndpointData;
+    getNameAvailability: (name: string) => EndpointData;
+    delete: Endpoint;
+    updateName: (name: string) => EndpointData;
+    updateEmail: (newEmail: string, previousEmail: string) => EndpointData;
+    deletePersonalBests: Endpoint;
+    getCustomThemes: () => EndpointData;
+    addCustomTheme: (newTheme: Partial<Theme>) => EndpointData;
+    editCustomTheme: (
+      themeId: string,
+      newTheme: Partial<Theme>
+    ) => EndpointData;
+    deleteCustomTheme: (themeId: string) => EndpointData;
+    linkDiscord: (data: {
+      tokenType: string;
+      accessToken: string;
+      uid?: string;
+    }) => EndpointData;
+    unlinkDiscord: Endpoint;
+  };
+
+  results: {
+    get: Endpoint;
+    save: (result: Result) => EndpointData;
+    deleteAll: Endpoint;
+  };
+
+  apiKeys: {
+    get: Endpoint;
+    generate: (name: string, enabled: boolean) => EndpointData;
+    update: (
+      apiKeyId: string,
+      updates: { name?: string; enabled?: boolean }
+    ) => EndpointData;
+    delete: (apiKeyId: string) => EndpointData;
+  };
 }
