@@ -5,8 +5,8 @@ import * as ApiKeysDAL from "../../dal/api-keys";
 import IronTimerError from "../../utils/error";
 import { IronTimerResponse } from "../../utils/irontimer-response";
 import { base64UrlEncode } from "../../utils/misc";
-import { Request } from "../../../types/types";
-import { ApiKey as IApiKey } from "../../../types/types";
+import { Request } from "../../../types";
+import { ApiKey as IApiKey } from "../../../types";
 import { ApiKey } from "../../models/api-key";
 
 function cleanApiKey(apiKey: IApiKey): Partial<IApiKey> {

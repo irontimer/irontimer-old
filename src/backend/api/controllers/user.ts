@@ -5,8 +5,9 @@ import { IronTimerResponse } from "../../utils/irontimer-response";
 import { linkAccount } from "../../utils/discord";
 import { buildAgentLog } from "../../utils/misc";
 import * as Bot from "../../tasks/bot";
-import type { Request, User } from "../../../types/types";
+import type { Request, User } from "../../../types";
 import admin from "firebase-admin";
+import { ScrambleType } from "../../../constants/scramble-type";
 
 export async function createNewUser(req: Request): Promise<IronTimerResponse> {
   const { name } = req.body;
@@ -215,7 +216,8 @@ export async function getPersonalBests(
   const { scrambleType } = req.query;
 
   const data =
-    (await UserDAL.getPersonalBests(userID, scrambleType as string)) ?? null;
+    (await UserDAL.getPersonalBests(userID, scrambleType as ScrambleType)) ??
+    null;
   return new IronTimerResponse("Personal bests retrieved", data);
 }
 

@@ -14,6 +14,8 @@ export interface Result {
   solution?: string;
 }
 
+export type ResultIDLess = Omit<Result, "_id" | "userID">;
+
 export interface PersonalBest {
   time: number;
   timestamp: number;
@@ -218,7 +220,8 @@ export interface Endpoints {
 
   results: {
     get: Endpoint;
-    save: (result: Result) => EndpointData;
+    save: (result: ResultIDLess) => EndpointData;
+    delete: (result: Result) => EndpointData;
     deleteAll: Endpoint;
   };
 

@@ -10,7 +10,7 @@ import {
   ApiResponse,
   Client,
   Endpoints
-} from "../types/types";
+} from "../types";
 
 const DEV_SERVER_HOST = "http://localhost:5005";
 const PROD_SERVER_HOST = "https://api.monkeytype.com";

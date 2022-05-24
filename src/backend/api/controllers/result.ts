@@ -13,7 +13,7 @@ import { isResultTooFast } from "../../utils/validation";
 import IronTimerStatusCodes from "../../constants/irontimer-status-codes";
 import { incrementResult } from "../../utils/prometheus";
 import * as Bot from "../../tasks/bot";
-import { Request } from "../../../types/types";
+import { Request } from "../../../types";
 
 export async function getResults(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
@@ -33,6 +33,15 @@ export async function deleteAll(req: Request): Promise<IronTimerResponse> {
   await ResultDAL.deleteAll(userID);
   Logger.logToDb("user_results_deleted", "", userID);
   return new IronTimerResponse("All results deleted");
+}
+
+export async function deleteResult(req: Request): Promise<IronTimerResponse> {
+  const { userID } = req.ctx.decodedToken;
+  const { resultID } = req.body;
+
+  await ResultDAL.deleteResult(userID, resultID);
+  Logger.logToDb("user_result_deleted", "", userID);
+  return new IronTimerResponse("Result deleted");
 }
 
 export async function addResult(req: Request): Promise<IronTimerResponse> {

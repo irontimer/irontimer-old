@@ -1,4 +1,4 @@
-import { Configuration } from "../../types/types";
+import { Configuration } from "../../types";
 
 /**
  * This is the base schema for the configuration of the API backend.

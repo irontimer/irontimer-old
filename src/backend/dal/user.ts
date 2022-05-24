@@ -4,7 +4,7 @@ import type {
   UserStats,
   Theme,
   User as IUser
-} from "../../types/types";
+} from "../../types";
 import { User } from "../models/user";
 import { isUsernameValid } from "../utils/validation";
 import { updateUserEmail } from "../utils/auth";

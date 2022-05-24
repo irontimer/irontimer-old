@@ -1,7 +1,7 @@
 import { UpdateResult } from "mongodb";
 import _ from "lodash";
 import { Config } from "../models/config";
-import type { Config as IConfig } from "../../types/types";
+import type { Config as IConfig } from "../../types";
 
 export async function saveConfig(
   userID: string,

@@ -6,7 +6,7 @@ import {
   handleIronTimerResponse
 } from "../utils/irontimer-response";
 import { /*NextFunction,*/ Response } from "express";
-import { Request } from "../../types/types";
+import { Request } from "../../types";
 import { Error } from "../models/error";
 
 async function errorHandlingMiddleware(

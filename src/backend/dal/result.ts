@@ -1,5 +1,5 @@
 import _ from "lodash";
-import type { Result as IResult, User } from "../../types/types";
+import type { Result as IResult, User } from "../../types";
 import { Result } from "../models/result";
 import { DeleteResult } from "mongodb";
 import { Schema } from "mongoose";
@@ -32,6 +32,13 @@ export async function addResult(
 
 export async function deleteAll(userID: string): Promise<DeleteResult> {
   return await Result.deleteMany({ userID });
+}
+
+export async function deleteResult(
+  userID: string,
+  resultID: Schema.Types.ObjectId
+): Promise<DeleteResult> {
+  return await Result.deleteOne({ userID, _id: resultID });
 }
 
 export async function getResult(userID: string, id: string): Promise<IResult> {

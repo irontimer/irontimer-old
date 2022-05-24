@@ -1,4 +1,4 @@
-import { Client, Endpoints, EndpointData } from "../../types/types";
+import { Client, Endpoints, EndpointData } from "../../types";
 import { CLIENT_VERSION } from "../../version";
 
 const BASE_PATH = "/psas";

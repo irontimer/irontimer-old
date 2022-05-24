@@ -1,4 +1,4 @@
-import { Client, Endpoints, EndpointData, Theme } from "../../types/types";
+import { Client, Endpoints, EndpointData, Theme } from "../../types";
 
 const BASE_PATH = "/users";
 

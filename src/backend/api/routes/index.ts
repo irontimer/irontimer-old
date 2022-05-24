@@ -10,7 +10,7 @@ import { asyncHandler } from "../../middlewares/api-utils";
 import { IronTimerResponse } from "../../utils/irontimer-response";
 import { recordClientVersion } from "../../utils/prometheus";
 import { Application, NextFunction, Response, Router } from "express";
-import type { Request } from "../../../types/types";
+import type { Request } from "../../../types";
 
 const pathOverride = process.env.API_PATH_OVERRIDE;
 const BASE_ROUTE = pathOverride ? `/${pathOverride}` : "";

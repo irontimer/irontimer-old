@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { PersonalBest, Result } from "../../types/types";
+import { PersonalBest, Result } from "../../types";
 
 interface CheckAndUpdatePersonalBestResult {
   isPersonalBest: boolean;

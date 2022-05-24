@@ -1,6 +1,6 @@
 import _ from "lodash";
 import uaparser from "ua-parser-js";
-import { Request } from "../../types/types";
+import { Request } from "../../types";
 
 export function roundTo2(num: number): number {
   return _.round(num, 2);

@@ -1,4 +1,4 @@
-import { PSA as IPSA } from "../../types/types";
+import { PSA as IPSA } from "../../types";
 import { Schema, model } from "mongoose";
 
 export const PSASchema = new Schema<IPSA>({

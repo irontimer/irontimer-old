@@ -2,7 +2,7 @@ import IronTimerError from "../utils/error";
 import { ObjectId } from "mongodb";
 import { FilterQuery } from "mongoose";
 import { Preset } from "../models/preset";
-import { Config, Preset as IPreset } from "../../types/types";
+import { Config, Preset as IPreset } from "../../types";
 
 const MAX_PRESETS = 10;
 

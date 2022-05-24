@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { ApiKey as IApiKey } from "../../types/types";
+import { ApiKey as IApiKey } from "../../types";
 
 export const ApiKeySchema = new Schema<IApiKey>({
   _id: Schema.Types.ObjectId,

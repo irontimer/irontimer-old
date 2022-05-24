@@ -1,4 +1,4 @@
-import { Configuration as IConfiguration } from "../../types/types";
+import { Configuration as IConfiguration } from "../../types";
 import { Schema, model } from "mongoose";
 
 export const ConfigurationSchema = new Schema<IConfiguration>({

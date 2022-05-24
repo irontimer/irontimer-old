@@ -1,23 +1,17 @@
 import { createSignal } from "solid-js";
-import { Move, FACES, DIRECTIONS, Face } from "../structures/Move";
-import { Puzzle } from "../structures/Puzzle";
+import { ScrambleType } from "../constants/scramble-type";
 
-export function generateScramble(puzzle: Puzzle, length?: number): Move[] {
-  switch (puzzle.type) {
-    case "Megaminx":
-    case "Pyraminx":
-    case "Skewb":
-    case "Square-1":
-    case "Cube":
-      // return generateMegaminxScramble(length ?? 50);
-      // return generatePyraminxScramble(length ?? 15);
-      // return generateSkewbScramble(length ?? 15);
-      // return generateSquare1Scramble(length ?? 20);
+export function generateScramble(
+  scrambleType: ScrambleType,
+  length?: number
+): string {
+  switch (scrambleType) {
+    case "3x3x3":
       return generateCubeScramble(length ?? 25);
   }
 }
 
-function generateCubeScramble(length: number): Move[] {
+function generateCubeScramble(length: number): string {
   const moves: Move[] = [];
 
   let lastFace: Face = "BackWide";
@@ -46,4 +40,8 @@ function generateCubeScramble(length: number): Move[] {
   return moves;
 }
 
-export const [getScramble, setScramble] = createSignal<Move[]>([]);
+export const [getScrambleType, setScrambleType] =
+  createSignal<ScrambleType>("3x3x3");
+export const [getScramble, setScramble] = createSignal(
+  generateScramble(getScrambleType())
+);

@@ -1,4 +1,4 @@
-import { Result as IResult } from "../../types/types";
+import { Result as IResult } from "../../types";
 import { Schema, model } from "mongoose";
 
 export const ResultSchema = new Schema<IResult>({

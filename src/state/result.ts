@@ -1,38 +1,50 @@
 import { createMemo, createSignal } from "solid-js";
-import {
-  saveResult,
-  deleteResult as dbDeleteResult
-} from "../functions/client";
-import type { Result } from "../types/types";
-import { getPuzzle } from "./puzzle";
-import { generateScramble, setScramble } from "./scramble";
+import type { Result, ResultIDLess } from "../types";
+import { generateScramble, getScrambleType, setScramble } from "./scramble";
+import API from "../api-client/index";
 
 // TODO setup mongoose
 
-export const [getResults, setResults] = createSignal<Result[]>([]);
+export const [getResults, setResults] = createSignal<(Result | ResultIDLess)[]>(
+  []
+);
 
 export const getResultsReverse = createMemo(() =>
   getResults().sort((a, b) => b.timestamp - a.timestamp)
 );
 
-export function addResult(result: Result, userID?: string): void {
+export function addResult(result: ResultIDLess, userID?: string): void {
   setResults([...getResults(), result]);
 
   if (userID !== undefined) {
-    saveResult(userID, result);
+    API.results.save(result);
 
     console.log("Saved result to database");
   }
 
-  setScramble(generateScramble(getPuzzle()));
+  setScramble(generateScramble(getScrambleType()));
 }
 
-export function deleteResult(result: Result, userID?: string): void {
+export function deleteResult(
+  result: Result | ResultIDLess,
+  userID?: string
+): void {
   setResults(getResults().filter((r) => r !== result));
 
-  if (userID !== undefined && result._id !== undefined) {
-    dbDeleteResult(result);
+  if (userID !== undefined && isDatabaseResult(result)) {
+    API.results.delete(result);
 
     console.log("Deleted result from database");
   }
+}
+
+export function isDatabaseResult(result: Partial<Result>): result is Result {
+  return (
+    result._id !== undefined &&
+    result.userID !== undefined &&
+    result.time !== undefined &&
+    result.timestamp !== undefined &&
+    result.scrambleType !== undefined &&
+    result.scramble !== undefined
+  );
 }

@@ -1,4 +1,4 @@
-import { User as IUser } from "../../types/types";
+import { User as IUser } from "../../types";
 import { Schema, model } from "mongoose";
 import { SCRAMBLE_TYPES } from "../../constants/scramble-type";
 

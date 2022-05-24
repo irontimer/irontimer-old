@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { ObjectId, MatchKeysAndValues } from "mongodb";
 import IronTimerError from "../utils/error";
-import { ApiKey as IApiKey } from "../../types/types";
+import { ApiKey as IApiKey } from "../../types";
 import { ApiKey } from "../models/api-key";
 import { FilterQuery } from "mongoose";
 

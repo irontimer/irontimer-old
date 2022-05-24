@@ -1,3 +1,3 @@
-export const SCRAMBLE_TYPES = ["3x3x3"]; // TODO add more scramble types
+export type ScrambleType = "3x3x3" | "2x2x2";
 
-export type ScrambleType = typeof SCRAMBLE_TYPES[number];
+export const SCRAMBLE_TYPES: ScrambleType[] = ["3x3x3", "2x2x2"]; // TODO add more scramble types

@@ -1,4 +1,10 @@
-import { Client, Endpoints, EndpointData, Result } from "../../types/types";
+import {
+  Client,
+  Endpoints,
+  EndpointData,
+  Result,
+  ResultIDLess
+} from "../../types";
 import { CLIENT_VERSION } from "../../version";
 
 const BASE_PATH = "/results";
@@ -10,16 +16,20 @@ export default function getResultsEndpoints(
     return await apiClient.get(BASE_PATH);
   }
 
-  async function save(result: Result): EndpointData {
+  async function save(result: ResultIDLess): EndpointData {
     return await apiClient.post(BASE_PATH, {
       payload: { result },
       headers: { "Client-Version": CLIENT_VERSION }
     });
   }
 
+  async function deleteResult(result: Result): EndpointData {
+    return await apiClient.delete(`${BASE_PATH}/${result._id}`);
+  }
+
   async function deleteAll(): EndpointData {
     return await apiClient.delete(BASE_PATH);
   }
 
-  return { get, save, deleteAll };
+  return { get, save, deleteAll, delete: deleteResult };
 }

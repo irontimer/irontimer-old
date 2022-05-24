@@ -5,18 +5,15 @@ import { auth } from "../functions/auth";
 import { calculateAverage } from "../functions/average";
 import { deleteResult } from "../state/result";
 import { parseTimeString, timeFormat } from "../functions/time";
-import { getPuzzle } from "../state/puzzle";
 import { addResult, getResults, getResultsReverse } from "../state/result";
-import { getScramble } from "../state/scramble";
-import { Move } from "../structures/Move";
-import { Puzzle } from "../structures/Puzzle";
-import { Result } from "../types/types";
+import { getScramble, getScrambleType } from "../state/scramble";
+import { Result, ResultIDLess } from "../types";
 import "./Timer.scss";
 
 export const Timer: Component = () => {
   const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
 
-  const getResultFromCurrentOpen = (): Result | undefined => {
+  const getResultFromCurrentOpen = (): Result | ResultIDLess | undefined => {
     const currentOpen = getCurrentOpen();
 
     if (currentOpen === undefined) {
@@ -28,10 +25,6 @@ export const Timer: Component = () => {
     if (result === undefined) {
       return;
     }
-
-    result.puzzle = new Puzzle(result.puzzle);
-
-    result.scramble = result.scramble.map((m) => new Move(m));
 
     return result;
   };
@@ -69,21 +62,21 @@ export const Timer: Component = () => {
                 ).toLocaleDateString()}
               </div>
               <div class="popup-content">
-                Puzzle: {getResultFromCurrentOpen()?.puzzle.toString()}
+                Scramble Type: {getResultFromCurrentOpen()?.scrambleType}
               </div>
               <div class="popup-content">
                 Scramble:
                 <input
                   readonly
                   class="popup-content"
-                  value={getResultFromCurrentOpen()?.scramble.join(" ")}
+                  value={getResultFromCurrentOpen()?.scramble}
                 />
                 <i
                   class="popup-copy-button fa-solid fa-clipboard-list"
                   onClick={() => {
                     // copy scramble to clipboard
                     navigator.clipboard.writeText(
-                      getResultFromCurrentOpen()?.scramble.join(" ") ?? ""
+                      getResultFromCurrentOpen()?.scramble ?? ""
                     );
                   }}
                 ></i>
@@ -169,8 +162,8 @@ export const Timer: Component = () => {
                 {
                   time: float,
                   timestamp: Date.now(),
-                  puzzle: getPuzzle(),
-                  scramble: getScramble()
+                  scramble: getScramble(),
+                  scrambleType: getScrambleType()
                 },
                 auth.currentUser?.uid
               );

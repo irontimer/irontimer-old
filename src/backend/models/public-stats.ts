@@ -1,4 +1,4 @@
-import { PublicStats as IPublicStats } from "../../types/types";
+import { PublicStats as IPublicStats } from "../../types";
 import { Schema, model } from "mongoose";
 
 export const PublicStatsSchema = new Schema<IPublicStats>({

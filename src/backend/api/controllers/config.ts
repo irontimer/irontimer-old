@@ -1,6 +1,6 @@
 import * as ConfigDAL from "../../dal/config";
 import { IronTimerResponse } from "../../utils/irontimer-response";
-import { Request } from "../../../types/types";
+import { Request } from "../../../types";
 
 export async function getConfig(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;

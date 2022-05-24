@@ -1,4 +1,4 @@
-import type { Config as IConfig } from "../../types/types";
+import type { Config as IConfig } from "../../types";
 import { Schema, model } from "mongoose";
 import { SCRAMBLE_TYPES } from "../../constants/scramble-type";
 

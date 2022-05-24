@@ -1,4 +1,4 @@
-import type { Preset as IPreset } from "../../types/types";
+import type { Preset as IPreset } from "../../types";
 import { Schema, model } from "mongoose";
 import { SCRAMBLE_TYPES } from "../../constants/scramble-type";
 

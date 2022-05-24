@@ -2,7 +2,7 @@ import _ from "lodash";
 import joi from "joi";
 import IronTimerError from "../utils/error";
 import { Response, NextFunction, RequestHandler } from "express";
-import { Configuration, Request, User } from "../../types/types";
+import { Configuration, Request, User } from "../../types";
 import {
   handleIronTimerResponse,
   IronTimerResponse

@@ -44,6 +44,21 @@ router.delete(
   asyncHandler(ResultController.deleteAll)
 );
 
+router.delete(
+  "/:id",
+  RateLimit.resultsDelete,
+  authenticateRequest(),
+  validateRequest({
+    params: {
+      id: {
+        type: "string",
+        required: true
+      }
+    }
+  }),
+  asyncHandler(ResultController.deleteResult)
+);
+
 router.get(
   "/last",
   RateLimit.resultsGet,

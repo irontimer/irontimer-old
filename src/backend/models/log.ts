@@ -1,4 +1,4 @@
-import { Log as ILog } from "../../types/types";
+import { Log as ILog } from "../../types";
 import { Schema, model } from "mongoose";
 
 export const LogSchema = new Schema<ILog>({

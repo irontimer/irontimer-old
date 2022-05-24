@@ -7,7 +7,7 @@ import { NextFunction, Response, Handler } from "express";
 import statuses from "../constants/irontimer-status-codes";
 import { incrementAuth } from "../utils/prometheus";
 import Logger from "../utils/logger";
-import { Configuration, DecodedToken, Request } from "../../types/types";
+import { Configuration, DecodedToken, Request } from "../../types";
 
 interface RequestAuthenticationOptions {
   isPublic?: boolean;

@@ -1,7 +1,7 @@
 // import { Response, NextFunction } from "express";
 import rateLimit /*, { Options }*/ from "express-rate-limit";
 import IronTimerError from "../utils/error";
-import { Request } from "../../types/types";
+import { Request } from "../../types";
 
 const REQUEST_MULTIPLIER = process.env.MODE === "dev" ? 100 : 1;
 
@@ -91,6 +91,13 @@ export const resultsAdd = rateLimit({
 export const resultsDeleteAll = rateLimit({
   windowMs: ONE_HOUR,
   max: 10 * REQUEST_MULTIPLIER,
+  keyGenerator: getAddress,
+  handler: customHandler
+});
+
+export const resultsDelete = rateLimit({
+  windowMs: ONE_HOUR,
+  max: 100 * REQUEST_MULTIPLIER,
   keyGenerator: getAddress,
   handler: customHandler
 });

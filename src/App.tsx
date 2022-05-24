@@ -17,12 +17,15 @@ import { Settings } from "./pages/Settings";
 import { SignIn } from "./pages/SignIn";
 
 // signals
-import { generateScramble, setScramble } from "./state/scramble";
-import { getPuzzle } from "./state/puzzle";
+import {
+  generateScramble,
+  getScrambleType,
+  setScramble
+} from "./state/scramble";
 
 export const App: Component = () => {
   onMount(() => {
-    setScramble(generateScramble(getPuzzle()));
+    setScramble(generateScramble(getScrambleType()));
   });
 
   return (
