@@ -7,7 +7,7 @@ import type { Result } from "../types/types";
 import { getPuzzle } from "./puzzle";
 import { generateScramble, setScramble } from "./scramble";
 
-// TODO setup mongodb
+// TODO setup mongoose
 
 export const [getResults, setResults] = createSignal<Result[]>([]);
 

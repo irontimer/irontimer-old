@@ -9,3 +9,4 @@ dist
 .firebaserc
 .firebase/
 src/config/firebase-config.ts
+src/backend/credentials/serviceAccountKey.json

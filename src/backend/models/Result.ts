@@ -1,22 +1,33 @@
+import { Result as IResult } from "../../types/types";
 import { Schema, model } from "mongoose";
-import type { Result as IResult } from "../../types/types";
 
-const ResultSchema = new Schema<IResult & { userID: string }>({
-  userID: String,
-  time: Number,
-  timestamp: Number,
-  puzzle: {
-    type: {
-      type: String,
-      enum: ["Cube", "Megaminx", "Pyraminx", "Skewb", "Square-1"]
-    },
-    size: Number
+export const ResultSchema = new Schema<IResult>({
+  _id: Schema.Types.ObjectId,
+  userID: {
+    type: String,
+    required: true
   },
-  scramble: Array,
+  time: {
+    type: Number,
+    required: true
+  },
+  timestamp: {
+    type: Number,
+    required: true
+  },
+  scrambleType: {
+    type: String,
+    enum: ["3x3x3"],
+    required: true
+  },
+  scramble: {
+    type: String,
+    required: true
+  },
   solution: {
-    type: Array,
+    type: [String],
     required: false
   }
 });
 
-export const Result = model("Result", ResultSchema);
+export const Result = model<IResult>("result", ResultSchema);

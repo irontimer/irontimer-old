@@ -34,7 +34,7 @@ auth.onAuthStateChanged(async (user) => {
       return;
     }
 
-    const results = await getResults(user.uid);
+    const results = await getResults(user.userID);
 
     if (results === undefined) {
       return;
