@@ -8,18 +8,19 @@ import * as Bot from "../../tasks/bot";
 import type { Request, User } from "../../../types";
 import admin from "firebase-admin";
 import { ScrambleType } from "../../../constants/scramble-type";
+import { isUsernameValid } from "../../utils/validation";
 
 export async function createNewUser(req: Request): Promise<IronTimerResponse> {
-  const { name } = req.body;
+  const { username } = req.body;
   const { email, userID } = req.ctx.decodedToken;
 
-  const available = await UserDAL.isNameAvailable(name);
+  const available = await UserDAL.isNameAvailable(username);
   if (!available) {
     throw new IronTimerError(409, "Username unavailable");
   }
 
-  await UserDAL.addUser(name, email, userID);
-  Logger.logToDb("user_created", `${name} ${email}`, userID);
+  await UserDAL.addUser(username, email, userID);
+  Logger.logToDb("user_created", `${username} ${email}`, userID);
 
   return new IronTimerResponse("User created");
 }
@@ -68,8 +69,18 @@ export async function checkName(req: Request): Promise<IronTimerResponse> {
   const { name } = req.params;
 
   const available = await UserDAL.isNameAvailable(name);
+
   if (!available) {
     throw new IronTimerError(409, "Username unavailable");
+  }
+
+  const valid = isUsernameValid(name);
+
+  if (!valid) {
+    throw new IronTimerError(
+      400,
+      "Username invalid. Name cannot use special characters or contain more than 16 characters. Can include _ . and -"
+    );
   }
 
   return new IronTimerResponse("Username available");

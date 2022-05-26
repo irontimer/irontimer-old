@@ -1,10 +1,11 @@
 import _ from "lodash";
 import { ScrambleType } from "../../constants/scramble-type";
-import { Result } from "../../types";
+import { SavedResult } from "../../types";
 import profanities from "../constants/profanities";
 
 const RECORD_LIST: Record<ScrambleType, number> = {
-  "3x3x3": 3.47
+  "3x3x3": 3.47,
+  "2x2x2": 0.5
 };
 
 export function inRange(value: number, min: number, max: number): boolean {
@@ -43,6 +44,6 @@ export function isPresetNameValid(name: string): boolean {
   return VALID_NAME_PATTERN.test(name);
 }
 
-export function isResultTooFast(result: Result): boolean {
+export function isResultTooFast(result: SavedResult): boolean {
   return result.time < RECORD_LIST[result.scrambleType];
 }

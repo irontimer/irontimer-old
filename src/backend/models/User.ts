@@ -3,8 +3,8 @@ import { Schema, model } from "mongoose";
 import { SCRAMBLE_TYPES } from "../../constants/scramble-type";
 
 export const UserSchema = new Schema<IUser>({
-  _id: Schema.Types.ObjectId,
-  userID: {
+  // since the userID is unique to each use we can use it as the _id
+  _id: {
     type: String,
     required: true
   },

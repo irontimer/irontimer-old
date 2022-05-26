@@ -63,10 +63,10 @@ async function addToQueue(taskName: string, task: BotTask): Promise<void> {
 
 export async function updateDiscordRole(
   discordUserID: string,
-  wpm: number
+  time: number
 ): Promise<void> {
   const task = "updateRole";
-  const updateDiscordRoleTask = buildBotTask(task, [discordUserID, wpm]);
+  const updateDiscordRoleTask = buildBotTask(task, [discordUserID, time]);
   await addToQueue(task, updateDiscordRoleTask);
 }
 

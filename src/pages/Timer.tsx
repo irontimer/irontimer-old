@@ -3,17 +3,21 @@ import { Component, createSignal } from "solid-js";
 import { Popup } from "../components/Popup";
 import { auth } from "../functions/auth";
 import { calculateAverage } from "../functions/average";
-import { deleteResult } from "../state/result";
+import { deleteAll, deleteResult } from "../state/result";
 import { parseTimeString, timeFormat } from "../functions/time";
 import { addResult, getResults, getResultsReverse } from "../state/result";
 import { getScramble, getScrambleType } from "../state/scramble";
-import { Result, ResultIDLess } from "../types";
+import { SavedResult, UnsavedResult } from "../types";
 import "./Timer.scss";
+import { Button } from "../components/Button";
 
 export const Timer: Component = () => {
   const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
 
-  const getResultFromCurrentOpen = (): Result | ResultIDLess | undefined => {
+  const getResultFromCurrentOpen = ():
+    | SavedResult
+    | UnsavedResult
+    | undefined => {
     const currentOpen = getCurrentOpen();
 
     if (currentOpen === undefined) {
@@ -32,6 +36,10 @@ export const Timer: Component = () => {
   return (
     <div class="timer-page">
       <div id="results">
+        <h1>Results</h1>
+        <Button class="clear-results-button" onClick={() => deleteAll()}>
+          Clear
+        </Button>
         <Popup
           children={
             <div class="popup-content">
@@ -46,7 +54,7 @@ export const Timer: Component = () => {
                       return;
                     }
 
-                    deleteResult(result, auth.currentUser?.uid);
+                    deleteResult(result);
 
                     setCurrentOpen();
                   }}
@@ -90,7 +98,6 @@ export const Timer: Component = () => {
           id="result-popup"
           wrapperID="result-popup-wrapper"
         ></Popup>
-        <h1>Results</h1>
         <table>
           <thead>
             <tr>

@@ -1,13 +1,13 @@
 import _ from "lodash";
-import { ObjectId, MatchKeysAndValues } from "mongodb";
+import { MatchKeysAndValues } from "mongodb";
 import IronTimerError from "../utils/error";
 import { ApiKey as IApiKey } from "../../types";
 import { ApiKey } from "../models/api-key";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, Types } from "mongoose";
 
 function getApiKeyFilter(userID: string, keyID: string): FilterQuery<IApiKey> {
   return {
-    _id: new ObjectId(keyID),
+    _id: new Types.ObjectId(keyID),
     userID
   };
 }
@@ -20,8 +20,8 @@ export async function getApiKey(userID: string): Promise<IApiKey | undefined> {
   return (await ApiKey.findOne({ _id: userID })) ?? undefined;
 }
 
-export async function countApiKeysForUser(uid: string): Promise<number> {
-  const apiKeys = await getApiKeys(uid);
+export async function countApiKeysForUser(userID: string): Promise<number> {
+  const apiKeys = await getApiKeys(userID);
 
   return _.size(apiKeys);
 }

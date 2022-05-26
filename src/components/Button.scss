@@ -7,10 +7,11 @@
   border-radius: 5px;
   text-align: center;
   font-size: 1.5rem;
-
+  transition: all 0.2s ease-in-out;
   background-color: lightgray;
 
   &:hover {
+    transition: all 0.2s ease-in-out;
     background-color: white;
   }
 }

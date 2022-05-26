@@ -14,3 +14,4 @@ src/backend/credentials/serviceAccountKey.json
 #backend
 server.version
 yarn-error.log
+logs/

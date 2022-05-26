@@ -1,4 +1,4 @@
-import { Result as IResult } from "../../types";
+import { SavedResult as IResult } from "../../types";
 import { Schema, model } from "mongoose";
 
 export const ResultSchema = new Schema<IResult>({
@@ -17,7 +17,7 @@ export const ResultSchema = new Schema<IResult>({
   },
   scrambleType: {
     type: String,
-    enum: ["3x3x3"],
+    enum: ["3x3x3", "2x2x2"],
     required: true
   },
   scramble: {

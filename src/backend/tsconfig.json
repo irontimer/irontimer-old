@@ -3,6 +3,7 @@
     "strict": true,
     "target": "ESNext",
     "module": "CommonJS",
+    "outDir": "../../build",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

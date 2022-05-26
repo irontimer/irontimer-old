@@ -1,5 +1,5 @@
 import IronTimerError from "../utils/error";
-import { ObjectId } from "mongodb";
+import { Types } from "mongoose";
 import { FilterQuery } from "mongoose";
 import { Preset } from "../models/preset";
 import { Config, Preset as IPreset } from "../../types";
@@ -11,7 +11,7 @@ function getPresetKeyFilter(
   keyId: string
 ): FilterQuery<IPreset> {
   return {
-    _id: new ObjectId(keyId),
+    _id: new Types.ObjectId(keyId),
     userID
   };
 }

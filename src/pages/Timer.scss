@@ -19,6 +19,27 @@ $remaining_height: 86.75vh;
     height: fit-content;
     max-height: $remaining_height;
 
+    .clear-results-button {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      margin-left: 5px;
+      margin-right: 5px;
+      padding: 5px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: black;
+      background-color: gray;
+      color: black;
+      font-size: 1.5em;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #fafafa;
+        color: black;
+      }
+    }
+
     #result-popup-wrapper {
       #result-popup {
         padding: 5px;

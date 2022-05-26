@@ -1,21 +1,28 @@
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../config/firebase-config";
 import { getAuth, createUserWithEmailAndPassword, User } from "firebase/auth";
-import { getResults } from "./client";
+import API from "../api-client";
 import { setResults } from "../state/result";
 
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth = getAuth(firebaseApp);
 
-export async function signUp(email: string, password: string): Promise<User> {
+export async function signUp(
+  email: string,
+  password: string
+): Promise<User | undefined> {
   const credential = await createUserWithEmailAndPassword(
     auth,
     email,
     password
-  );
+  ).catch((err) => {
+    console.log(err);
 
-  return credential.user;
+    return undefined;
+  });
+
+  return credential?.user;
 }
 
 auth.onAuthStateChanged(async (user) => {
@@ -34,7 +41,7 @@ auth.onAuthStateChanged(async (user) => {
       return;
     }
 
-    const results = await getResults(user.userID);
+    const results = (await API.results.get()).data;
 
     if (results === undefined) {
       return;

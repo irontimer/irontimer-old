@@ -119,7 +119,7 @@ async function authenticateWithBearerToken(
 
     return {
       type: "Bearer",
-      userID: decodedToken.userID,
+      userID: decodedToken.uid,
       email: decodedToken.email ?? ""
     };
   } catch (error: any) {

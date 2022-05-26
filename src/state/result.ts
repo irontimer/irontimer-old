@@ -1,47 +1,69 @@
 import { createMemo, createSignal } from "solid-js";
-import type { Result, ResultIDLess } from "../types";
-import { generateScramble, getScrambleType, setScramble } from "./scramble";
+import type { AddResultResponse, SavedResult, UnsavedResult } from "../types";
 import API from "../api-client/index";
+import { auth } from "../functions/auth";
 
-// TODO setup mongoose
-
-export const [getResults, setResults] = createSignal<(Result | ResultIDLess)[]>(
-  []
-);
+export const [getResults, setResults] = createSignal<
+  (SavedResult | UnsavedResult)[]
+>([]);
 
 export const getResultsReverse = createMemo(() =>
   getResults().sort((a, b) => b.timestamp - a.timestamp)
 );
 
-export function addResult(result: ResultIDLess, userID?: string): void {
-  setResults([...getResults(), result]);
+export async function addResult(
+  result: UnsavedResult,
+  userID?: string
+): Promise<void> {
+  if (auth.currentUser !== null && userID !== undefined) {
+    const response = await API.results.save({
+      ...result,
+      userID
+    });
 
-  if (userID !== undefined) {
-    API.results.save(result);
+    const savedResult = response.data as AddResultResponse;
+
+    setResults([
+      ...getResults(),
+      { ...result, _id: savedResult.insertedID, userID }
+    ]);
 
     console.log("Saved result to database");
+  } else {
+    setResults([...getResults(), result]);
   }
-
-  setScramble(generateScramble(getScrambleType()));
 }
 
-export function deleteResult(
-  result: Result | ResultIDLess,
-  userID?: string
-): void {
+export function deleteResult(result: SavedResult | UnsavedResult): void {
   setResults(getResults().filter((r) => r !== result));
 
-  if (userID !== undefined && isDatabaseResult(result)) {
+  if (auth.currentUser !== null && isDatabaseResult(result)) {
     API.results.delete(result);
 
     console.log("Deleted result from database");
   }
 }
 
-export function isDatabaseResult(result: Partial<Result>): result is Result {
+export function deleteAll(): void {
+  if (getResults().length === 0) {
+    return;
+  }
+
+  setResults([]);
+
+  if (auth.currentUser !== null) {
+    API.results.deleteAll();
+
+    console.log("Deleted all results from database");
+  }
+}
+
+export function isDatabaseResult(
+  result: Partial<SavedResult>
+): result is SavedResult {
   return (
     result._id !== undefined &&
-    result.userID !== undefined &&
+    result.userID !== null &&
     result.time !== undefined &&
     result.timestamp !== undefined &&
     result.scrambleType !== undefined &&

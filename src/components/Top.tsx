@@ -1,16 +1,15 @@
 /** @format */
 
-import { Component, For } from "solid-js";
+import { Component, For, Show } from "solid-js";
 import { Link } from "solid-app-router";
 import {
-  generateScramble,
   getScramble,
   getScrambleType,
-  setScramble,
   setScrambleType
 } from "../state/scramble";
 import "./Top.scss";
 import { ScrambleType, SCRAMBLE_TYPES } from "../constants/scramble-type";
+import { Button } from "./Button";
 
 const pages = ["Timer", "Account", "Settings"];
 const icons = ["fa-cube", "fa-user", "fa-cog"];
@@ -27,15 +26,29 @@ export const Top: Component = () => {
         </div>
       </div>
 
-      <div id="scramble">{getScramble()}</div>
+      <div id="scramble">
+        {
+          <Show
+            when={getScramble() !== ""}
+            fallback={
+              <Button
+                class="generate-scramble-button"
+                onClick={() => setScrambleType(getScrambleType())}
+              >
+                Generate Scramble
+              </Button>
+            }
+          >
+            {getScramble()}
+          </Show>
+        }
+      </div>
       <select
         id="scramble-type"
         onChange={(e) => {
           const val = e.currentTarget.value as ScrambleType;
 
           setScrambleType(val);
-
-          setScramble(generateScramble(getScrambleType()));
         }}
       >
         <For each={SCRAMBLE_TYPES}>

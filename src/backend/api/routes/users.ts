@@ -75,7 +75,7 @@ router.post(
   validateRequest({
     body: {
       email: joi.string().email(),
-      name: usernameValidation,
+      username: usernameValidation,
       userID: joi.string()
     }
   }),

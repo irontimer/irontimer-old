@@ -2,6 +2,7 @@ import chalk from "chalk";
 import winston, { format } from "winston";
 import { resolve } from "path";
 import { Log } from "../models/log";
+import { Types } from "mongoose";
 
 const errorColor = chalk.red.bold;
 const warningColor = chalk.yellow.bold;
@@ -91,6 +92,7 @@ const logToDb = async (
 ): Promise<void> => {
   logger.info(`${event}\t${userID}\t${JSON.stringify(message)}`);
   Log.create({
+    _id: new Types.ObjectId(),
     timestamp: Date.now(),
     userID: userID ?? "",
     event,

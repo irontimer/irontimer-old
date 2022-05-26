@@ -6,7 +6,7 @@ interface Status {
 }
 
 interface Statuses {
-  TEST_TOO_SHORT: Status;
+  RESULT_TOO_FAST: Status;
   RESULT_HASH_INVALID: Status;
   RESULT_DATA_INVALID: Status;
   RESULT_SPACING_INVALID: Status;
@@ -19,7 +19,7 @@ interface Statuses {
 }
 
 const statuses: Statuses = {
-  TEST_TOO_SHORT: {
+  RESULT_TOO_FAST: {
     code: 460,
     message: "Test too short"
   },

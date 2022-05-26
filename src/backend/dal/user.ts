@@ -1,6 +1,6 @@
 import type {
   PersonalBest,
-  Result,
+  SavedResult,
   UserStats,
   Theme,
   User as IUser
@@ -8,40 +8,43 @@ import type {
 import { User } from "../models/user";
 import { isUsernameValid } from "../utils/validation";
 import { updateUserEmail } from "../utils/auth";
-import { checkAndUpdatePersonalBest as checkAndUpdatePersonalBest } from "../utils/pb";
+import { checkAndUpdatePersonalBest as checkAndUpdatePersonalBest } from "../utils/personal-best";
 import IronTimerError from "../utils/error";
-import { DeleteResult, InsertOneResult, ObjectId, UpdateResult } from "mongodb";
+import { DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
 import { ScrambleType } from "../../constants/scramble-type";
 
 export async function addUser(
-  name: string,
+  username: string,
   email: string,
   userID: string
 ): Promise<InsertOneResult<IUser>> {
-  const user = await User.findOne({ userID });
+  const user = await User.findOne({ _id: userID });
 
   if (user !== null) {
     throw new IronTimerError(409, "User document already exists", "addUser");
   }
 
-  const currentDate = Date.now();
-
   const newUser = await User.create({
-    _id: new ObjectId(),
-    name,
+    _id: userID,
+    username,
     email,
-    userID,
-    addedAt: currentDate
+    addedAt: Date.now(),
+    personalBests: [],
+    canManageApiKeys: false,
+    timeCubing: 0,
+    resultCount: 0,
+    lastNameChange: null,
+    customThemes: []
   });
 
   return {
     acknowledged: true,
-    insertedId: newUser._id
+    insertedID: newUser._id
   };
 }
 
 export async function deleteUser(userID: string): Promise<DeleteResult> {
-  return await User.deleteOne({ userID });
+  return await User.deleteOne({ _id: userID });
 }
 
 const DAY_IN_SECONDS = 24 * 60 * 60;
@@ -54,8 +57,9 @@ export async function updateName(
   if (!isUsernameValid(name)) {
     throw new IronTimerError(400, "Invalid username");
   }
+
   if (!(await isNameAvailable(name))) {
-    throw new IronTimerError(409, "Username already taken", name);
+    throw new IronTimerError(409, "Username unavailable", name);
   }
 
   const user = await getUser(userID, "update name");
@@ -68,7 +72,7 @@ export async function updateName(
   }
 
   return await User.updateOne(
-    { userID },
+    { _id: userID },
     {
       $set: { name, lastNameChange: Date.now() },
       $unset: { needsToChangeName: "" }
@@ -78,7 +82,7 @@ export async function updateName(
 
 export async function clearPersonalBest(userID: string): Promise<UpdateResult> {
   return await User.updateOne(
-    { userID },
+    { _id: userID },
     {
       $set: {
         personalBests: []
@@ -87,8 +91,8 @@ export async function clearPersonalBest(userID: string): Promise<UpdateResult> {
   );
 }
 
-export async function isNameAvailable(name: string): Promise<boolean> {
-  const nameDocs = await User.find({ name })
+export async function isNameAvailable(username: string): Promise<boolean> {
+  const nameDocs = await User.find({ username })
     .collation({ locale: "en", strength: 1 })
     .limit(1);
 
@@ -101,12 +105,12 @@ export async function updateEmail(
 ): Promise<boolean> {
   await getUser(userID, "update email"); // To make sure that the user exists
   await updateUserEmail(userID, email);
-  await User.updateOne({ userID }, { $set: { email } });
+  await User.updateOne({ _id: userID }, { $set: { email } });
   return true;
 }
 
 export async function getUser(userID: string, stack: string): Promise<IUser> {
-  const user = await User.findOne({ userID });
+  const user = await User.findOne({ _id: userID });
   if (!user) {
     throw new IronTimerError(404, "User not found", stack);
   }
@@ -124,7 +128,7 @@ export async function isDiscordUserIDAvailable(
 export async function checkIfPersonalBest(
   userID: string,
   user: IUser,
-  result: Result
+  result: SavedResult
 ): Promise<boolean> {
   const pb = checkAndUpdatePersonalBest(user.personalBests ?? [], result);
 
@@ -133,7 +137,7 @@ export async function checkIfPersonalBest(
   }
 
   await User.updateOne(
-    { userID },
+    { _id: userID },
     { $set: { personalBests: pb.personalBests } }
   );
 
@@ -145,7 +149,7 @@ export async function resetPersonalBests(
 ): Promise<UpdateResult> {
   await getUser(userID, "reset pb");
   return await User.updateOne(
-    { userID },
+    { _id: userID },
     {
       $set: {
         personalBests: []
@@ -156,15 +160,13 @@ export async function resetPersonalBests(
 
 export async function updateTypingStats(
   userID: string,
-  restartCount: number,
   timeCubing: number
 ): Promise<UpdateResult> {
   return await User.updateOne(
-    { userID },
+    { _id: userID },
     {
       $inc: {
-        startedTests: restartCount + 1,
-        completedTests: 1,
+        resultCount: 1,
         timeCubing
       }
     }
@@ -177,21 +179,21 @@ export async function linkDiscord(
 ): Promise<UpdateResult> {
   await getUser(userID, "link discord");
 
-  return await User.updateOne({ userID }, { $set: { discordUserID } });
+  return await User.updateOne({ _id: userID }, { $set: { discordUserID } });
 }
 
 export async function unlinkDiscord(userID: string): Promise<UpdateResult> {
   await getUser(userID, "unlink discord");
 
   return await User.updateOne(
-    { userID },
+    { _id: userID },
     { $set: { discordUserID: undefined } }
   );
 }
 
 export async function incrementCubes(
   userID: string,
-  result: Result
+  result: SavedResult
 ): Promise<UpdateResult | undefined> {
   const user = await getUser(userID, "increment cubes");
 
@@ -200,8 +202,8 @@ export async function incrementCubes(
     .sort((a, b) => b.time - a.time)[0];
 
   if (personalBest === undefined || result.time >= personalBest.time * 0.75) {
-    // increment when no record found or wpm is within 25% of the record
-    return await User.updateOne({ userID }, { $inc: { cubes: 1 } });
+    // Increment when no record found or wpm is within 25% of the record
+    return await User.updateOne({ _id: userID }, { $inc: { cubes: 1 } });
   }
 
   return undefined;
@@ -222,7 +224,7 @@ export async function addTheme(userID: string, theme: Theme): Promise<string> {
   }
 
   await User.updateOne(
-    { userID },
+    { _id: userID },
     {
       $push: {
         customThemes: theme
@@ -245,7 +247,7 @@ export async function removeTheme(
 
   return await User.updateOne(
     {
-      userID: userID,
+      _id: userID,
       "customThemes.name": name
     },
     { $pull: { customThemes: { name } } }
@@ -265,7 +267,7 @@ export async function editTheme(
 
   return await User.updateOne(
     {
-      userID: userID,
+      _id: userID,
       "customThemes.name": name
     },
     {

@@ -1,8 +1,8 @@
 import _ from "lodash";
-import type { Result as IResult, User } from "../../types";
+import type { SavedResult as IResult, User } from "../../types";
 import { Result } from "../models/result";
 import { DeleteResult } from "mongodb";
-import { Schema } from "mongoose";
+import { Schema, Types } from "mongoose";
 import IronTimerError from "../utils/error";
 
 import { getUser } from "./user";
@@ -10,7 +10,7 @@ import { getUser } from "./user";
 export async function addResult(
   userID: string,
   result: IResult
-): Promise<{ insertedId: Schema.Types.ObjectId }> {
+): Promise<{ insertedID: Schema.Types.ObjectId }> {
   const user: User | undefined = await getUser(userID, "add result").catch(
     () => undefined
   );
@@ -23,10 +23,13 @@ export async function addResult(
     result.userID = userID;
   }
 
-  const res = await Result.create(result);
+  const res = await Result.create({
+    ...result,
+    _id: new Types.ObjectId()
+  });
 
   return {
-    insertedId: res._id
+    insertedID: res._id
   };
 }
 
@@ -36,16 +39,12 @@ export async function deleteAll(userID: string): Promise<DeleteResult> {
 
 export async function deleteResult(
   userID: string,
-  resultID: Schema.Types.ObjectId
+  resultID: Types.ObjectId
 ): Promise<DeleteResult> {
   return await Result.deleteOne({ userID, _id: resultID });
 }
 
 export async function getResult(userID: string, id: string): Promise<IResult> {
-  // const result = await db
-  //   .collection<IResult>("results")
-  //   .findOne({ _id: new ObjectId(id), userID });
-
   const result = await Result.findOne({ _id: id, userID });
 
   if (result === null) {
@@ -84,8 +83,8 @@ export async function getResults(
     .skip(start)
     .limit(end); // this needs to be changed to later take patreon into consideration
 
-  if (!results || results.length === 0) {
-    throw new IronTimerError(404, "Result not found");
+  if (!results) {
+    throw new IronTimerError(404, "Results not found");
   }
 
   return results;

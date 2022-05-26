@@ -1,5 +1,6 @@
 import * as ResultController from "../controllers/result";
 import resultSchema from "../schemas/result-schema";
+import joi from "joi";
 import {
   asyncHandler,
   validateRequest,
@@ -50,10 +51,7 @@ router.delete(
   authenticateRequest(),
   validateRequest({
     params: {
-      id: {
-        type: "string",
-        required: true
-      }
+      id: joi.string().required()
     }
   }),
   asyncHandler(ResultController.deleteResult)

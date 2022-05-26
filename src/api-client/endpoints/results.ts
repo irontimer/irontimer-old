@@ -2,8 +2,8 @@ import {
   Client,
   Endpoints,
   EndpointData,
-  Result,
-  ResultIDLess
+  SavedResult,
+  AlmostSavedResult
 } from "../../types";
 import { CLIENT_VERSION } from "../../version";
 
@@ -16,14 +16,14 @@ export default function getResultsEndpoints(
     return await apiClient.get(BASE_PATH);
   }
 
-  async function save(result: ResultIDLess): EndpointData {
+  async function save(result: AlmostSavedResult): EndpointData {
     return await apiClient.post(BASE_PATH, {
       payload: { result },
       headers: { "Client-Version": CLIENT_VERSION }
     });
   }
 
-  async function deleteResult(result: Result): EndpointData {
+  async function deleteResult(result: SavedResult): EndpointData {
     return await apiClient.delete(`${BASE_PATH}/${result._id}`);
   }
 

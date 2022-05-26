@@ -1,5 +1,5 @@
 import { Counter, Histogram } from "prom-client";
-import { Result } from "../../types";
+import { SavedResult } from "../../types";
 
 const auth = new Counter({
   name: "api_request_auth_total",
@@ -32,7 +32,7 @@ export function incrementAuth(type: "Bearer" | "ApiKey" | "None"): void {
   auth.inc({ type });
 }
 
-export function incrementResult(res: Result): void {
+export function incrementResult(res: SavedResult): void {
   result.inc({
     scrambleType: res.scrambleType
   });

@@ -4,17 +4,28 @@ import { ObjectId } from "mongoose";
 import { Request as ExpressRequest } from "express";
 import { ScrambleType } from "../constants/scramble-type";
 
-export interface Result {
-  _id: ObjectId;
-  userID: string;
+export interface UnsavedResult {
   time: number; // float seconds for how long the solve was
   timestamp: number;
   scramble: string;
   scrambleType: ScrambleType;
   solution?: string;
+  isPersonalBest?: boolean;
 }
 
-export type ResultIDLess = Omit<Result, "_id" | "userID">;
+export interface AlmostSavedResult extends UnsavedResult {
+  userID: string;
+}
+
+export interface SavedResult extends AlmostSavedResult {
+  _id: ObjectId;
+}
+
+export interface AddResultResponse {
+  insertedID: ObjectId;
+  isPersonalBest: boolean;
+  username: string;
+}
 
 export interface PersonalBest {
   time: number;
@@ -35,7 +46,6 @@ export interface Theme {
 
 export interface User {
   _id: ObjectId;
-  userID: string;
   email: string;
   username: string;
   discordUserID?: string;
@@ -120,10 +130,12 @@ export interface UserStats {
   timeCubing: number;
 }
 
+export type TimerType = "timer" | "typing" | "stackmat";
+
 export interface Config {
   _id: ObjectId;
-  timerType: "timer" | "typing" | "stackmat";
-  scrambleType: "3x3x3";
+  timerType: TimerType;
+  scrambleType: ScrambleType;
 }
 
 export type ConfigChanges = Partial<Config>;
@@ -197,7 +209,7 @@ export interface Endpoints {
 
   users: {
     getData: Endpoint;
-    create: (name: string, email?: string, uid?: string) => EndpointData;
+    create: (name: string, email: string, userID: string) => EndpointData;
     getNameAvailability: (name: string) => EndpointData;
     delete: Endpoint;
     updateName: (name: string) => EndpointData;
@@ -213,15 +225,15 @@ export interface Endpoints {
     linkDiscord: (data: {
       tokenType: string;
       accessToken: string;
-      uid?: string;
+      userID?: string;
     }) => EndpointData;
     unlinkDiscord: Endpoint;
   };
 
   results: {
     get: Endpoint;
-    save: (result: ResultIDLess) => EndpointData;
-    delete: (result: Result) => EndpointData;
+    save: (result: UnsavedResult & { userID: string }) => EndpointData;
+    delete: (result: SavedResult) => EndpointData;
     deleteAll: Endpoint;
   };
 

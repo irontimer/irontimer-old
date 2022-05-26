@@ -10,17 +10,17 @@ export default function getUsersEndpoints(
   }
 
   async function create(
-    name: string,
-    email?: string,
-    uid?: string
+    username: string,
+    email: string,
+    userID: string
   ): EndpointData {
-    const payload = {
-      email,
-      name,
-      uid
-    };
-
-    return await apiClient.post(`${BASE_PATH}/signup`, { payload });
+    return await apiClient.post(`${BASE_PATH}/signup`, {
+      payload: {
+        email,
+        username,
+        userID
+      }
+    });
   }
 
   async function getNameAvailability(name: string): EndpointData {
@@ -84,7 +84,7 @@ export default function getUsersEndpoints(
   async function linkDiscord(data: {
     tokenType: string;
     accessToken: string;
-    uid?: string;
+    userID?: string;
   }): EndpointData {
     return await apiClient.post(`${BASE_PATH}/discord/link`, {
       payload: { data }

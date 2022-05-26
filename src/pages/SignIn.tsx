@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { Component } from "solid-js";
 import { Button } from "../components/Button";
 import { auth, signUp } from "../functions/auth";
-import { createUser } from "../functions/client";
+import API from "../api-client";
 import "./SignIn.scss";
 
 export const SignIn: Component = () => {
@@ -76,6 +76,16 @@ export const SignIn: Component = () => {
                 return;
               }
 
+              const isValid = await API.users.getNameAvailability(
+                signUpUsername
+              );
+
+              if (isValid.status !== 200) {
+                alert("Username is already taken or is invalid");
+
+                return;
+              }
+
               const user = await signUp(signUpEmail, signUpPassword).catch(
                 () => {
                   alert("Error signing up");
@@ -85,7 +95,15 @@ export const SignIn: Component = () => {
               );
 
               if (user !== undefined) {
-                await createUser(signUpEmail, signUpUsername, user.uid);
+                API.users
+                  .create(signUpUsername, signUpEmail, user?.uid)
+                  .catch((err) => {
+                    console.log(err);
+
+                    alert(err.message);
+
+                    auth.currentUser?.delete();
+                  });
               }
             }}
           >

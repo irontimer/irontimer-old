@@ -1,6 +1,6 @@
-import { Result, ResultIDLess } from "../types";
+import { UnsavedResult } from "../types";
 
-export function calculateAverage(results: (Result | ResultIDLess)[]): number {
+export function calculateAverage(results: UnsavedResult[]): number {
   const sorted = results.sort((a, b) => a.time - b.time);
 
   const middle = sorted.slice(1, results.length - 1); // this gets rid of the best and worst results respectively

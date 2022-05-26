@@ -13,7 +13,8 @@ import { isResultTooFast } from "../../utils/validation";
 import IronTimerStatusCodes from "../../constants/irontimer-status-codes";
 import { incrementResult } from "../../utils/prometheus";
 import * as Bot from "../../tasks/bot";
-import { Request } from "../../../types";
+import { Request, SavedResult } from "../../../types";
+import { Types } from "mongoose";
 
 export async function getResults(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
@@ -37,10 +38,12 @@ export async function deleteAll(req: Request): Promise<IronTimerResponse> {
 
 export async function deleteResult(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
-  const { resultID } = req.body;
+  const resultID = new Types.ObjectId(req.params.id);
 
   await ResultDAL.deleteResult(userID, resultID);
+
   Logger.logToDb("user_result_deleted", "", userID);
+
   return new IronTimerResponse("Result deleted");
 }
 
@@ -49,46 +52,44 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
 
   const user = await getUser(userID, "add result");
 
-  const result = Object.assign({}, req.body.result);
+  const result: SavedResult = Object.assign({}, req.body.result);
 
   result.userID = userID;
 
   if (isResultTooFast(result)) {
-    const status = IronTimerStatusCodes.TEST_TOO_SHORT;
+    const status = IronTimerStatusCodes.RESULT_TOO_FAST;
     throw new IronTimerError(status.code, status.message);
   }
 
-  result.name = user.username;
+  // Convert result time to miliseconds
+  const timeMilliseconds = result.time * 1000;
 
-  //convert result test duration to miliseconds
-  const durationMilliseconds = result.testDuration * 1000;
-  //get latest result ordered by timestamp
-  let lastResultTimestamp;
-  try {
-    lastResultTimestamp = (await ResultDAL.getLastResult(userID)).timestamp;
-  } catch (e) {
-    lastResultTimestamp = null;
-  }
+  // Get latest result by timestamp
+  const lastResultTimestamp = (
+    await ResultDAL.getLastResult(userID).catch(() => undefined)
+  )?.timestamp;
 
-  result.timestamp = Math.floor(Date.now() / 1000) * 1000;
-
-  //check if now is earlier than last result plus duration (-1 second as a buffer)
+  // Check if now is earlier than last result plus duration (no buffer because of scramble time)
   const earliestPossible =
-    (lastResultTimestamp ?? Date.now()) + durationMilliseconds;
+    (lastResultTimestamp ?? Date.now()) + timeMilliseconds;
+
   const nowMilliseconds = Math.floor(Date.now() / 1000) * 1000;
-  if (lastResultTimestamp && nowMilliseconds < earliestPossible - 1000) {
+
+  if (lastResultTimestamp && nowMilliseconds < earliestPossible) {
     Logger.logToDb(
       "invalid_result_spacing",
       {
         lastTimestamp: lastResultTimestamp,
         earliestPossible,
         now: nowMilliseconds,
-        testDuration: durationMilliseconds,
+        testDuration: timeMilliseconds,
         difference: nowMilliseconds - earliestPossible
       },
       userID
     );
+
     const status = IronTimerStatusCodes.RESULT_SPACING_INVALID;
+
     throw new IronTimerError(status.code, "Invalid result spacing");
   }
 
@@ -98,27 +99,22 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
     result.isPersonalBest = true;
   }
 
-  if (result.mode === "time" && String(result.mode2) === "60") {
-    incrementCubes(userID, result.wpm);
+  if (result.scrambleType === "3x3x3") {
+    incrementCubes(userID, result);
+
     if (isPersonalBest && user.discordUserID) {
-      Bot.updateDiscordRole(user.discordUserID, result.wpm);
+      Bot.updateDiscordRole(user.discordUserID, result.time);
     }
   }
 
-  if (result.challenge && user.discordUserID) {
-    Bot.awardChallenge(user.discordUserID, result.challenge);
-  } else {
-    delete result.challenge;
-  }
+  // if (result.challenge && user.discordUserID) {
+  //   Bot.awardChallenge(user.discordUserID, result.challenge);
+  // } else {
+  //   delete result.challenge;
+  // }
 
-  let tt = 0;
-  let afk = result.afkDuration;
-  if (afk === undefined) {
-    afk = 0;
-  }
-  tt = result.testDuration + result.incompleteTestSeconds - afk;
-  updateTypingStats(userID, result.restartCount, tt);
-  PublicStatsDAL.updateStats(tt);
+  updateTypingStats(userID, result.time);
+  PublicStatsDAL.updateStats(result.time);
 
   // if (result.bailedOut === false) {
   //   delete result.bailedOut;
@@ -162,17 +158,15 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
   if (isPersonalBest) {
     Logger.logToDb(
       "user_new_pb",
-      `${result.mode + " " + result.mode2} ${result.wpm} ${result.acc}% ${
-        result.rawWpm
-      } ${result.consistency}% (${addedResult.insertedId})`,
+      `${result.scrambleType} ${result.time} ${result.scramble} (${addedResult.insertedID})`,
       userID
     );
   }
 
   const data = {
     isPersonalBest,
-    name: result.name,
-    insertedId: addedResult.insertedId
+    username: user.username,
+    insertedID: addedResult.insertedID
   };
 
   incrementResult(result);
