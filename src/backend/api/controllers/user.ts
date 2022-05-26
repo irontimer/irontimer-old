@@ -20,6 +20,7 @@ export async function createNewUser(req: Request): Promise<IronTimerResponse> {
   }
 
   await UserDAL.addUser(username, email, userID);
+
   Logger.logToDb("user_created", `${username} ${email}`, userID);
 
   return new IronTimerResponse("User created");

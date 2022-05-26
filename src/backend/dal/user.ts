@@ -39,7 +39,7 @@ export async function addUser(
 
   return {
     acknowledged: true,
-    insertedID: newUser._id
+    insertedId: newUser._id
   };
 }
 
