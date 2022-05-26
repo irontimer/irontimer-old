@@ -106,20 +106,7 @@ $remaining_height: 86.75vh;
 
   #timer {
     height: $remaining_height;
-
-    input {
-      position: absolute;
-      top: 50vh;
-      height: 5rem;
-      width: 50vw;
-      left: 25vw;
-      font-size: 5rem;
-      text-align: center;
-      border-width: thick;
-      border-style: solid;
-      border-color: black;
-      border-radius: 5rem;
-      background-color: lightgray;
-    }
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
   }
 }

@@ -132,19 +132,26 @@ export interface UserStats {
 
 export type TimerType = "timer" | "typing" | "stackmat";
 
-export interface Config {
-  _id: ObjectId;
+export interface UnsavedConfig {
   timerType: TimerType;
   scrambleType: ScrambleType;
 }
 
-export type ConfigChanges = Partial<Config>;
+export interface AlmostSavedConfig extends UnsavedConfig {
+  userID: string;
+}
+
+export interface SavedConfig extends AlmostSavedConfig {
+  _id: string;
+}
+
+export type ConfigChanges = Partial<SavedConfig>;
 
 export interface Preset {
   _id: ObjectId;
   userID: string;
   name: string;
-  config: Config;
+  config: SavedConfig;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -189,7 +196,7 @@ export type Endpoint = () => EndpointData;
 export interface Endpoints {
   configs: {
     get: Endpoint;
-    save: (config: Config) => EndpointData;
+    save: (config: UnsavedConfig | SavedConfig) => EndpointData;
   };
 
   presets: {

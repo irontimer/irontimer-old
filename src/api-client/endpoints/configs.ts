@@ -1,4 +1,10 @@
-import { Client, Endpoints, EndpointData, Config } from "../../types";
+import {
+  Client,
+  Endpoints,
+  EndpointData,
+  SavedConfig,
+  UnsavedConfig
+} from "../../types";
 
 const BASE_PATH = "/configs";
 
@@ -9,7 +15,7 @@ export default function getConfigsEndpoints(
     return await apiClient.get(BASE_PATH);
   }
 
-  async function save(config: Config): EndpointData {
+  async function save(config: UnsavedConfig | SavedConfig): EndpointData {
     return await apiClient.patch(BASE_PATH, { payload: { config } });
   }
 

@@ -3,13 +3,16 @@
 import { Component, For, Show } from "solid-js";
 import { Link } from "solid-app-router";
 import {
+  generateScramble,
   getScramble,
   getScrambleType,
+  setScramble,
   setScrambleType
 } from "../state/scramble";
 import "./Top.scss";
 import { ScrambleType, SCRAMBLE_TYPES } from "../constants/scramble-type";
 import { Button } from "./Button";
+import { getIsAnimating } from "./TimerStopwatch";
 
 const pages = ["Timer", "Account", "Settings"];
 const icons = ["fa-cube", "fa-user", "fa-cog"];
@@ -29,11 +32,11 @@ export const Top: Component = () => {
       <div id="scramble">
         {
           <Show
-            when={getScramble() !== ""}
+            when={getScramble() !== "" && !getIsAnimating()}
             fallback={
               <Button
                 class="generate-scramble-button"
-                onClick={() => setScrambleType(getScrambleType())}
+                onClick={() => setScramble(generateScramble(getScrambleType()))}
               >
                 Generate Scramble
               </Button>

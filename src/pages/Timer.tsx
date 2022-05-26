@@ -1,15 +1,16 @@
 /** @format */
-import { Component, createSignal } from "solid-js";
+import { Component, createSignal, Match, Switch } from "solid-js";
 import { Popup } from "../components/Popup";
-import { auth } from "../functions/auth";
 import { calculateAverage } from "../functions/average";
 import { deleteAll, deleteResult } from "../state/result";
-import { parseTimeString, timeFormat } from "../functions/time";
-import { addResult, getResults, getResultsReverse } from "../state/result";
-import { getScramble, getScrambleType } from "../state/scramble";
+import { formatTime } from "../functions/time";
+import { getResults, getResultsReverse } from "../state/result";
 import { SavedResult, UnsavedResult } from "../types";
 import "./Timer.scss";
 import { Button } from "../components/Button";
+import { TimerStopwatch } from "../components/TimerStopwatch";
+import { getConfigValue } from "../state/config";
+import { TimerInput } from "../components/TimerInput";
 
 export const Timer: Component = () => {
   const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
@@ -127,9 +128,9 @@ export const Timer: Component = () => {
                 <>
                   <tr>
                     <td onClick={onClick}>{n()}</td>
-                    <td onClick={onClick}>{timeFormat(result.time)}</td>
-                    <td>{ao5 !== undefined ? timeFormat(ao5) : "-"}</td>
-                    <td>{ao12 !== undefined ? timeFormat(ao12) : "-"}</td>
+                    <td onClick={onClick}>{formatTime(result.time)}</td>
+                    <td>{ao5 !== undefined ? formatTime(ao5) : "-"}</td>
+                    <td>{ao12 !== undefined ? formatTime(ao12) : "-"}</td>
                   </tr>
                 </>
               );
@@ -139,46 +140,16 @@ export const Timer: Component = () => {
       </div>
 
       <div id="timer">
-        <input
-          placeholder="Enter time"
-          onKeyPress={(e) => {
-            if (e.key !== "Enter") {
-              if (/[^0-9.:,]/.test(e.key)) {
-                e.preventDefault();
-              }
-
-              return;
-            }
-
-            const val = e.currentTarget.value.replace(/,/g, "");
-
-            let float = /[^0-9.]/.test(val) ? NaN : parseFloat(val);
-
-            if (isNaN(float)) {
-              float = parseTimeString(val);
-            }
-
-            if (isNaN(float)) {
-              alert("Entered time is not a number");
-            } else {
-              if (float % 1 === 0 && !val.includes(".")) {
-                float /= 1000;
-              }
-
-              addResult(
-                {
-                  time: float,
-                  timestamp: Date.now(),
-                  scramble: getScramble(),
-                  scrambleType: getScrambleType()
-                },
-                auth.currentUser?.uid
-              );
-            }
-
-            e.currentTarget.value = "";
-          }}
-        />
+        <div class="spacer" />
+        <Switch fallback={<TimerStopwatch />}>
+          <Match when={getConfigValue("timerType") === "timer"}>
+            <TimerStopwatch />
+          </Match>
+          <Match when={getConfigValue("timerType") === "stopwatch"}>
+            <TimerInput />
+          </Match>
+        </Switch>
+        <div class="spacer" />
       </div>
     </div>
   );

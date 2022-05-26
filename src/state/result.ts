@@ -1,7 +1,19 @@
 import { createMemo, createSignal } from "solid-js";
-import type { AddResultResponse, SavedResult, UnsavedResult } from "../types";
+import type {
+  AddResultResponse,
+  AlmostSavedResult,
+  SavedResult,
+  UnsavedResult
+} from "../types";
 import API from "../api-client/index";
 import { auth } from "../functions/auth";
+import {
+  generateScramble,
+  getScramble,
+  getScrambleType,
+  setScramble
+} from "./scramble";
+import { roundToMilliseconds } from "../functions/time";
 
 export const [getResults, setResults] = createSignal<
   (SavedResult | UnsavedResult)[]
@@ -11,26 +23,44 @@ export const getResultsReverse = createMemo(() =>
   getResults().sort((a, b) => b.timestamp - a.timestamp)
 );
 
-export async function addResult(
-  result: UnsavedResult,
-  userID?: string
-): Promise<void> {
-  if (auth.currentUser !== null && userID !== undefined) {
-    const response = await API.results.save({
-      ...result,
-      userID
-    });
+export async function addResult(time: number): Promise<void> {
+  const roundedTime = roundToMilliseconds(time);
 
-    const savedResult = response.data as AddResultResponse;
+  const unsavedResult: UnsavedResult = {
+    time: roundedTime,
+    timestamp: Date.now(),
+    scramble: getScramble(),
+    scrambleType: getScrambleType()
+  };
+
+  const userID = auth.currentUser?.uid;
+
+  if (auth.currentUser !== null && userID !== undefined) {
+    const almostSavedResult: AlmostSavedResult = {
+      ...unsavedResult,
+      userID
+    };
+
+    const response = await API.results.save(almostSavedResult);
+
+    const savedResult = response.data as AddResultResponse | undefined;
+
+    if (savedResult === undefined) {
+      console.log(response.status, response.message);
+
+      setScramble(generateScramble(getScrambleType()));
+
+      return;
+    }
 
     setResults([
       ...getResults(),
-      { ...result, _id: savedResult.insertedID, userID }
+      { ...almostSavedResult, _id: savedResult.insertedID }
     ]);
 
     console.log("Saved result to database");
   } else {
-    setResults([...getResults(), result]);
+    setResults([...getResults(), unsavedResult]);
   }
 }
 

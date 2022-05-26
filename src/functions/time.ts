@@ -2,7 +2,7 @@ const HOUR = 3600;
 const MINUTE = 60;
 const SECOND = 1;
 
-export function timeFormat(time: number): string {
+export function formatTime(time: number): string {
   const roundedTime = roundToMilliseconds(time);
 
   const hours = Math.floor(roundedTime / HOUR);

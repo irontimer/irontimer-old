@@ -2,7 +2,7 @@ import _ from "lodash";
 import type { SavedResult as IResult, User } from "../../types";
 import { Result } from "../models/result";
 import { DeleteResult } from "mongodb";
-import { Schema, Types } from "mongoose";
+import { Types } from "mongoose";
 import IronTimerError from "../utils/error";
 
 import { getUser } from "./user";
@@ -10,7 +10,7 @@ import { getUser } from "./user";
 export async function addResult(
   userID: string,
   result: IResult
-): Promise<{ insertedID: Schema.Types.ObjectId }> {
+): Promise<{ insertedID: Types.ObjectId }> {
   const user: User | undefined = await getUser(userID, "add result").catch(
     () => undefined
   );
@@ -23,13 +23,15 @@ export async function addResult(
     result.userID = userID;
   }
 
-  const res = await Result.create({
+  const _id = new Types.ObjectId();
+
+  await Result.create({
     ...result,
-    _id: new Types.ObjectId()
+    _id
   });
 
   return {
-    insertedID: res._id
+    insertedID: _id
   };
 }
 
