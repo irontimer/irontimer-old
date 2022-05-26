@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { ScrambleType } from "../../constants/scramble-type";
+import type { ScrambleType } from "../../constants/scramble-type";
 import { SavedResult } from "../../types";
 import profanities from "../constants/profanities";
 

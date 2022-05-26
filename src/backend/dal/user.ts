@@ -11,7 +11,7 @@ import { updateUserEmail } from "../utils/auth";
 import { checkAndUpdatePersonalBest as checkAndUpdatePersonalBest } from "../utils/personal-best";
 import IronTimerError from "../utils/error";
 import { DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
-import { ScrambleType } from "../../constants/scramble-type";
+import type { ScrambleType } from "../../constants/scramble-type";
 
 export async function addUser(
   username: string,

@@ -1,6 +1,5 @@
 import type { SavedConfig as IConfig } from "../../types";
 import { Schema, model } from "mongoose";
-import { SCRAMBLE_TYPES } from "../../constants/scramble-type";
 
 export const ConfigSchema = new Schema<IConfig>({
   // since the userID is unique to each use we can use it as the _id
@@ -15,7 +14,7 @@ export const ConfigSchema = new Schema<IConfig>({
   },
   scrambleType: {
     type: String,
-    enum: SCRAMBLE_TYPES,
+    enum: ["3x3x3", "2x2x2"],
     required: true
   } // TODO remove and add sessions
 });

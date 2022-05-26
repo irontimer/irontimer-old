@@ -7,7 +7,7 @@ import { buildAgentLog } from "../../utils/misc";
 import * as Bot from "../../tasks/bot";
 import type { Request, User } from "../../../types";
 import admin from "firebase-admin";
-import { ScrambleType } from "../../../constants/scramble-type";
+import type { ScrambleType } from "../../../constants/scramble-type";
 import { isUsernameValid } from "../../utils/validation";
 
 export async function createNewUser(req: Request): Promise<IronTimerResponse> {
