@@ -11,17 +11,21 @@ const [getAnimationFrame, setAnimationFrame] = createSignal(0);
 export const [getIsAnimating, setIsAnimating] = createSignal(false);
 const [getReadyState, setReadyState] = createSignal<ReadyState>("unready");
 
-const getCurrentDifference = (): number => Date.now() - getTimestamp();
-
 export const TimerStopwatch: Component = () => {
   return (
     <div class={`timer-stopwatch ${getReadyState()}`}>{getCurrentTime()}</div>
   );
 };
 
-document.addEventListener("keydown", (e) => {
-  if (e.code !== "Space") {
-    return;
+function getCurrentDifference(): number {
+  return Date.now() - getTimestamp();
+}
+
+function press(e: KeyboardEvent | TouchEvent): void {
+  if (isKeyboardEvent(e)) {
+    if (e.code !== "Space") {
+      return;
+    }
   }
 
   switch (getReadyState()) {
@@ -33,7 +37,7 @@ document.addEventListener("keydown", (e) => {
       break;
 
     case "almost-ready":
-      if (getCurrentDifference() < 1000) {
+      if (getCurrentDifference() < 500) {
         break;
       }
 
@@ -60,11 +64,13 @@ document.addEventListener("keydown", (e) => {
 
       break;
   }
-});
+}
 
-document.addEventListener("keyup", (e) => {
-  if (e.code !== "Space") {
-    return;
+function release(e: KeyboardEvent | TouchEvent): void {
+  if (isKeyboardEvent(e)) {
+    if (e.code !== "Space") {
+      return;
+    }
   }
 
   switch (getReadyState()) {
@@ -91,7 +97,7 @@ document.addEventListener("keyup", (e) => {
       setReadyState("unready");
       break;
   }
-});
+}
 
 function animationLoop(): void {
   if (getReadyState() !== "running") {
@@ -116,3 +122,15 @@ function getCurrentTime(): string {
 
   return formatTime(getCurrentDifference() / 1000);
 }
+
+function isKeyboardEvent(e: KeyboardEvent | TouchEvent): e is KeyboardEvent {
+  return (e as KeyboardEvent).code !== undefined;
+}
+
+// Keyboard
+document.addEventListener("keydown", press);
+document.addEventListener("keyup", release);
+
+// Touchscreen
+document.addEventListener("touchstart", press);
+document.addEventListener("touchend", release);
