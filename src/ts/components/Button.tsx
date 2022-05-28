@@ -1,5 +1,4 @@
 import { Component, JSX } from "solid-js";
-import "./Button.scss";
 
 export const Button: Component<{
   children: JSX.Element;
@@ -13,7 +12,7 @@ export const Button: Component<{
 }> = (props) => {
   return (
     <div
-      class={`button${props.class === undefined ? "" : " " + props.class}`}
+      class={`button unselectable ${props.class ?? ""}`.trim()}
       onClick={props.onClick}
     >
       <span>{props.children}</span>

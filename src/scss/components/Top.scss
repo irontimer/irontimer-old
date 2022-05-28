@@ -6,7 +6,7 @@ $text-color: #fafafa;
   display: grid;
   grid-template-columns: 1fr 5fr 0.5fr 0.75fr;
   grid-gap: 1rem;
-  padding: 1rem 1rem 0 1rem;
+  padding: 1rem;
   place-items: center;
   height: fit-content;
   max-height: 20vh;
@@ -74,11 +74,10 @@ $text-color: #fafafa;
     }
   }
 
-  // TODO: replace with scramble settings with just a settings icon
+  // TODO: replace with settings page
   #scramble-type {
     font-size: 1rem;
     width: 100%;
-    margin-left: 3rem;
     background-color: white;
     border-radius: 10px;
   }

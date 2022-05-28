@@ -5,8 +5,8 @@ import { calculateAverage } from "../functions/average";
 import { deleteAll, deleteResult } from "../state/result";
 import { formatTime } from "../functions/time";
 import { getResults, getResultsReverse } from "../state/result";
-import { SavedResult, UnsavedResult } from "../types";
-import "./Timer.scss";
+import { SavedResult, UnsavedResult } from "../../types";
+
 import { Button } from "../components/Button";
 import { TimerStopwatch } from "../components/TimerStopwatch";
 import { getConfigValue } from "../state/config";

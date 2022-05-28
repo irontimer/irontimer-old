@@ -1,6 +1,5 @@
 import { Component, JSX, Show } from "solid-js";
 import { Button } from "./Button";
-import "./Popup.scss";
 
 export const Popup: Component<{
   children: JSX.Element;

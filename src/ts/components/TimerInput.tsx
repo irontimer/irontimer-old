@@ -1,7 +1,6 @@
 import { Component } from "solid-js";
 import { parseTimeString } from "../functions/time";
 import { addResult } from "../state/result";
-import "./TimerInput.scss";
 
 export const TimerInput: Component = () => {
   return (

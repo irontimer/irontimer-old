@@ -7,8 +7,13 @@
 import { render } from "solid-js/web";
 import { Router } from "solid-app-router";
 
-import "./index.scss";
 import { App } from "./App";
+
+const root = document.getElementById("root");
+
+if (root === null) {
+  throw new Error("No root element found");
+}
 
 render(
   () => (
@@ -16,5 +21,5 @@ render(
       <App />
     </Router>
   ),
-  document.getElementById("root") as HTMLElement
+  root
 );

@@ -4,8 +4,8 @@ import type {
   AlmostSavedResult,
   SavedResult,
   UnsavedResult
-} from "../types";
-import API from "../api-client/index";
+} from "../../types";
+import API from "../../api-client/index";
 import { auth } from "../functions/auth";
 import {
   generateScramble,

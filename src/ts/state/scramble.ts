@@ -1,5 +1,5 @@
 import { createEffect, createSignal } from "solid-js";
-import { FACES, ScrambleType } from "../constants/scramble-type";
+import { FACES, ScrambleType } from "../../constants/scramble-type";
 import { randomBoolean } from "../functions/random";
 import { getResults } from "./result";
 

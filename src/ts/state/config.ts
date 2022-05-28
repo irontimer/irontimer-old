@@ -1,8 +1,8 @@
 import { createSignal } from "solid-js";
-import API from "../api-client";
-import { DEFAULT_CONFIG } from "../constants/default-config";
+import API from "../../api-client";
+import { DEFAULT_CONFIG } from "../../constants/default-config";
 import { auth } from "../functions/auth";
-import { SavedConfig, UnsavedConfig } from "../types";
+import { SavedConfig, UnsavedConfig } from "../../types";
 
 export const [getConfig, setConfig] = createSignal<UnsavedConfig | SavedConfig>(
   DEFAULT_CONFIG

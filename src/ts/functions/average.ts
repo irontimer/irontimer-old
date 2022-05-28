@@ -1,4 +1,4 @@
-import { UnsavedResult } from "../types";
+import { UnsavedResult } from "../../types";
 
 export function calculateAverage(results: UnsavedResult[]): number {
   const sorted = results.sort((a, b) => a.time - b.time);

@@ -1,5 +1,4 @@
 import { Component, JSX } from "solid-js";
-import "./Text.scss";
 
 export const Text: Component<{
   children: JSX.Element;
