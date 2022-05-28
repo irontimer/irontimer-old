@@ -1,10 +1,9 @@
 import { Component, createSignal } from "solid-js";
 import { formatTime } from "../functions/time";
-import { addResult } from "../state/result";
+import { addResult, getLastResult } from "../state/result";
 
 type ReadyState = "unready" | "almost-ready" | "ready" | "running";
 
-const [getPreviousTime, setPreviousTime] = createSignal(0);
 const [getTimestamp, setTimestamp] = createSignal(0);
 const [getAnimationFrame, setAnimationFrame] = createSignal(0);
 const [getReadyState, setReadyState] = createSignal<ReadyState>("unready");
@@ -52,9 +51,7 @@ function press(e: KeyboardEvent | TouchEvent): void {
       break;
 
     case "running":
-      setPreviousTime(getCurrentDifference());
-
-      addResult(getPreviousTime() / 1000);
+      addResult(getCurrentDifference() / 1000);
 
       setTimestamp(0);
 
@@ -121,7 +118,7 @@ function getCurrentTime(): string {
       animationLoop();
     }
   } else {
-    return formatTime(getPreviousTime() / 1000);
+    return formatTime(getLastResult()?.time ?? 0);
   }
 
   return formatTime(getCurrentDifference() / 1000);

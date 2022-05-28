@@ -15,13 +15,22 @@ import {
 } from "./scramble";
 import { roundToMilliseconds } from "../functions/time";
 
-export const [getResults, setResults] = createSignal<
+export const [getResultsTemp, setResults] = createSignal<
   (SavedResult | UnsavedResult)[]
 >([]);
 
-export const getResultsReverse = createMemo(() =>
-  getResults().sort((a, b) => b.timestamp - a.timestamp)
+// for some reason, not using the spread operator mutates the signal
+export const getResults = createMemo(() =>
+  [...getResultsTemp()].sort((a, b) => a.timestamp - b.timestamp)
 );
+
+export const getResultsReverse = createMemo(() =>
+  [...getResultsTemp()].sort((a, b) => b.timestamp - a.timestamp)
+);
+
+export function getLastResult(): UnsavedResult | SavedResult | undefined {
+  return getResults().at(-1);
+}
 
 export async function addResult(time: number): Promise<void> {
   const roundedTime = roundToMilliseconds(time);

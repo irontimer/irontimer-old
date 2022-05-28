@@ -2,9 +2,9 @@
 import { Component, createSignal, Match, Switch } from "solid-js";
 import { Popup } from "../components/Popup";
 import { calculateAverage } from "../functions/average";
-import { deleteAll, deleteResult } from "../state/result";
+import { deleteAll, deleteResult, getResultsReverse } from "../state/result";
 import { formatTime } from "../functions/time";
-import { getResults, getResultsReverse } from "../state/result";
+import { getResults } from "../state/result";
 import { SavedResult, UnsavedResult } from "../../types";
 
 import { Button } from "../components/Button";
@@ -16,15 +16,7 @@ export const Timer: Component = () => {
   const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
 
   function getResultFromCurrentOpen(): SavedResult | UnsavedResult | undefined {
-    const currentOpen = getCurrentOpen();
-
-    if (currentOpen === undefined) {
-      return;
-    }
-
-    const result = getResults().at(-currentOpen);
-
-    return result;
+    return getResults()[(getCurrentOpen() ?? 0) - 1];
   }
 
   return (
@@ -104,7 +96,7 @@ export const Timer: Component = () => {
           <tbody>
             {getResultsReverse().map((result, index) => {
               const [ao5, ao12] = [5, 12].map((n) => {
-                const results = getResults().slice(index, index + n);
+                const results = getResultsReverse().slice(index, index + n);
 
                 if (results.length !== n) {
                   return;
