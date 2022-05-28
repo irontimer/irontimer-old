@@ -95,10 +95,10 @@ export const Timer: Component = () => {
         <table>
           <thead>
             <tr>
-              <td>#</td>
-              <td>Time</td>
-              <td>ao5</td>
-              <td>ao12</td>
+              <td class="unselectable">#</td>
+              <td class="unselectable">Time</td>
+              <td class="unselectable">ao5</td>
+              <td class="unselectable">ao12</td>
             </tr>
           </thead>
           <tbody>
@@ -113,21 +113,29 @@ export const Timer: Component = () => {
                 return calculateAverage(results);
               });
 
-              function n(): number {
+              function getIndex(): number {
                 return getResults().length - index;
               }
 
               function onClick(): void {
-                setCurrentOpen(n());
+                setCurrentOpen(getIndex());
               }
 
               return (
                 <>
                   <tr>
-                    <td onClick={onClick}>{n()}</td>
-                    <td onClick={onClick}>{formatTime(result.time)}</td>
-                    <td>{ao5 !== undefined ? formatTime(ao5) : "-"}</td>
-                    <td>{ao12 !== undefined ? formatTime(ao12) : "-"}</td>
+                    <td class="unselectable" onClick={onClick}>
+                      {getIndex()}
+                    </td>
+                    <td class="unselectable" onClick={onClick}>
+                      {formatTime(result.time)}
+                    </td>
+                    <td class="unselectable">
+                      {ao5 !== undefined ? formatTime(ao5) : "-"}
+                    </td>
+                    <td class="unselectable">
+                      {ao12 !== undefined ? formatTime(ao12) : "-"}
+                    </td>
                   </tr>
                 </>
               );
