@@ -30,7 +30,7 @@ export const Timer: Component = () => {
   return (
     <div class="timer-page">
       <div id="results">
-        <h1>Results</h1>
+        <h1 class="unselectable">Results</h1>
         <Button class="clear-results-button" onClick={() => deleteAll()}>
           Clear
         </Button>
