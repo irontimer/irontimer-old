@@ -63,4 +63,6 @@ async function bootServer(port: number): Promise<Server> {
 
 const PORT = parseInt(process.env.PORT ?? "3005", 10);
 
-export const run = (): Promise<Server> => bootServer(PORT);
+export function run(): Promise<Server> {
+  return bootServer(PORT);
+}

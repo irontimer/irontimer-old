@@ -15,10 +15,7 @@ import { TimerInput } from "../components/TimerInput";
 export const Timer: Component = () => {
   const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
 
-  const getResultFromCurrentOpen = ():
-    | SavedResult
-    | UnsavedResult
-    | undefined => {
+  function getResultFromCurrentOpen(): SavedResult | UnsavedResult | undefined {
     const currentOpen = getCurrentOpen();
 
     if (currentOpen === undefined) {
@@ -27,12 +24,8 @@ export const Timer: Component = () => {
 
     const result = getResults().at(-currentOpen);
 
-    if (result === undefined) {
-      return;
-    }
-
     return result;
-  };
+  }
 
   return (
     <div class="timer-page">
@@ -120,9 +113,13 @@ export const Timer: Component = () => {
                 return calculateAverage(results);
               });
 
-              const n = (): number => getResults().length - index;
+              function n(): number {
+                return getResults().length - index;
+              }
 
-              const onClick = (): number => setCurrentOpen(n());
+              function onClick(): void {
+                setCurrentOpen(n());
+              }
 
               return (
                 <>
