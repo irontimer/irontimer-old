@@ -5,7 +5,7 @@ import type {
   SavedResult,
   UnsavedResult
 } from "../../types";
-import API from "../../api-client/index";
+import API from "../api-client/index";
 import { auth } from "../functions/auth";
 import {
   generateScramble,

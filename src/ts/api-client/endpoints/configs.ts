@@ -4,7 +4,7 @@ import {
   EndpointData,
   SavedConfig,
   UnsavedConfig
-} from "../../types";
+} from "../../../types";
 
 const BASE_PATH = "/configs";
 

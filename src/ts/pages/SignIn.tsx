@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { Component } from "solid-js";
 import { Button } from "../components/Button";
 import { auth, signUp } from "../functions/auth";
-import API from "../../api-client";
+import API from "../api-client";
 
 export const SignIn: Component = () => {
   let signUpEmail = "";

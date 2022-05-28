@@ -1,11 +1,12 @@
 # In case anyone uses npm install by accident
 package-lock.json
 
-node_modules
-dist
-build
+.vscode
 .env
 .DS_Store
+build
+dist
+node_modules
 
 # Firebase
 .firebaserc

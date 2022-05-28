@@ -1,4 +1,4 @@
-import { Client, Endpoints, EndpointData } from "../../types";
+import { Client, Endpoints, EndpointData } from "../../../types";
 
 const BASE_PATH = "/api-keys";
 

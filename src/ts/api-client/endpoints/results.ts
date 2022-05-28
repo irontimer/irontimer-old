@@ -4,7 +4,7 @@ import {
   EndpointData,
   SavedResult,
   AlmostSavedResult
-} from "../../types";
+} from "../../../types";
 import { CLIENT_VERSION } from "../../version";
 
 const BASE_PATH = "/results";

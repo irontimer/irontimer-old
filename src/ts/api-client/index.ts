@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import endpoints from "./endpoints";
-import { auth } from "../ts/functions/auth";
+import { auth } from "../functions/auth";
 import { getIdToken } from "firebase/auth";
 import {
   RequestOptions,
@@ -10,7 +10,7 @@ import {
   ApiResponse,
   Client,
   Endpoints
-} from "../types";
+} from "../../types";
 
 const DEV_SERVER_HOST = "http://localhost:3005";
 const PROD_SERVER_HOST = "http://api.irontimer.com:3005";

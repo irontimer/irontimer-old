@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../config/firebase-config";
 import { getAuth, createUserWithEmailAndPassword, User } from "firebase/auth";
-import API from "../../api-client";
+import API from "../api-client";
 import { setResults } from "../state/result";
 import { SavedConfig, SavedResult } from "../../types";
 import { setConfig } from "../state/config";
