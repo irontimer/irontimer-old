@@ -7,8 +7,8 @@ type ReadyState = "unready" | "almost-ready" | "ready" | "running";
 const [getPreviousTime, setPreviousTime] = createSignal(0);
 const [getTimestamp, setTimestamp] = createSignal(0);
 const [getAnimationFrame, setAnimationFrame] = createSignal(0);
-export const [getIsAnimating, setIsAnimating] = createSignal(false);
 const [getReadyState, setReadyState] = createSignal<ReadyState>("unready");
+export const [isTiming, setIsTiming] = createSignal(false);
 
 export const TimerStopwatch: Component = () => {
   return (
@@ -58,7 +58,7 @@ function press(e: KeyboardEvent | TouchEvent): void {
 
       setTimestamp(0);
 
-      setIsAnimating(false);
+      setIsTiming(false);
       setAnimationFrame(0);
 
       setReadyState("unready");
@@ -87,7 +87,7 @@ function release(e: KeyboardEvent | TouchEvent): void {
     case "ready":
       setTimestamp(Date.now());
 
-      setIsAnimating(true);
+      setIsTiming(true);
 
       setReadyState("running");
       break;
@@ -95,7 +95,7 @@ function release(e: KeyboardEvent | TouchEvent): void {
     case "running":
       setTimestamp(0);
 
-      setIsAnimating(false);
+      setIsTiming(false);
       setAnimationFrame(0);
 
       setReadyState("unready");
@@ -117,7 +117,7 @@ function getCurrentTime(): string {
   getAnimationFrame();
 
   if (getReadyState() === "running") {
-    if (getAnimationFrame() === 0 && getIsAnimating()) {
+    if (getAnimationFrame() === 0 && isTiming()) {
       animationLoop();
     }
   } else {

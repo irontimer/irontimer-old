@@ -12,7 +12,7 @@ import {
 
 import { ScrambleType, SCRAMBLE_TYPES } from "../../constants/scramble-type";
 import { Button } from "./Button";
-import { getIsAnimating } from "./TimerStopwatch";
+import { isTiming } from "./TimerStopwatch";
 
 const pages = ["Timer", "Account", "Settings"];
 const icons = ["fa-cube", "fa-user", "fa-cog"];
@@ -31,7 +31,7 @@ export const Top: Component = () => {
 
       <div class="unselectable" id="scramble">
         <Switch fallback="">
-          <Match when={getScramble() === "" && !getIsAnimating()}>
+          <Match when={getScramble() === "" && !isTiming()}>
             <Button
               class="generate-scramble-button unselectable"
               onClick={() => setScramble(generateScramble(getScrambleType()))}
@@ -39,7 +39,7 @@ export const Top: Component = () => {
               Generate Scramble
             </Button>
           </Match>
-          <Match when={getIsAnimating()}>{""}</Match>
+          <Match when={isTiming()}>{""}</Match>
           <Match when={getScramble() !== ""}>{getScramble()}</Match>
         </Switch>
       </div>
