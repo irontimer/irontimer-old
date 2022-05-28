@@ -4,28 +4,30 @@
   .sign-up {
     .sign-up-form {
       .sign-up-form-title {
+        display: block;
         font-size: 1.5rem;
         font-weight: bold;
         margin-bottom: 1rem;
       }
+
       .sign-up-form-input {
+        display: block;
         margin-bottom: 1rem;
       }
+
       .sign-up-form-input-label {
+        display: block;
         font-size: 1.2rem;
         font-weight: bold;
         margin-bottom: 0.5rem;
       }
-      .sign-up-form-input-error {
-        color: red;
-        font-size: 1rem;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-      }
+
       .sign-up-form-button {
+        display: block;
         font-size: 1.2rem;
         font-weight: bold;
         margin-bottom: 1rem;
+        width: 25vw;
       }
     }
   }
@@ -33,28 +35,30 @@
   .sign-in {
     .sign-in-form {
       .sign-in-form-title {
+        display: block;
         font-size: 1.5rem;
         font-weight: bold;
         margin-bottom: 1rem;
       }
+
       .sign-in-form-input {
+        display: block;
         margin-bottom: 1rem;
       }
+
       .sign-in-form-input-label {
+        display: block;
         font-size: 1.2rem;
         font-weight: bold;
         margin-bottom: 0.5rem;
       }
-      .sign-in-form-input-error {
-        color: red;
-        font-size: 1rem;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-      }
+
       .sign-in-form-button {
+        display: block;
         font-size: 1.2rem;
         font-weight: bold;
         margin-bottom: 1rem;
+        width: 25vw;
       }
     }
   }
