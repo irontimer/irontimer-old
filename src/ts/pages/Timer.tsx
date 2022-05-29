@@ -16,6 +16,7 @@ import { Button } from "../components/Button";
 import { TimerStopwatch } from "../components/TimerStopwatch";
 import { getConfigValue } from "../state/config";
 import { TimerInput } from "../components/TimerInput";
+import { addNotification } from "../state/notifications";
 
 export const Timer: Component = () => {
   const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
@@ -77,6 +78,12 @@ export const Timer: Component = () => {
                     navigator.clipboard.writeText(
                       getResultFromCurrentOpen()?.scramble ?? ""
                     );
+
+                    addNotification({
+                      status: "success",
+                      message: "Copied scramble to clipboard",
+                      duration: 3000
+                    });
                   }}
                 ></i>
               </div>

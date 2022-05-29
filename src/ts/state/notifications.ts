@@ -6,7 +6,15 @@ export const [getNotificationBuffer, setNotificationBuffer] = createSignal<
 >([]);
 
 export function addNotification(notification: Notification): void {
-  setNotificationBuffer((buffer) => [...buffer, notification]);
+  setNotificationBuffer((buffer) => {
+    if (notification.duration !== undefined) {
+      setTimeout(() => {
+        deleteNotification(buffer.length);
+      }, notification.duration);
+    }
+
+    return [...buffer, notification];
+  });
 }
 
 export function deleteNotification(index: number): void {

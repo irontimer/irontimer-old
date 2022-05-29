@@ -157,6 +157,7 @@ export interface Preset {
 export interface Notification {
   status: "success" | "error" | "info";
   message: string;
+  duration?: number;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
