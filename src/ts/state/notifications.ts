@@ -1,24 +1,41 @@
-import { createSignal } from "solid-js";
+import { createStore } from "solid-js/store";
 import type { Notification } from "../../types";
 
-export const [getNotificationBuffer, setNotificationBuffer] = createSignal<
-  Notification[]
->([]);
+export const [notificationBuffer, setNotificationBuffer] = createStore<
+  Record<string, Notification>
+>({});
 
-export function addNotification(notification: Notification): void {
-  setNotificationBuffer((buffer) => {
-    if (notification.duration !== undefined) {
-      setTimeout(() => {
-        deleteNotification(buffer.length);
-      }, notification.duration);
+export function addNotification(notification: Omit<Notification, "id">): void {
+  let id = generateNotificationID();
+
+  while (notificationBuffer[id] !== undefined) {
+    id = generateNotificationID();
+  }
+
+  setNotificationBuffer((buffer) => ({
+    ...buffer,
+    [id]: {
+      ...notification,
+      id
     }
+  }));
 
-    return [...buffer, notification];
+  if (notification.duration) {
+    setTimeout(() => {
+      deleteNotification(id);
+    }, notification.duration);
+  }
+}
+
+export function deleteNotification(id: string): void {
+  setNotificationBuffer((buffer) => {
+    return {
+      ...buffer,
+      [id]: undefined
+    };
   });
 }
 
-export function deleteNotification(index: number): void {
-  if (getNotificationBuffer().length > index) {
-    setNotificationBuffer((buffer) => buffer.filter((_, i) => i !== index));
-  }
+function generateNotificationID(): string {
+  return Math.random().toString(36).substring(2, 15);
 }
