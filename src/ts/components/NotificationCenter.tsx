@@ -10,7 +10,7 @@ export const NotificationCenter: Component = () => {
 
           return (
             <div
-              class={`notification ${notification.status}`}
+              class={`notification ${notification.type}`}
               onClick={() => {
                 deleteNotification(id);
               }}

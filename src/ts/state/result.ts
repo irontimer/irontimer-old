@@ -55,7 +55,7 @@ export async function addResult(time: number): Promise<void> {
 
     if (response.status !== 200) {
       addNotification({
-        status: "error",
+        type: "error",
         message: `Failed to save result\n${response.message}`
       });
 

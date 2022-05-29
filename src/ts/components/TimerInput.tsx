@@ -27,7 +27,7 @@ export const TimerInput: Component = () => {
 
           if (isNaN(float)) {
             addNotification({
-              status: "error",
+              type: "error",
               message: "Entered time is not a number"
             });
           } else {

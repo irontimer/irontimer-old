@@ -72,7 +72,7 @@ export const SignIn: Component = () => {
             onClick={async () => {
               if (signUpPassword !== signUpConfirmPassword) {
                 addNotification({
-                  status: "error",
+                  type: "error",
                   message: "Passwords do not match"
                 });
 
@@ -85,7 +85,7 @@ export const SignIn: Component = () => {
 
               if (isValid.status !== 200) {
                 addNotification({
-                  status: "error",
+                  type: "error",
                   message: "Username is invalid or already taken"
                 });
 
@@ -95,7 +95,7 @@ export const SignIn: Component = () => {
               const user = await signUp(signUpEmail, signUpPassword).catch(
                 () => {
                   addNotification({
-                    status: "error",
+                    type: "error",
                     message: "Error signing up"
                   });
 
@@ -109,7 +109,7 @@ export const SignIn: Component = () => {
                   .catch((err) => {
                     console.log(err);
 
-                    addNotification({ status: "error", message: err.message });
+                    addNotification({ type: "error", message: err.message });
 
                     auth.currentUser?.delete();
                   });
@@ -157,7 +157,7 @@ export const SignIn: Component = () => {
                 console.error(err.code, err.message);
 
                 addNotification({
-                  status: "error",
+                  type: "error",
                   message: `Error signing in\n${err.code}\n${err.message}`
                 });
               });

@@ -65,7 +65,7 @@ async function getResultsFromDatabase(): Promise<void> {
 
   if (response.status !== 200) {
     addNotification({
-      status: "error",
+      type: "error",
       message: `Failed to get results\n${response.message}`
     });
 
@@ -82,7 +82,7 @@ async function getConfigFromDatabase(user: User): Promise<void> {
 
   if (response.status !== 200) {
     addNotification({
-      status: "error",
+      type: "error",
       message: `Failed to get config\n${response.message}`
     });
 
@@ -96,7 +96,7 @@ async function getConfigFromDatabase(user: User): Promise<void> {
 
     if (saveResponse.status !== 200) {
       addNotification({
-        status: "error",
+        type: "error",
         message: `Failed to save config\n${saveResponse.message}`
       });
 

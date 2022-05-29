@@ -29,7 +29,22 @@ export const Timer: Component = () => {
     <div class="timer-page">
       <div id="results">
         <h1 class="unselectable">Results</h1>
-        <Button class="clear-results-button" onClick={() => deleteAll()}>
+        <Button
+          class="clear-results-button"
+          onClick={() => {
+            if (
+              window.confirm("Are you sure you want to delete all results?")
+            ) {
+              deleteAll();
+
+              addNotification({
+                type: "success",
+                message: "All results have been deleted",
+                duration: 5000
+              });
+            }
+          }}
+        >
           Clear
         </Button>
         <Popup
@@ -80,9 +95,9 @@ export const Timer: Component = () => {
                     );
 
                     addNotification({
-                      status: "success",
+                      type: "success",
                       message: "Copied scramble to clipboard",
-                      duration: 3000
+                      duration: 5000
                     });
                   }}
                 ></i>
