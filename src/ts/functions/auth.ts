@@ -6,6 +6,7 @@ import { setResults } from "../state/result";
 import { SavedConfig, SavedResult } from "../../types";
 import { setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
+import { addNotification } from "../state/notifications";
 
 const firebaseApp = initializeApp(firebaseConfig);
 
@@ -62,6 +63,15 @@ auth.onAuthStateChanged(async (user) => {
 async function getResultsFromDatabase(): Promise<void> {
   const response = await API.results.get();
 
+  if (response.status !== 200) {
+    addNotification({
+      status: "error",
+      message: `Failed to get results\n${response.message}`
+    });
+
+    return;
+  }
+
   const results = response.data as SavedResult[];
 
   setResults(results);
@@ -70,10 +80,28 @@ async function getResultsFromDatabase(): Promise<void> {
 async function getConfigFromDatabase(user: User): Promise<void> {
   const response = await API.configs.get();
 
+  if (response.status !== 200) {
+    addNotification({
+      status: "error",
+      message: `Failed to get config\n${response.message}`
+    });
+
+    return;
+  }
+
   let config = response.data as SavedConfig | null;
 
   if (config === null) {
     const saveResponse = await API.configs.save(DEFAULT_CONFIG);
+
+    if (saveResponse.status !== 200) {
+      addNotification({
+        status: "error",
+        message: `Failed to save config\n${saveResponse.message}`
+      });
+
+      return;
+    }
 
     config = saveResponse.data as SavedConfig | null;
   }

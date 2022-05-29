@@ -6,6 +6,7 @@ import { Component } from "solid-js";
 import { Button } from "../components/Button";
 import { auth, signUp } from "../functions/auth";
 import API from "../api-client";
+import { addNotification } from "../state/notifications";
 
 export const SignIn: Component = () => {
   let signUpEmail = "";
@@ -70,7 +71,10 @@ export const SignIn: Component = () => {
             class="sign-up-form-button"
             onClick={async () => {
               if (signUpPassword !== signUpConfirmPassword) {
-                alert("Passwords do not match");
+                addNotification({
+                  status: "error",
+                  message: "Passwords do not match"
+                });
 
                 return;
               }
@@ -80,14 +84,20 @@ export const SignIn: Component = () => {
               );
 
               if (isValid.status !== 200) {
-                alert("Username is already taken or is invalid");
+                addNotification({
+                  status: "error",
+                  message: "Username is invalid or already taken"
+                });
 
                 return;
               }
 
               const user = await signUp(signUpEmail, signUpPassword).catch(
                 () => {
-                  alert("Error signing up");
+                  addNotification({
+                    status: "error",
+                    message: "Error signing up"
+                  });
 
                   return undefined;
                 }
@@ -99,7 +109,7 @@ export const SignIn: Component = () => {
                   .catch((err) => {
                     console.log(err);
 
-                    alert(err.message);
+                    addNotification({ status: "error", message: err.message });
 
                     auth.currentUser?.delete();
                   });
@@ -146,7 +156,10 @@ export const SignIn: Component = () => {
               ).catch((err: FirebaseError) => {
                 console.error(err.code, err.message);
 
-                alert(`Error signing in\n${err.code}\n${err.message}`);
+                addNotification({
+                  status: "error",
+                  message: `Error signing in\n${err.code}\n${err.message}`
+                });
               });
             }}
           >

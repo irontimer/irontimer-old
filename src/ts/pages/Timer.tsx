@@ -2,9 +2,14 @@
 import { Component, createSignal, Match, Switch } from "solid-js";
 import { Popup } from "../components/Popup";
 import { calculateAverage } from "../functions/average";
-import { deleteAll, deleteResult, getResultsReverse } from "../state/result";
+import {
+  deleteAll,
+  deleteResult,
+  getResults,
+  getResultsDescending,
+  getResultsAscending
+} from "../state/result";
 import { formatTime } from "../functions/time";
-import { getResults } from "../state/result";
 import { SavedResult, UnsavedResult } from "../../types";
 
 import { Button } from "../components/Button";
@@ -16,7 +21,7 @@ export const Timer: Component = () => {
   const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
 
   function getResultFromCurrentOpen(): SavedResult | UnsavedResult | undefined {
-    return getResults()[(getCurrentOpen() ?? 0) - 1];
+    return getResultsAscending()[(getCurrentOpen() ?? 0) - 1];
   }
 
   return (
@@ -94,9 +99,9 @@ export const Timer: Component = () => {
             </tr>
           </thead>
           <tbody>
-            {getResultsReverse().map((result, index) => {
+            {getResultsDescending().map((result, index) => {
               const [ao5, ao12] = [5, 12].map((n) => {
-                const results = getResultsReverse().slice(index, index + n);
+                const results = getResultsDescending().slice(index, index + n);
 
                 if (results.length !== n) {
                   return;
@@ -105,19 +110,15 @@ export const Timer: Component = () => {
                 return calculateAverage(results);
               });
 
-              function getIndex(): number {
-                return getResults().length - index;
-              }
-
               function onClick(): void {
-                setCurrentOpen(getIndex());
+                setCurrentOpen(getResults().length - index);
               }
 
               return (
                 <>
                   <tr>
                     <td class="unselectable" onClick={onClick}>
-                      {getIndex()}
+                      {getResults().length - index}
                     </td>
                     <td class="unselectable" onClick={onClick}>
                       {formatTime(result.time)}

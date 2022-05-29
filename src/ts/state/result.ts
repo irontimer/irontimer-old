@@ -14,22 +14,23 @@ import {
   setScramble
 } from "./scramble";
 import { roundToMilliseconds } from "../functions/time";
+import { addNotification } from "./notifications";
 
-export const [getResultsTemp, setResults] = createSignal<
+export const [getResults, setResults] = createSignal<
   (SavedResult | UnsavedResult)[]
 >([]);
 
 // for some reason, not using the spread operator mutates the signal
-export const getResults = createMemo(() =>
-  [...getResultsTemp()].sort((a, b) => a.timestamp - b.timestamp)
+export const getResultsAscending = createMemo(() =>
+  [...getResults()].sort((a, b) => a.timestamp - b.timestamp)
 );
 
-export const getResultsReverse = createMemo(() =>
-  [...getResultsTemp()].sort((a, b) => b.timestamp - a.timestamp)
+export const getResultsDescending = createMemo(() =>
+  [...getResults()].sort((a, b) => b.timestamp - a.timestamp)
 );
 
 export function getLastResult(): UnsavedResult | SavedResult | undefined {
-  return getResults().at(-1);
+  return getResultsAscending().at(-1);
 }
 
 export async function addResult(time: number): Promise<void> {
@@ -52,29 +53,36 @@ export async function addResult(time: number): Promise<void> {
 
     const response = await API.results.save(almostSavedResult);
 
+    if (response.status !== 200) {
+      addNotification({
+        status: "error",
+        message: `Failed to save result\n${response.message}`
+      });
+
+      return;
+    }
+
     const savedResult = response.data as AddResultResponse | undefined;
 
     if (savedResult === undefined) {
-      console.log(response.status, response.message);
-
       setScramble(generateScramble(getScrambleType()));
 
       return;
     }
 
-    setResults([
-      ...getResults(),
+    setResults((results) => [
+      ...results,
       { ...almostSavedResult, _id: savedResult.insertedID }
     ]);
 
     console.log("Saved result to database");
   } else {
-    setResults([...getResults(), unsavedResult]);
+    setResults((results) => [...results, unsavedResult]);
   }
 }
 
 export function deleteResult(result: SavedResult | UnsavedResult): void {
-  setResults(getResults().filter((r) => r !== result));
+  setResults((results) => results.filter((r) => r !== result));
 
   if (auth.currentUser !== null && isDatabaseResult(result)) {
     API.results.delete(result);

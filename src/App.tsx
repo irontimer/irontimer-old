@@ -7,6 +7,7 @@ import { Route, Routes } from "solid-app-router";
 // styles
 import "./scss/index.scss";
 import "./scss/components/Button.scss";
+import "./scss/components/NotificationCenter.scss";
 import "./scss/components/Popup.scss";
 import "./scss/components/Text.scss";
 import "./scss/components/TimerInput.scss";
@@ -18,6 +19,7 @@ import "./scss/pages/SignIn.scss";
 import "./scss/pages/Timer.scss";
 
 // tsx
+import { NotificationCenter } from "./ts/components/NotificationCenter";
 import { Top } from "./ts/components/Top";
 import { Account } from "./ts/pages/Account";
 import { Settings } from "./ts/pages/Settings";
@@ -27,6 +29,7 @@ import { Timer } from "./ts/pages/Timer";
 export const App: Component = () => {
   return (
     <>
+      <NotificationCenter />
       <Top />
       <Routes>
         <Route path="/" element={<Timer />}></Route>
