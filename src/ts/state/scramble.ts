@@ -15,12 +15,14 @@ export function generateScramble(
   }
 }
 
+type Face = string | null;
+
 function generateCubeScramble(length: number): string {
   let scramble = "";
 
   const faces = FACES[getScrambleType()];
 
-  let lastFace = faces[Math.floor(Math.random() * faces.length)];
+  let lastFaces: [Face, Face] = [null, null];
 
   for (let i = 0; i < length; i++) {
     const normalFaces = faces.filter((face) => !face.endsWith("Wide"));
@@ -28,11 +30,14 @@ function generateCubeScramble(length: number): string {
     let randomFace =
       normalFaces[Math.floor(Math.random() * normalFaces.length)];
 
-    while (randomFace === lastFace) {
+    while (
+      lastFaces[1] === randomFace ||
+      areParallel(faces, lastFaces[0], randomFace)
+    ) {
       randomFace = normalFaces[Math.floor(Math.random() * normalFaces.length)];
     }
 
-    lastFace = randomFace;
+    lastFaces = [lastFaces[1], randomFace];
 
     const randomDirection = randomBoolean();
     const count = randomBoolean();
@@ -43,6 +48,31 @@ function generateCubeScramble(length: number): string {
   }
 
   return scramble.trim();
+}
+
+function areParallel(faces: string[], face1: Face, face2: Face): boolean {
+  if (face1 === null || face2 === null) {
+    return false;
+  }
+
+  // all parallel faces are within each third of the faces array
+  const threshold = faces.length / 3;
+  const thresholds = [threshold, threshold * 2, threshold * 3];
+
+  const face1Index = faces.indexOf(face1);
+  const face2Index = faces.indexOf(face2);
+
+  // check each third to see if the two sides are in the same third
+  return thresholds.some((max) => {
+    const min = max - threshold;
+
+    return (
+      face1Index >= min &&
+      face1Index < max &&
+      face2Index >= min &&
+      face2Index < max
+    );
+  });
 }
 
 export const [getScrambleType, setScrambleType] =
