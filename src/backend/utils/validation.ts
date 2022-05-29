@@ -1,6 +1,5 @@
 import _ from "lodash";
-import type { ScrambleType } from "../../constants/scramble-type";
-import { SavedResult } from "../../types";
+import type { SavedResult, ScrambleType } from "../../types";
 import profanities from "../constants/profanities";
 
 const RECORD_LIST: Record<ScrambleType, number> = {

@@ -3,7 +3,8 @@ import type {
   SavedResult,
   UserStats,
   Theme,
-  User as IUser
+  User as IUser,
+  ScrambleType
 } from "../../types";
 import { User } from "../models/user";
 import { isUsernameValid } from "../utils/validation";
@@ -11,7 +12,6 @@ import { updateUserEmail } from "../utils/auth";
 import { checkAndUpdatePersonalBest as checkAndUpdatePersonalBest } from "../utils/personal-best";
 import IronTimerError from "../utils/error";
 import { DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
-import type { ScrambleType } from "../../constants/scramble-type";
 
 export async function addUser(
   username: string,

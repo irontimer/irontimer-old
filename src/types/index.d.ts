@@ -2,7 +2,6 @@
 
 import { ObjectId } from "mongoose";
 import { Request as ExpressRequest } from "express";
-import { ScrambleType } from "../constants/scramble-type";
 
 export interface UnsavedResult {
   time: number; // float seconds for how long the solve was
@@ -131,6 +130,8 @@ export interface UserStats {
 }
 
 export type TimerType = "timer" | "typing" | "stackmat";
+
+export type ScrambleType = "3x3x3" | "2x2x2";
 
 export interface UnsavedConfig {
   timerType: TimerType;

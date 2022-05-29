@@ -8,10 +8,9 @@ import type {
 import API from "../api-client/index";
 import { auth } from "../functions/auth";
 import {
-  generateScramble,
+  setAndGenerateScramble,
   getScramble,
-  getScrambleType,
-  setScramble
+  getScrambleType
 } from "./scramble";
 import { roundToMilliseconds } from "../functions/time";
 import { addNotification } from "./notifications";
@@ -65,7 +64,7 @@ export async function addResult(time: number): Promise<void> {
     const savedResult = response.data as AddResultResponse | undefined;
 
     if (savedResult === undefined) {
-      setScramble(generateScramble(getScrambleType()));
+      setAndGenerateScramble();
 
       return;
     }
