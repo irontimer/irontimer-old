@@ -15,6 +15,7 @@ import { incrementResult } from "../../utils/prometheus";
 import * as Bot from "../../tasks/bot";
 import { Request, SavedResult } from "../../../types";
 import { Types } from "mongoose";
+import { DEFAULT_SCRAMBLE_TYPE } from "../../../constants/scramble-type";
 
 export async function getResults(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
@@ -99,7 +100,7 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
     result.isPersonalBest = true;
   }
 
-  if (result.scrambleType === "3x3x3") {
+  if (result.scrambleType === DEFAULT_SCRAMBLE_TYPE) {
     incrementCubes(userID, result);
 
     if (isPersonalBest && user.discordUserID) {

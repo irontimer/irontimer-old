@@ -7,10 +7,9 @@ import {
   setAndGenerateScramble,
   setScrambleType
 } from "../state/scramble";
-import { SCRAMBLE_TYPES } from "../../constants/scramble-type";
+import { SCRAMBLE_TYPES, ScrambleType } from "../../constants/scramble-type";
 import { Button } from "./Button";
 import { isTiming } from "./TimerStopwatch";
-import { ScrambleType } from "../../types";
 
 const pages = ["Timer", "Account", "Settings"];
 const icons = ["fa-cube", "fa-user", "fa-cog"];

@@ -1,4 +1,4 @@
-import { ScrambleType } from "../../types";
+import type { ScrambleType } from "../../constants/scramble-type";
 import { generate2x2x2Scramble } from "./2x2x2";
 import { generate3x3x3Scramble } from "./3x3x3";
 

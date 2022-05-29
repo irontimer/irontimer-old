@@ -5,9 +5,10 @@ import { IronTimerResponse } from "../../utils/irontimer-response";
 import { linkAccount } from "../../utils/discord";
 import { buildAgentLog } from "../../utils/misc";
 import * as Bot from "../../tasks/bot";
-import type { Request, User, ScrambleType } from "../../../types";
+import type { Request, User } from "../../../types";
 import admin from "firebase-admin";
 import { isUsernameValid } from "../../utils/validation";
+import type { ScrambleType } from "../../../constants/scramble-type";
 
 export async function createNewUser(req: Request): Promise<IronTimerResponse> {
   const { username } = req.body;

@@ -1,5 +1,6 @@
 import { User as IUser } from "../../types";
 import { Schema, model } from "mongoose";
+import { SCRAMBLE_TYPES } from "../../constants/scramble-type";
 
 export const UserSchema = new Schema<IUser>({
   // since the userID is unique to each use we can use it as the _id
@@ -36,7 +37,7 @@ export const UserSchema = new Schema<IUser>({
         },
         scrambleType: {
           type: String,
-          enum: ["3x3x3", "2x2x2"],
+          enum: SCRAMBLE_TYPES,
           required: true
         },
         solution: {

@@ -1,4 +1,5 @@
 import joi from "joi";
+import { SCRAMBLE_TYPES } from "../../../constants/scramble-type";
 
 const RESULT_SCHEMA = joi
   .object({
@@ -6,7 +7,10 @@ const RESULT_SCHEMA = joi
     time: joi.number().required(),
     timestamp: joi.date().timestamp().required(),
     scramble: joi.string().required(),
-    scrambleType: joi.string().valid("3x3x3", "2x2x2").required(), // figure out a way to use SCRAMBLE_TYPES without it building weirdly
+    scrambleType: joi
+      .string()
+      .valid(...SCRAMBLE_TYPES)
+      .required(),
     solution: joi.string().optional()
   })
   .required();

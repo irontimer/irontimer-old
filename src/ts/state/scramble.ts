@@ -1,10 +1,12 @@
 import { createEffect, createSignal } from "solid-js";
-import { ScrambleType } from "../../types";
+import { DEFAULT_SCRAMBLE_TYPE } from "../../constants/scramble-type";
+import type { ScrambleType } from "../../constants/scramble-type";
 import { generateScramble } from "../scramble-generator";
 import { getResults } from "./result";
 
-export const [getScrambleType, setScrambleType] =
-  createSignal<ScrambleType>("3x3x3");
+export const [getScrambleType, setScrambleType] = createSignal<ScrambleType>(
+  DEFAULT_SCRAMBLE_TYPE
+);
 export const [getScramble, setScramble] = createSignal("");
 
 export function setAndGenerateScramble(scrambleType?: ScrambleType): void {
