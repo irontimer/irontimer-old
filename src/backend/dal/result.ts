@@ -1,7 +1,7 @@
 import _ from "lodash";
 import type { SavedResult as IResult, User } from "../../types";
 import { Result } from "../models/result";
-import { DeleteResult } from "mongodb";
+import type { DeleteResult } from "mongodb";
 import { Types } from "mongoose";
 import IronTimerError from "../utils/error";
 

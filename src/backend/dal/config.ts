@@ -1,4 +1,4 @@
-import { UpdateResult } from "mongodb";
+import type { UpdateResult } from "mongodb";
 import _ from "lodash";
 import { Config } from "../models/config";
 import type { SavedConfig as IConfig } from "../../types";

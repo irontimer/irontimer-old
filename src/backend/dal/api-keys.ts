@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { MatchKeysAndValues } from "mongodb";
+import type { MatchKeysAndValues } from "mongodb";
 import IronTimerError from "../utils/error";
 import { ApiKey as IApiKey } from "../../types";
 import { ApiKey } from "../models/api-key";

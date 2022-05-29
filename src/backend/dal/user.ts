@@ -10,7 +10,7 @@ import { isUsernameValid } from "../utils/validation";
 import { updateUserEmail } from "../utils/auth";
 import { checkAndUpdatePersonalBest as checkAndUpdatePersonalBest } from "../utils/personal-best";
 import IronTimerError from "../utils/error";
-import { DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
+import type { DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
 import type { ScrambleType } from "../../constants/scramble-type";
 
 export async function addUser(
