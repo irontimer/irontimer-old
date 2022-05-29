@@ -4,6 +4,7 @@ import { addResult, getLastResult } from "../state/result";
 
 type ReadyState = "unready" | "almost-ready" | "ready" | "running";
 
+const [getPreviousTimestamp, setPreviousTimestamp] = createSignal(0);
 const [getTimestamp, setTimestamp] = createSignal(0);
 const [getAnimationFrame, setAnimationFrame] = createSignal(0);
 const [getReadyState, setReadyState] = createSignal<ReadyState>("unready");
@@ -51,6 +52,7 @@ function press(e: KeyboardEvent | TouchEvent): void {
       break;
 
     case "running":
+      setPreviousTimestamp(getCurrentDifference());
       addResult(getCurrentDifference() / 1000);
 
       setTimestamp(0);
@@ -118,7 +120,9 @@ function getCurrentTime(): string {
       animationLoop();
     }
   } else {
-    return formatTime(getLastResult()?.time ?? 0);
+    return formatTime(
+      (getPreviousTimestamp() / 1000 || getLastResult()?.time) ?? 0
+    );
   }
 
   return formatTime(getCurrentDifference() / 1000);
