@@ -3,11 +3,12 @@ import { firebaseConfig } from "../../config/firebase-config";
 import { getAuth, createUserWithEmailAndPassword, User } from "firebase/auth";
 import API from "../api-client";
 import { setResults } from "../state/result";
-import { Config, Result, Saved } from "../../types";
+import { Config, Result, Saved, Session } from "../../types";
 import { config, getConfigChange, setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
 import { addNotification } from "../state/notifications";
 import { createEffect } from "solid-js";
+import { setCurrentSession, setSessions } from "../state/session";
 
 const firebaseApp = initializeApp(firebaseConfig);
 
@@ -46,8 +47,9 @@ auth.onAuthStateChanged(async (user) => {
       return;
     }
 
-    getResultsFromDatabase();
-    getConfigFromDatabase(user);
+    await getResultsFromDatabase();
+    await getConfigFromDatabase(user);
+    await getSessionsFromDatabase();
   } else {
     console.log("user logged out");
 
@@ -112,6 +114,37 @@ async function getConfigFromDatabase(user: User): Promise<void> {
   }
 
   setConfig(config);
+}
+
+async function getSessionsFromDatabase(): Promise<void> {
+  const response = await API.sessions.get();
+
+  if (response.status !== 200) {
+    addNotification({
+      type: "error",
+      message: `Failed to get sessions\n${response.message}`
+    });
+
+    return;
+  }
+
+  const sessions = response.data as Saved<Session>[];
+
+  const currentSession = sessions.find(
+    (session) => config.currentSession === session.name
+  );
+
+  if (currentSession === undefined) {
+    if (sessions.length > 0) {
+      setCurrentSession(sessions[0]);
+
+      setConfig("currentSession", sessions[0].name);
+    }
+  } else {
+    setCurrentSession(currentSession);
+  }
+
+  setSessions(sessions);
 }
 
 createEffect(() => {

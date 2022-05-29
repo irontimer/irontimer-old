@@ -12,14 +12,13 @@ import { updateUserEmail } from "../utils/auth";
 import { checkAndUpdatePersonalBest as checkAndUpdatePersonalBest } from "../utils/personal-best";
 import IronTimerError from "../utils/error";
 import type { DeleteResult, UpdateResult } from "mongodb";
-import type { ScrambleType } from "../../constants/scramble-type";
 
 export async function addUser(
   username: string,
   email: string,
   userID: string
 ): Promise<{ insertedId: string }> {
-  const user = await User.findOne({ _id: userID });
+  const user = await User.findById(userID);
 
   if (user !== null) {
     throw new IronTimerError(409, "User document already exists", "addUser");
@@ -110,7 +109,7 @@ export async function updateEmail(
 }
 
 export async function getUser(userID: string, stack: string): Promise<IUser> {
-  const user = await User.findOne({ _id: userID });
+  const user = await User.findById(userID);
   if (!user) {
     throw new IronTimerError(404, "User not found", stack);
   }
@@ -198,7 +197,7 @@ export async function incrementCubes(
   const user = await getUser(userID, "increment cubes");
 
   const personalBest = user.personalBests
-    .filter((pb) => pb.scrambleType === result.scrambleType)
+    .filter((pb) => pb.session === result.session)
     .sort((a, b) => b.time - a.time)[0];
 
   if (personalBest === undefined || result.time >= personalBest.time * 0.75) {
@@ -286,11 +285,11 @@ export async function getThemes(userID: string): Promise<Theme[]> {
 
 export async function getPersonalBests(
   userID: string,
-  scrambleType: ScrambleType
+  sessionName: string
 ): Promise<PersonalBest | undefined> {
   const user = await getUser(userID, "get personal bests");
 
-  return user.personalBests.find((pb) => pb.scrambleType === scrambleType);
+  return user.personalBests.find((pb) => pb.session === sessionName);
 }
 
 export async function getStats(userID: string): Promise<UserStats> {

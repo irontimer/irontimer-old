@@ -54,7 +54,7 @@ function buildPersonalBest(result: Saved<Result>): PersonalBest {
     time: result.time,
     timestamp: result.timestamp,
     scramble: result.scramble,
-    scrambleType: result.scrambleType,
+    session: result.session,
     solution: result.solution
   };
 }

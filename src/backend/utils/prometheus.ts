@@ -10,13 +10,13 @@ const auth = new Counter({
 const result = new Counter({
   name: "result_saved_total",
   help: "Counts result saves",
-  labelNames: ["scrambleType"]
+  labelNames: ["session"]
 });
 
-const resultScrambleType = new Counter({
-  name: "result_scramble_type_total",
+const resultSession = new Counter({
+  name: "result_session_total",
   help: "Counts scramble types",
-  labelNames: ["scrambleType"]
+  labelNames: ["session"]
 });
 
 const resultTime = new Histogram({
@@ -34,11 +34,11 @@ export function incrementAuth(type: "Bearer" | "ApiKey" | "None"): void {
 
 export function incrementResult(res: Saved<Result>): void {
   result.inc({
-    scrambleType: res.scrambleType
+    session: res.session
   });
 
-  resultScrambleType.inc({
-    scrambleType: res.scrambleType
+  resultSession.inc({
+    session: res.session
   });
 
   resultTime.observe(res.time);

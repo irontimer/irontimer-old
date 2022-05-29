@@ -23,7 +23,7 @@ export async function saveConfig(
 ): Promise<UpdateResult> {
   const configChanges = _.mapKeys(config, (_value, key) => `config.${key}`);
 
-  const existingConfig = await Config.findOne({ _id: userID });
+  const existingConfig = await Config.findById(userID);
 
   if (existingConfig === null) {
     await addConfig(userID, config);
@@ -39,11 +39,5 @@ export async function saveConfig(
 export async function getConfig(
   userID: string
 ): Promise<Saved<IConfig> | undefined> {
-  const config = await Config.findOne({ _id: userID });
-
-  if (config === null) {
-    return;
-  }
-
-  return config;
+  return (await Config.findById(userID)) ?? undefined;
 }

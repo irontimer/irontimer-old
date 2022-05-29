@@ -15,7 +15,7 @@ export interface Result {
   time: number; // float seconds for how long the solve was
   timestamp: number;
   scramble: string;
-  scrambleType: ScrambleType;
+  session: string;
   enteredBy: TimerType;
   solution?: string;
   isPersonalBest?: boolean;
@@ -31,7 +31,7 @@ export interface PersonalBest {
   time: number;
   timestamp: number;
   scramble: string;
-  scrambleType: ScrambleType;
+  session: string;
   solution?: string;
 }
 
@@ -134,13 +134,12 @@ export type TimerType = "timer" | "typing" | "stackmat";
 
 export interface Session {
   name: string;
-  userID: string;
   scrambleType: ScrambleType;
 }
 
 export interface Config {
   timerType: TimerType;
-  scrambleType: ScrambleType;
+  currentSession: string;
 }
 
 export type ConfigChanges = Partial<Saved<Config, string>>;
@@ -257,5 +256,12 @@ export interface Endpoints {
       updates: { name?: string; enabled?: boolean }
     ) => EndpointData;
     delete: (apiKeyId: string) => EndpointData;
+  };
+
+  sessions: {
+    get: Endpoint;
+    add: (session: Session) => EndpointData;
+    delete: (session: Saved<Session>) => EndpointData;
+    deleteAll: Endpoint;
   };
 }

@@ -5,6 +5,7 @@ import configs from "./configs";
 import results from "./results";
 import presets from "./presets";
 import apiKeys from "./api-keys";
+import sessions from "./sessions";
 import { version } from "../../version";
 import { asyncHandler } from "../../middlewares/api-utils";
 import { IronTimerResponse } from "../../utils/irontimer-response";
@@ -22,7 +23,8 @@ const API_ROUTE_MAP = {
   "/results": results,
   "/presets": presets,
   "/psas": psas,
-  "/api-keys": apiKeys
+  "/api-keys": apiKeys,
+  "/sessions": sessions
 };
 
 function addApiRoutes(app: Application): void {

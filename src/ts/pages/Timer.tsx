@@ -17,6 +17,7 @@ import { isTiming, TimerStopwatch } from "../components/TimerStopwatch";
 import { config } from "../state/config";
 import { TimerInput } from "../components/TimerInput";
 import { addNotification } from "../state/notifications";
+import { currentSession } from "../state/session";
 
 export const Timer: Component = () => {
   const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
@@ -78,7 +79,7 @@ export const Timer: Component = () => {
                   ).toLocaleDateString()}
                 </div>
                 <div class="popup-content">
-                  Scramble Type: {getResultFromCurrentOpen()?.scrambleType}
+                  Scramble Type: {currentSession.scrambleType}
                 </div>
                 <div class="popup-content">
                   Scramble:

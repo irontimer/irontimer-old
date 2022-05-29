@@ -1,4 +1,5 @@
 import * as ResultDAL from "../../dal/result";
+import * as SessionDAL from "../../dal/session";
 import {
   getUser,
   checkIfPersonalBest,
@@ -55,9 +56,18 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
 
   const result: Saved<Result> = Object.assign({}, req.body.result);
 
+  const session = await SessionDAL.getSession(userID, result.session);
+
+  if (session === undefined) {
+    throw new IronTimerError(
+      IronTimerStatusCodes.SESSION_NOT_FOUND.code,
+      "Session not found"
+    );
+  }
+
   result.userID = userID;
 
-  if (isResultTooFast(result)) {
+  if (isResultTooFast(result, session)) {
     const status = IronTimerStatusCodes.RESULT_TOO_FAST;
     throw new IronTimerError(status.code, status.message);
   }
@@ -100,7 +110,7 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
     result.isPersonalBest = true;
   }
 
-  if (result.scrambleType === DEFAULT_SCRAMBLE_TYPE) {
+  if (session.scrambleType === DEFAULT_SCRAMBLE_TYPE) {
     incrementCubes(userID, result);
 
     if (isPersonalBest && user.discordUserID) {
@@ -159,7 +169,7 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
   if (isPersonalBest) {
     Logger.logToDb(
       "user_new_pb",
-      `${result.scrambleType} ${result.time} ${result.scramble} (${addedResult.insertedID})`,
+      `${session.scrambleType} ${result.time} ${result.scramble} (${addedResult.insertedID})`,
       userID
     );
   }

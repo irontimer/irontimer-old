@@ -4,6 +4,7 @@ import getPsasEndpoints from "./psas";
 import getResultsEndpoints from "./results";
 import getUsersEndpoints from "./users";
 import getApiKeysEndpoints from "./api-keys";
+import getSessionsEndpoints from "./sessions";
 
 export default {
   getConfigsEndpoints,
@@ -11,5 +12,6 @@ export default {
   getPsasEndpoints,
   getResultsEndpoints,
   getUsersEndpoints,
-  getApiKeysEndpoints: getApiKeysEndpoints
+  getApiKeysEndpoints,
+  getSessionsEndpoints
 };

@@ -6,7 +6,7 @@ import { getScramble, setAndGenerateScramble } from "../state/scramble";
 import { SCRAMBLE_TYPES, ScrambleType } from "../../constants/scramble-type";
 import { Button } from "./Button";
 import { isTiming } from "./TimerStopwatch";
-import { setConfig } from "../state/config";
+import { setCurrentSession } from "../state/session";
 
 const pages = ["Timer", "Account", "Settings"];
 const icons = ["fa-cube", "fa-user", "fa-cog"];
@@ -45,7 +45,7 @@ export const Top: Component = () => {
             onChange={(e) => {
               const val = e.currentTarget.value as ScrambleType;
 
-              setConfig("scrambleType", val);
+              setCurrentSession("scrambleType", val);
             }}
           >
             <For each={SCRAMBLE_TYPES}>

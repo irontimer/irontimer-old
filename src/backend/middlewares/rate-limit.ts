@@ -102,6 +102,35 @@ export const resultsDelete = rateLimit({
   handler: customHandler
 });
 
+// Sessions Routing
+export const sessionsGet = rateLimit({
+  windowMs: ONE_HOUR,
+  max: 60 * REQUEST_MULTIPLIER,
+  keyGenerator: getAddress,
+  handler: customHandler
+});
+
+export const sessionsAdd = rateLimit({
+  windowMs: ONE_HOUR,
+  max: 60 * REQUEST_MULTIPLIER,
+  keyGenerator: getAddress,
+  handler: customHandler
+});
+
+export const sessionsDeleteAll = rateLimit({
+  windowMs: ONE_HOUR,
+  max: 10 * REQUEST_MULTIPLIER,
+  keyGenerator: getAddress,
+  handler: customHandler
+});
+
+export const sessionsDelete = rateLimit({
+  windowMs: ONE_HOUR,
+  max: 60 * REQUEST_MULTIPLIER,
+  keyGenerator: getAddress,
+  handler: customHandler
+});
+
 // Users Routing
 export const userGet = rateLimit({
   windowMs: ONE_HOUR,

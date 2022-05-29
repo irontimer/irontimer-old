@@ -122,13 +122,14 @@ const apiClient: Client = {
 };
 
 // API Endpoints
-const Api: Endpoints = {
+const API: Endpoints = {
   users: endpoints.getUsersEndpoints(apiClient),
   configs: endpoints.getConfigsEndpoints(apiClient),
   results: endpoints.getResultsEndpoints(apiClient),
   psas: endpoints.getPsasEndpoints(apiClient),
   presets: endpoints.getPresetsEndpoints(apiClient),
-  apiKeys: endpoints.getApiKeysEndpoints(apiClient)
+  apiKeys: endpoints.getApiKeysEndpoints(apiClient),
+  sessions: endpoints.getSessionsEndpoints(apiClient)
 };
 
-export default Api;
+export default API;

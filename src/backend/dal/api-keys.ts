@@ -17,7 +17,7 @@ export async function getApiKeys(userID: string): Promise<IApiKey[]> {
 }
 
 export async function getApiKey(userID: string): Promise<IApiKey | undefined> {
-  return (await ApiKey.findOne({ _id: userID })) ?? undefined;
+  return (await ApiKey.findById(userID)) ?? undefined;
 }
 
 export async function countApiKeysForUser(userID: string): Promise<number> {

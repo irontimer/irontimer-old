@@ -7,6 +7,7 @@ interface Status {
 
 interface Statuses {
   RESULT_TOO_FAST: Status;
+  SESSION_NOT_FOUND: Status;
   RESULT_HASH_INVALID: Status;
   RESULT_DATA_INVALID: Status;
   RESULT_SPACING_INVALID: Status;
@@ -22,6 +23,10 @@ const statuses: Statuses = {
   RESULT_TOO_FAST: {
     code: 460,
     message: "Test too short"
+  },
+  SESSION_NOT_FOUND: {
+    code: 461,
+    message: "Session not found"
   },
   RESULT_HASH_INVALID: {
     code: 461,

@@ -11,6 +11,7 @@ import { setAndGenerateScramble, getScramble } from "./scramble";
 import { roundToMilliseconds } from "../functions/time";
 import { addNotification } from "./notifications";
 import { config } from "./config";
+import { currentSession } from "./session";
 
 export const [getResults, setResults] = createSignal<
   (Saved<Result> | Result)[]
@@ -36,7 +37,7 @@ export async function addResult(time: number): Promise<void> {
     time: roundedTime,
     timestamp: Date.now(),
     scramble: getScramble(),
-    scrambleType: config.scrambleType,
+    session: currentSession.name,
     enteredBy: config.timerType
   };
 
@@ -110,7 +111,7 @@ export function isDatabaseResult(
     result.userID !== null &&
     result.time !== undefined &&
     result.timestamp !== undefined &&
-    result.scrambleType !== undefined &&
+    result.session !== undefined &&
     result.scramble !== undefined
   );
 }
