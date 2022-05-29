@@ -14,7 +14,7 @@ import { SavedResult, UnsavedResult } from "../../types";
 
 import { Button } from "../components/Button";
 import { isTiming, TimerStopwatch } from "../components/TimerStopwatch";
-import { getConfigValue } from "../state/config";
+import { config } from "../state/config";
 import { TimerInput } from "../components/TimerInput";
 import { addNotification } from "../state/notifications";
 
@@ -167,10 +167,10 @@ export const Timer: Component = () => {
       <div id="timer">
         <div class="spacer" />
         <Switch fallback={<TimerStopwatch />}>
-          <Match when={getConfigValue("timerType") === "timer"}>
+          <Match when={config.timerType === "timer"}>
             <TimerStopwatch />
           </Match>
-          <Match when={getConfigValue("timerType") === "stopwatch"}>
+          <Match when={config.timerType === "typing"}>
             <TimerInput />
           </Match>
         </Switch>
