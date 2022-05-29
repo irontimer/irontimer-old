@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { PersonalBest, SavedResult } from "../../types";
+import { PersonalBest, Result, Saved } from "../../types";
 
 interface CheckAndUpdatePersonalBestResult {
   isPersonalBest: boolean;
@@ -8,7 +8,7 @@ interface CheckAndUpdatePersonalBestResult {
 
 export function checkAndUpdatePersonalBest(
   userPersonalBests: PersonalBest[],
-  result: SavedResult
+  result: Saved<Result>
 ): CheckAndUpdatePersonalBestResult {
   const personalBestMatch = findMatchingPersonalBest(userPersonalBests, result);
 
@@ -37,19 +37,19 @@ export function checkAndUpdatePersonalBest(
 
 export function findMatchingPersonalBest(
   personalBests: PersonalBest[],
-  result: SavedResult
+  result: Saved<Result>
 ): PersonalBest | undefined {
   return personalBests.find((pb) => matchesPersonalBest(result, pb));
 }
 
 function matchesPersonalBest(
-  result: SavedResult,
+  result: Saved<Result>,
   personalBest: PersonalBest
 ): boolean {
   return _.isEqual(buildPersonalBest(result), personalBest);
 }
 
-function buildPersonalBest(result: SavedResult): PersonalBest {
+function buildPersonalBest(result: Saved<Result>): PersonalBest {
   return {
     time: result.time,
     timestamp: result.timestamp,

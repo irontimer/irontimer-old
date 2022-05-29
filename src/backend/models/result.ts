@@ -1,8 +1,8 @@
-import { SavedResult as IResult } from "../../types";
+import { Result as IResult, Saved } from "../../types";
 import { Schema, model } from "mongoose";
 import { SCRAMBLE_TYPES } from "../../constants/scramble-type";
 
-export const ResultSchema = new Schema<IResult>({
+export const ResultSchema = new Schema<Saved<IResult>>({
   _id: Schema.Types.ObjectId,
   userID: {
     type: String,
@@ -31,4 +31,4 @@ export const ResultSchema = new Schema<IResult>({
   }
 });
 
-export const Result = model<IResult>("result", ResultSchema);
+export const Result = model<Saved<IResult>>("result", ResultSchema);

@@ -10,7 +10,7 @@ import {
   getResultsAscending
 } from "../state/result";
 import { formatTime } from "../functions/time";
-import { SavedResult, UnsavedResult } from "../../types";
+import { Result, Saved } from "../../types";
 
 import { Button } from "../components/Button";
 import { isTiming, TimerStopwatch } from "../components/TimerStopwatch";
@@ -21,7 +21,7 @@ import { addNotification } from "../state/notifications";
 export const Timer: Component = () => {
   const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
 
-  function getResultFromCurrentOpen(): SavedResult | UnsavedResult | undefined {
+  function getResultFromCurrentOpen(): Saved<Result> | Result | undefined {
     return getResultsAscending()[(getCurrentOpen() ?? 0) - 1];
   }
 

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import type { SavedResult as IResult, User } from "../../types";
+import type { Result as IResult, Saved, User } from "../../types";
 import { Result } from "../models/result";
 import type { DeleteResult } from "mongodb";
 import { Types } from "mongoose";
@@ -9,7 +9,7 @@ import { getUser } from "./user";
 
 export async function addResult(
   userID: string,
-  result: IResult
+  result: Partial<Saved<IResult>>
 ): Promise<{ insertedID: Types.ObjectId }> {
   const user: User | undefined = await getUser(userID, "add result").catch(
     () => undefined
@@ -46,7 +46,10 @@ export async function deleteResult(
   return await Result.deleteOne({ userID, _id: resultID });
 }
 
-export async function getResult(userID: string, id: string): Promise<IResult> {
+export async function getResult(
+  userID: string,
+  id: string
+): Promise<Saved<IResult>> {
   const result = await Result.findOne({ _id: id, userID });
 
   if (result === null) {
@@ -56,7 +59,9 @@ export async function getResult(userID: string, id: string): Promise<IResult> {
   return result;
 }
 
-export async function getLastResult(userID: string): Promise<Partial<IResult>> {
+export async function getLastResult(
+  userID: string
+): Promise<Partial<Saved<IResult>>> {
   const [lastResult] = await Result.find({ userID })
     .sort({ timestamp: -1 })
     .limit(1);
@@ -71,7 +76,7 @@ export async function getLastResult(userID: string): Promise<Partial<IResult>> {
 export async function getResultByTimestamp(
   userID: string,
   timestamp: number
-): Promise<IResult | undefined> {
+): Promise<Saved<IResult> | undefined> {
   return (await Result.findOne({ userID, timestamp })) ?? undefined;
 }
 
@@ -79,7 +84,7 @@ export async function getResults(
   userID: string,
   start = 0,
   end = 1000
-): Promise<IResult[]> {
+): Promise<Saved<IResult>[]> {
   const results = await Result.find({ userID })
     .sort({ timestamp: -1 })
     .skip(start)

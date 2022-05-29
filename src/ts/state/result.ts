@@ -1,9 +1,9 @@
 import { createMemo, createSignal } from "solid-js";
 import type {
   AddResultResponse,
-  AlmostSavedResult,
-  SavedResult,
-  UnsavedResult
+  Result,
+  Saved,
+  AlmostSaved
 } from "../../types";
 import API from "../api-client/index";
 import { auth } from "../functions/auth";
@@ -17,7 +17,7 @@ import { addNotification } from "./notifications";
 import { config } from "./config";
 
 export const [getResults, setResults] = createSignal<
-  (SavedResult | UnsavedResult)[]
+  (Saved<Result> | Result)[]
 >([]);
 
 // for some reason, not using the spread operator mutates the signal
@@ -29,14 +29,14 @@ export const getResultsDescending = createMemo(() =>
   [...getResults()].sort((a, b) => b.timestamp - a.timestamp)
 );
 
-export function getLastResult(): UnsavedResult | SavedResult | undefined {
+export function getLastResult(): Result | Saved<Result> | undefined {
   return getResultsAscending().at(-1);
 }
 
 export async function addResult(time: number): Promise<void> {
   const roundedTime = roundToMilliseconds(time);
 
-  const unsavedResult: UnsavedResult = {
+  const unsavedResult: Result = {
     time: roundedTime,
     timestamp: Date.now(),
     scramble: getScramble(),
@@ -47,7 +47,7 @@ export async function addResult(time: number): Promise<void> {
   const userID = auth.currentUser?.uid;
 
   if (auth.currentUser !== null && userID !== undefined) {
-    const almostSavedResult: AlmostSavedResult = {
+    const almostSavedResult: AlmostSaved<Result> = {
       ...unsavedResult,
       userID
     };
@@ -82,7 +82,7 @@ export async function addResult(time: number): Promise<void> {
   }
 }
 
-export function deleteResult(result: SavedResult | UnsavedResult): void {
+export function deleteResult(result: Saved<Result> | Result): void {
   setResults((results) => results.filter((r) => r !== result));
 
   if (auth.currentUser !== null && isDatabaseResult(result)) {
@@ -107,8 +107,8 @@ export function deleteAll(): void {
 }
 
 export function isDatabaseResult(
-  result: Partial<SavedResult>
-): result is SavedResult {
+  result: Partial<Saved<Result>>
+): result is Saved<Result> {
   return (
     result._id !== undefined &&
     result.userID !== null &&

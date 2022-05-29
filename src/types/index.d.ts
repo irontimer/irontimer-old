@@ -4,7 +4,14 @@ import { ObjectId } from "mongoose";
 import { Request as ExpressRequest } from "express";
 import type { ScrambleType } from "../constants/scramble-type";
 
-export interface UnsavedResult {
+export type AlmostSaved<T> = T & {
+  userID: string;
+};
+export type Saved<T, ID = ObjectId> = AlmostSaved<T> & {
+  _id: ID;
+};
+
+export interface Result {
   time: number; // float seconds for how long the solve was
   timestamp: number;
   scramble: string;
@@ -12,14 +19,6 @@ export interface UnsavedResult {
   enteredBy: TimerType;
   solution?: string;
   isPersonalBest?: boolean;
-}
-
-export interface AlmostSavedResult extends UnsavedResult {
-  userID: string;
-}
-
-export interface SavedResult extends AlmostSavedResult {
-  _id: ObjectId;
 }
 
 export interface AddResultResponse {
@@ -46,7 +45,7 @@ export interface Theme {
 }
 
 export interface User {
-  _id: ObjectId;
+  _id: string; // this is the user's uid
   email: string;
   username: string;
   discordUserID?: string;
@@ -133,26 +132,24 @@ export interface UserStats {
 
 export type TimerType = "timer" | "typing" | "stackmat";
 
-export interface UnsavedConfig {
+export interface Session {
+  name: string;
+  userID: string;
+  scrambleType: ScrambleType;
+}
+
+export interface Config {
   timerType: TimerType;
   scrambleType: ScrambleType;
 }
 
-export interface AlmostSavedConfig extends UnsavedConfig {
-  userID: string;
-}
-
-export interface SavedConfig extends AlmostSavedConfig {
-  _id: string;
-}
-
-export type ConfigChanges = Partial<SavedConfig>;
+export type ConfigChanges = Partial<Saved<Config, string>>;
 
 export interface Preset {
   _id: ObjectId;
   userID: string;
   name: string;
-  config: SavedConfig;
+  config: Saved<Config, string>;
 }
 
 export interface Notification {
@@ -204,7 +201,7 @@ export type Endpoint = () => EndpointData;
 export interface Endpoints {
   configs: {
     get: Endpoint;
-    save: (config: UnsavedConfig | SavedConfig) => EndpointData;
+    save: (config: Config | Saved<Config, string>) => EndpointData;
   };
 
   presets: {
@@ -247,8 +244,8 @@ export interface Endpoints {
 
   results: {
     get: Endpoint;
-    save: (result: UnsavedResult & { userID: string }) => EndpointData;
-    delete: (result: SavedResult) => EndpointData;
+    save: (result: Result & { userID: string }) => EndpointData;
+    delete: (result: Saved<Result>) => EndpointData;
     deleteAll: Endpoint;
   };
 

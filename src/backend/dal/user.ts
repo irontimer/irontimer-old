@@ -1,6 +1,7 @@
 import type {
   PersonalBest,
-  SavedResult,
+  Result,
+  Saved,
   UserStats,
   Theme,
   User as IUser
@@ -10,14 +11,14 @@ import { isUsernameValid } from "../utils/validation";
 import { updateUserEmail } from "../utils/auth";
 import { checkAndUpdatePersonalBest as checkAndUpdatePersonalBest } from "../utils/personal-best";
 import IronTimerError from "../utils/error";
-import type { DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
+import type { DeleteResult, UpdateResult } from "mongodb";
 import type { ScrambleType } from "../../constants/scramble-type";
 
 export async function addUser(
   username: string,
   email: string,
   userID: string
-): Promise<InsertOneResult<IUser>> {
+): Promise<{ insertedId: string }> {
   const user = await User.findOne({ _id: userID });
 
   if (user !== null) {
@@ -38,7 +39,6 @@ export async function addUser(
   });
 
   return {
-    acknowledged: true,
     insertedId: newUser._id
   };
 }
@@ -128,7 +128,7 @@ export async function isDiscordUserIDAvailable(
 export async function checkIfPersonalBest(
   userID: string,
   user: IUser,
-  result: SavedResult
+  result: Saved<Result>
 ): Promise<boolean> {
   const pb = checkAndUpdatePersonalBest(user.personalBests ?? [], result);
 
@@ -193,7 +193,7 @@ export async function unlinkDiscord(userID: string): Promise<UpdateResult> {
 
 export async function incrementCubes(
   userID: string,
-  result: SavedResult
+  result: Saved<Result>
 ): Promise<UpdateResult | undefined> {
   const user = await getUser(userID, "increment cubes");
 

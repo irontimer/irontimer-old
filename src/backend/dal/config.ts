@@ -1,28 +1,25 @@
 import type { UpdateResult } from "mongodb";
 import _ from "lodash";
 import { Config } from "../models/config";
-import type { SavedConfig as IConfig } from "../../types";
-import { Types } from "mongoose";
+import type { Config as IConfig, Saved } from "../../types";
 
 export async function addConfig(
   userID: string,
   config: IConfig
-): Promise<{ insertedID: Types.ObjectId }> {
-  const _id = new Types.ObjectId();
-
+): Promise<{ insertedID: string }> {
   await Config.create({
     ...config,
-    _id
+    _id: userID
   });
 
   return {
-    insertedID: _id
+    insertedID: userID
   };
 }
 
 export async function saveConfig(
   userID: string,
-  config: IConfig
+  config: Saved<IConfig> | IConfig
 ): Promise<UpdateResult> {
   const configChanges = _.mapKeys(config, (_value, key) => `config.${key}`);
 
@@ -39,7 +36,9 @@ export async function saveConfig(
   );
 }
 
-export async function getConfig(userID: string): Promise<IConfig | undefined> {
+export async function getConfig(
+  userID: string
+): Promise<Saved<IConfig> | undefined> {
   const config = await Config.findOne({ _id: userID });
 
   if (config === null) {

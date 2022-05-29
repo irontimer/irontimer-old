@@ -13,7 +13,7 @@ import { isResultTooFast } from "../../utils/validation";
 import IronTimerStatusCodes from "../../constants/irontimer-status-codes";
 import { incrementResult } from "../../utils/prometheus";
 import * as Bot from "../../tasks/bot";
-import { Request, SavedResult } from "../../../types";
+import { Request, Result, Saved } from "../../../types";
 import { Types } from "mongoose";
 import { DEFAULT_SCRAMBLE_TYPE } from "../../../constants/scramble-type";
 
@@ -53,7 +53,7 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
 
   const user = await getUser(userID, "add result");
 
-  const result: SavedResult = Object.assign({}, req.body.result);
+  const result: Saved<Result> = Object.assign({}, req.body.result);
 
   result.userID = userID;
 

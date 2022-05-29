@@ -3,10 +3,11 @@ import { firebaseConfig } from "../../config/firebase-config";
 import { getAuth, createUserWithEmailAndPassword, User } from "firebase/auth";
 import API from "../api-client";
 import { setResults } from "../state/result";
-import { SavedConfig, SavedResult } from "../../types";
-import { setConfig } from "../state/config";
+import { Config, Result, Saved } from "../../types";
+import { config, setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
 import { addNotification } from "../state/notifications";
+import { createEffect } from "solid-js";
 
 const firebaseApp = initializeApp(firebaseConfig);
 
@@ -72,7 +73,7 @@ async function getResultsFromDatabase(): Promise<void> {
     return;
   }
 
-  const results = response.data as SavedResult[];
+  const results = response.data as Saved<Result>[];
 
   setResults(results);
 }
@@ -89,7 +90,7 @@ async function getConfigFromDatabase(user: User): Promise<void> {
     return;
   }
 
-  let config = response.data as SavedConfig | null;
+  let config = response.data as Saved<Config, string> | null;
 
   if (config === null) {
     const saveResponse = await API.configs.save(DEFAULT_CONFIG);
@@ -103,7 +104,7 @@ async function getConfigFromDatabase(user: User): Promise<void> {
       return;
     }
 
-    config = saveResponse.data as SavedConfig | null;
+    config = saveResponse.data as Saved<Config, string> | null;
   }
 
   if (config?._id !== user.uid) {
@@ -112,3 +113,9 @@ async function getConfigFromDatabase(user: User): Promise<void> {
 
   setConfig(config);
 }
+
+createEffect(() => {
+  if (auth.currentUser !== null) {
+    API.configs.save(config);
+  }
+});

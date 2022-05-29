@@ -2,7 +2,7 @@ import IronTimerError from "../utils/error";
 import { Types } from "mongoose";
 import { FilterQuery } from "mongoose";
 import { Preset } from "../models/preset";
-import { SavedConfig, Preset as IPreset } from "../../types";
+import { Config, Saved, Preset as IPreset } from "../../types";
 
 const MAX_PRESETS = 10;
 
@@ -29,7 +29,7 @@ export async function getPresets(userID: string): Promise<IPreset[]> {
 export async function addPreset(
   userID: string,
   name: string,
-  config: SavedConfig
+  config: Saved<Config, string>
 ): Promise<PresetCreationResult> {
   const presets = await getPresets(userID);
 
@@ -52,7 +52,7 @@ export async function editPreset(
   userID: string,
   presetId: string,
   name: string,
-  config: SavedConfig
+  config: Saved<Config, string>
 ): Promise<void> {
   const presetUpdates =
     config && Object.keys(config).length > 0 ? { name, config } : { name };
