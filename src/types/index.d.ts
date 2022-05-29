@@ -9,6 +9,7 @@ export interface UnsavedResult {
   timestamp: number;
   scramble: string;
   scrambleType: ScrambleType;
+  enteredBy: TimerType;
   solution?: string;
   isPersonalBest?: boolean;
 }

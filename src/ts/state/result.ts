@@ -14,6 +14,7 @@ import {
 } from "./scramble";
 import { roundToMilliseconds } from "../functions/time";
 import { addNotification } from "./notifications";
+import { getConfig } from "./config";
 
 export const [getResults, setResults] = createSignal<
   (SavedResult | UnsavedResult)[]
@@ -39,7 +40,8 @@ export async function addResult(time: number): Promise<void> {
     time: roundedTime,
     timestamp: Date.now(),
     scramble: getScramble(),
-    scrambleType: getScrambleType()
+    scrambleType: getScrambleType(),
+    enteredBy: getConfig().timerType
   };
 
   const userID = auth.currentUser?.uid;

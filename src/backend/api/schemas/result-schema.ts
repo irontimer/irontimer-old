@@ -11,6 +11,7 @@ const RESULT_SCHEMA = joi
       .string()
       .valid(...SCRAMBLE_TYPES)
       .required(),
+    enteredBy: joi.string().valid("timer", "typing", "stackmat").required(),
     solution: joi.string().optional()
   })
   .required();
