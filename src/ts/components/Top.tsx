@@ -1,6 +1,6 @@
 /** @format */
 
-import { Component, For, Match, Switch } from "solid-js";
+import { Component, For, Match, Show, Switch } from "solid-js";
 import { Link } from "solid-app-router";
 import {
   generateScramble,
@@ -43,19 +43,23 @@ export const Top: Component = () => {
           <Match when={getScramble() !== ""}>{getScramble()}</Match>
         </Switch>
       </div>
-      <select
-        id="scramble-type"
-        class="unselectable"
-        onChange={(e) => {
-          const val = e.currentTarget.value as ScrambleType;
+      <div id="scramble-type">
+        <Show when={!isTiming()}>
+          <select
+            id="scramble-type"
+            class="unselectable"
+            onChange={(e) => {
+              const val = e.currentTarget.value as ScrambleType;
 
-          setScrambleType(val);
-        }}
-      >
-        <For each={SCRAMBLE_TYPES}>
-          {(type) => <option value={type}>{type}</option>}
-        </For>
-      </select>
+              setScrambleType(val);
+            }}
+          >
+            <For each={SCRAMBLE_TYPES}>
+              {(type) => <option value={type}>{type}</option>}
+            </For>
+          </select>
+        </Show>
+      </div>
 
       <div class="nav">
         <For each={pages}>
