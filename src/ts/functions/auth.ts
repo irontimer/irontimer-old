@@ -4,7 +4,7 @@ import { getAuth, createUserWithEmailAndPassword, User } from "firebase/auth";
 import API from "../api-client";
 import { setResults } from "../state/result";
 import { Config, Result, Saved } from "../../types";
-import { config, setConfig } from "../state/config";
+import { config, getConfigChange, setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
 import { addNotification } from "../state/notifications";
 import { createEffect } from "solid-js";
@@ -115,6 +115,8 @@ async function getConfigFromDatabase(user: User): Promise<void> {
 }
 
 createEffect(() => {
+  getConfigChange();
+
   if (auth.currentUser !== null) {
     API.configs.save(config);
   }

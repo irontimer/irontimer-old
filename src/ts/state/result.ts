@@ -7,11 +7,7 @@ import type {
 } from "../../types";
 import API from "../api-client/index";
 import { auth } from "../functions/auth";
-import {
-  setAndGenerateScramble,
-  getScramble,
-  getScrambleType
-} from "./scramble";
+import { setAndGenerateScramble, getScramble } from "./scramble";
 import { roundToMilliseconds } from "../functions/time";
 import { addNotification } from "./notifications";
 import { config } from "./config";
@@ -40,7 +36,7 @@ export async function addResult(time: number): Promise<void> {
     time: roundedTime,
     timestamp: Date.now(),
     scramble: getScramble(),
-    scrambleType: getScrambleType(),
+    scrambleType: config.scrambleType,
     enteredBy: config.timerType
   };
 

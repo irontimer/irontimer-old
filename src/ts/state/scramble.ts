@@ -1,21 +1,21 @@
 import { createEffect, createSignal } from "solid-js";
-import { DEFAULT_SCRAMBLE_TYPE } from "../../constants/scramble-type";
-import type { ScrambleType } from "../../constants/scramble-type";
+import {
+  DEFAULT_SCRAMBLE_TYPE,
+  ScrambleType
+} from "../../constants/scramble-type";
 import { generateScramble } from "../scramble-generator";
 import { getResults } from "./result";
+import { config, getConfigChange, setConfig } from "./config";
 
-export const [getScrambleType, setScrambleType] = createSignal<ScrambleType>(
-  DEFAULT_SCRAMBLE_TYPE
-);
 export const [getScramble, setScramble] = createSignal("");
 
 export function setAndGenerateScramble(scrambleType?: ScrambleType): void {
-  scrambleType ??= getScrambleType();
+  scrambleType ??= config.scrambleType ?? DEFAULT_SCRAMBLE_TYPE;
 
-  if (scrambleType === getScrambleType()) {
+  if (scrambleType === config.scrambleType) {
     setScramble(generateScramble(scrambleType));
   } else {
-    setScrambleType(scrambleType);
+    setConfig("scrambleType", scrambleType);
   }
 }
 
@@ -23,7 +23,8 @@ createEffect(() => {
   // Update scramble when results list changes
   // Basically, calling a signal is like a dependency array in React
   getResults();
+  getConfigChange();
 
   // This also updates a scramble when the scramble type changes
-  setScramble(generateScramble(getScrambleType()));
+  setAndGenerateScramble();
 });

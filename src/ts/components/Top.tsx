@@ -2,14 +2,11 @@
 
 import { Component, For, Match, Show, Switch } from "solid-js";
 import { Link } from "solid-app-router";
-import {
-  getScramble,
-  setAndGenerateScramble,
-  setScrambleType
-} from "../state/scramble";
+import { getScramble, setAndGenerateScramble } from "../state/scramble";
 import { SCRAMBLE_TYPES, ScrambleType } from "../../constants/scramble-type";
 import { Button } from "./Button";
 import { isTiming } from "./TimerStopwatch";
+import { setConfig } from "../state/config";
 
 const pages = ["Timer", "Account", "Settings"];
 const icons = ["fa-cube", "fa-user", "fa-cog"];
@@ -48,7 +45,7 @@ export const Top: Component = () => {
             onChange={(e) => {
               const val = e.currentTarget.value as ScrambleType;
 
-              setScrambleType(val);
+              setConfig("scrambleType", val);
             }}
           >
             <For each={SCRAMBLE_TYPES}>
