@@ -30,12 +30,14 @@ export const Timer: Component = () => {
     <div class="timer-page">
       <Show when={!isTiming()} fallback={<div></div>}>
         <div id="results">
-          <h1 class="unselectable">Results</h1>
+          <h1 class="unselectable">{currentSession.name}</h1>
           <Button
             class="clear-results-button"
             onClick={() => {
               if (
-                window.confirm("Are you sure you want to delete all results?")
+                window.confirm(
+                  "Are you sure you want to delete all results in this session?"
+                )
               ) {
                 deleteAll();
 
