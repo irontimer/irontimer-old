@@ -1,5 +1,5 @@
 /** @format */
-import { Component, createSignal, Match, Show, Switch } from "solid-js";
+import { Component, createSignal, For, Match, Show, Switch } from "solid-js";
 import { Popup } from "../components/Popup";
 import { calculateAverage } from "../functions/average";
 import {
@@ -124,43 +124,53 @@ export const Timer: Component = () => {
               </tr>
             </thead>
             <tbody>
-              {getResultsDescending().map((result, index) => {
-                const [ao5, ao12] = [5, 12].map((n) => {
-                  const results = getResultsDescending().slice(
-                    index,
-                    index + n
-                  );
+              <For each={getResultsDescending()}>
+                {(result, getIndex) => {
+                  {
+                    const [ao5, ao12] = [5, 12].map((n) => {
+                      const results = getResultsDescending().slice(
+                        getIndex(),
+                        getIndex() + n
+                      );
 
-                  if (results.length !== n) {
-                    return;
+                      if (results.length !== n) {
+                        return;
+                      }
+
+                      return calculateAverage(results);
+                    });
+
+                    return (
+                      <>
+                        <tr>
+                          <td
+                            class="unselectable"
+                            onClick={() =>
+                              setCurrentOpen(getResults().length - getIndex())
+                            }
+                          >
+                            {getResults().length - getIndex()}
+                          </td>
+                          <td
+                            class="unselectable"
+                            onClick={() =>
+                              setCurrentOpen(getResults().length - getIndex())
+                            }
+                          >
+                            {formatTime(result.time)}
+                          </td>
+                          <td class="unselectable">
+                            {ao5 !== undefined ? formatTime(ao5) : "-"}
+                          </td>
+                          <td class="unselectable">
+                            {ao12 !== undefined ? formatTime(ao12) : "-"}
+                          </td>
+                        </tr>
+                      </>
+                    );
                   }
-
-                  return calculateAverage(results);
-                });
-
-                function onClick(): void {
-                  setCurrentOpen(getResults().length - index);
-                }
-
-                return (
-                  <>
-                    <tr>
-                      <td class="unselectable" onClick={onClick}>
-                        {getResults().length - index}
-                      </td>
-                      <td class="unselectable" onClick={onClick}>
-                        {formatTime(result.time)}
-                      </td>
-                      <td class="unselectable">
-                        {ao5 !== undefined ? formatTime(ao5) : "-"}
-                      </td>
-                      <td class="unselectable">
-                        {ao12 !== undefined ? formatTime(ao12) : "-"}
-                      </td>
-                    </tr>
-                  </>
-                );
-              })}
+                }}
+              </For>
             </tbody>
           </table>
         </div>
