@@ -61,7 +61,7 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
   if (session === undefined) {
     throw new IronTimerError(
       IronTimerStatusCodes.SESSION_NOT_FOUND.code,
-      "Session not found"
+      IronTimerStatusCodes.SESSION_NOT_FOUND.message
     );
   }
 

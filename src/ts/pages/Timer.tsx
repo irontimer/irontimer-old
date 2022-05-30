@@ -78,6 +78,7 @@ export const Timer: Component = () => {
                     getResultFromCurrentOpen()?.timestamp ?? 0
                   ).toLocaleDateString()}
                 </div>
+                <div class="popup-content">Session: {currentSession.name}</div>
                 <div class="popup-content">
                   Scramble Type: {currentSession.scrambleType}
                 </div>

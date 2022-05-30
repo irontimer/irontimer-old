@@ -16,7 +16,9 @@ export async function getSession(
 export async function addSession(
   session: AlmostSaved<ISession>
 ): Promise<ObjectId> {
-  const insertionResult = await Session.create(session);
+  const _id = new Types.ObjectId();
+
+  const insertionResult = await Session.create({ ...session, _id });
 
   return insertionResult._id;
 }

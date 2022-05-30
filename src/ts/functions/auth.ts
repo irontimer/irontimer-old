@@ -139,6 +139,26 @@ async function getSessionsFromDatabase(): Promise<void> {
       setCurrentSession(sessions[0]);
 
       setConfig("currentSession", sessions[0].name);
+    } else {
+      const response = await API.sessions.add({
+        name: "Default",
+        scrambleType: "3x3x3"
+      });
+
+      if (response.status !== 200) {
+        addNotification({
+          type: "error",
+          message: `Failed to add session\n${response.message}`
+        });
+
+        return;
+      }
+
+      const session = response.data as Saved<Session>;
+
+      setSessions([session]);
+
+      setCurrentSession(session);
     }
   } else {
     setCurrentSession(currentSession);
