@@ -11,9 +11,7 @@ export const NotificationCenter: Component = () => {
           return (
             <div
               class={`notification ${notification.type}`}
-              onClick={() => {
-                Notifications.delete(id);
-              }}
+              onClick={() => Notifications.delete(id)}
             >
               <div class="notification-message unselectable">
                 {notification.message}
