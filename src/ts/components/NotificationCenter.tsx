@@ -4,7 +4,7 @@ import Notifications, { notificationBuffer } from "../state/notifications";
 export const NotificationCenter: Component = () => {
   return (
     <div id="notification-center">
-      <For each={Object.keys(notificationBuffer)}>
+      <For each={Object.keys(notificationBuffer).reverse()}>
         {(id) => {
           const notification = notificationBuffer[id];
 
