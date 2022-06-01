@@ -2,7 +2,7 @@ import API from "../api-client";
 import { createSignal } from "solid-js";
 import { Saved, Session } from "../../types";
 import { auth } from "../functions/auth";
-import { addNotification } from "./notifications";
+import Notifications from "./notifications";
 import { ScrambleType } from "../../constants/scramble-type";
 import { createStore } from "solid-js/store";
 
@@ -34,7 +34,7 @@ export async function addSession(
 
       setSessions([...getSessions(), session]);
     } else {
-      addNotification({
+      Notifications.add({
         type: "error",
         message: "Failed to add session"
       });

@@ -6,7 +6,7 @@ import { Component } from "solid-js";
 import { Button } from "../components/Button";
 import { auth, signUp } from "../functions/auth";
 import API from "../api-client";
-import { addNotification } from "../state/notifications";
+import Notifications from "../state/notifications";
 
 export const SignIn: Component = () => {
   let signUpEmail = "";
@@ -71,7 +71,7 @@ export const SignIn: Component = () => {
             class="sign-up-form-button"
             onClick={async () => {
               if (signUpPassword !== signUpConfirmPassword) {
-                addNotification({
+                Notifications.add({
                   type: "error",
                   message: "Passwords do not match"
                 });
@@ -84,7 +84,7 @@ export const SignIn: Component = () => {
               );
 
               if (isValid.status !== 200) {
-                addNotification({
+                Notifications.add({
                   type: "error",
                   message: "Username is invalid or already taken"
                 });
@@ -94,7 +94,7 @@ export const SignIn: Component = () => {
 
               const user = await signUp(signUpEmail, signUpPassword).catch(
                 () => {
-                  addNotification({
+                  Notifications.add({
                     type: "error",
                     message: "Error signing up"
                   });
@@ -109,7 +109,7 @@ export const SignIn: Component = () => {
                   .catch((err) => {
                     console.log(err);
 
-                    addNotification({ type: "error", message: err.message });
+                    Notifications.add({ type: "error", message: err.message });
 
                     auth.currentUser?.delete();
                   });
@@ -156,7 +156,7 @@ export const SignIn: Component = () => {
               ).catch((err: FirebaseError) => {
                 console.error(err.code, err.message);
 
-                addNotification({
+                Notifications.add({
                   type: "error",
                   message: `Error signing in\n${err.code}\n${err.message}`
                 });

@@ -1,5 +1,5 @@
 import { Component, For } from "solid-js";
-import { deleteNotification, notificationBuffer } from "../state/notifications";
+import Notifications, { notificationBuffer } from "../state/notifications";
 
 export const NotificationCenter: Component = () => {
   return (
@@ -12,7 +12,7 @@ export const NotificationCenter: Component = () => {
             <div
               class={`notification ${notification.type}`}
               onClick={() => {
-                deleteNotification(id);
+                Notifications.delete(id);
               }}
             >
               <div class="notification-message unselectable">

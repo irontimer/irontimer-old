@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import { parseTimeString } from "../functions/time";
-import { addNotification } from "../state/notifications";
+import Notifications from "../state/notifications";
 import { addResult } from "../state/result";
 
 export const TimerInput: Component = () => {
@@ -26,7 +26,7 @@ export const TimerInput: Component = () => {
           }
 
           if (isNaN(float)) {
-            addNotification({
+            Notifications.add({
               type: "error",
               message: "Entered time is not a number"
             });

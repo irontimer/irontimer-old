@@ -5,7 +5,7 @@ export const [notificationBuffer, setNotificationBuffer] = createStore<
   Record<string, Notification>
 >({});
 
-export function addNotification(notification: Omit<Notification, "id">): void {
+function add(notification: Omit<Notification, "id">): void {
   let id = generateNotificationID();
 
   while (notificationBuffer[id] !== undefined) {
@@ -27,7 +27,7 @@ export function addNotification(notification: Omit<Notification, "id">): void {
   }
 }
 
-export function deleteNotification(id: string): void {
+function deleteNotification(id: string): void {
   setNotificationBuffer((buffer) => {
     return {
       ...buffer,
@@ -39,3 +39,8 @@ export function deleteNotification(id: string): void {
 function generateNotificationID(): string {
   return Math.random().toString(36).substring(2, 15);
 }
+
+export default {
+  add,
+  delete: deleteNotification
+};

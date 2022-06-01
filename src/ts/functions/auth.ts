@@ -6,7 +6,7 @@ import { setResults } from "../state/result";
 import { Config, Result, Saved, Session } from "../../types";
 import { config, getConfigChange, setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
-import { addNotification } from "../state/notifications";
+import Notifications from "../state/notifications";
 import { createEffect } from "solid-js";
 import { setCurrentSession, setSessions } from "../state/session";
 
@@ -67,7 +67,7 @@ async function getResultsFromDatabase(): Promise<void> {
   const response = await API.results.get();
 
   if (response.status !== 200) {
-    addNotification({
+    Notifications.add({
       type: "error",
       message: `Failed to get results\n${response.message}`
     });
@@ -84,7 +84,7 @@ async function getConfigFromDatabase(user: User): Promise<void> {
   const response = await API.configs.get();
 
   if (response.status !== 200) {
-    addNotification({
+    Notifications.add({
       type: "error",
       message: `Failed to get config\n${response.message}`
     });
@@ -98,7 +98,7 @@ async function getConfigFromDatabase(user: User): Promise<void> {
     const saveResponse = await API.configs.save(DEFAULT_CONFIG);
 
     if (saveResponse.status !== 200) {
-      addNotification({
+      Notifications.add({
         type: "error",
         message: `Failed to save config\n${saveResponse.message}`
       });
@@ -120,7 +120,7 @@ async function getSessionsFromDatabase(): Promise<void> {
   const response = await API.sessions.get();
 
   if (response.status !== 200) {
-    addNotification({
+    Notifications.add({
       type: "error",
       message: `Failed to get sessions\n${response.message}`
     });
@@ -146,7 +146,7 @@ async function getSessionsFromDatabase(): Promise<void> {
       });
 
       if (response.status !== 200) {
-        addNotification({
+        Notifications.add({
           type: "error",
           message: `Failed to add session\n${response.message}`
         });

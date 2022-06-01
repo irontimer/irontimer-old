@@ -9,7 +9,7 @@ import API from "../api-client/index";
 import { auth } from "../functions/auth";
 import { setAndGenerateScramble, getScramble } from "./scramble";
 import { roundToMilliseconds } from "../functions/time";
-import { addNotification } from "./notifications";
+import Notifications from "./notifications";
 import { config } from "./config";
 import { currentSession } from "./session";
 
@@ -52,7 +52,7 @@ export async function addResult(time: number): Promise<void> {
     const response = await API.results.save(almostSavedResult);
 
     if (response.status !== 200) {
-      addNotification({
+      Notifications.add({
         type: "error",
         message: `Failed to save result\n${response.message}`
       });

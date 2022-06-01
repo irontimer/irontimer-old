@@ -16,7 +16,7 @@ import { Button } from "../components/Button";
 import { isTiming, TimerStopwatch } from "../components/TimerStopwatch";
 import { config } from "../state/config";
 import { TimerInput } from "../components/TimerInput";
-import { addNotification } from "../state/notifications";
+import Notifications from "../state/notifications";
 import { currentSession } from "../state/session";
 
 export const Timer: Component = () => {
@@ -41,7 +41,7 @@ export const Timer: Component = () => {
               ) {
                 deleteAll();
 
-                addNotification({
+                Notifications.add({
                   type: "success",
                   message: "All results have been deleted",
                   duration: 5000
@@ -105,7 +105,7 @@ export const Timer: Component = () => {
                       getResultFromCurrentOpen()?.scramble ?? ""
                     );
 
-                    addNotification({
+                    Notifications.add({
                       type: "success",
                       message: "Copied scramble to clipboard",
                       duration: 5000
