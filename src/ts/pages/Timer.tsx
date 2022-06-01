@@ -52,70 +52,69 @@ export const Timer: Component = () => {
             Clear
           </Button>
           <Popup
-            children={
-              <div class="popup-content">
-                <div class="popup-title">Result #{getCurrentOpen()}</div>
-                <div class="popup-buttons">
-                  <i
-                    class="fas fa-trash"
-                    onClick={() => {
-                      const result = getResultFromCurrentOpen();
-
-                      if (result === undefined) {
-                        return;
-                      }
-
-                      deleteResult(result);
-
-                      setCurrentOpen();
-                    }}
-                  ></i>
-                </div>
-                <div class="popup-content">
-                  Time: {getResultFromCurrentOpen()?.time}
-                </div>
-                <div class="popup-content">
-                  Date:{" "}
-                  {new Date(
-                    getResultFromCurrentOpen()?.timestamp ?? 0
-                  ).toLocaleDateString()}
-                </div>
-                <div class="popup-content">Session: {currentSession.name}</div>
-                <div class="popup-content">
-                  Scramble Type: {currentSession.scrambleType}
-                </div>
-                <div class="popup-content">
-                  Scramble:
-                  <input
-                    readonly
-                    class="popup-content"
-                    value={getResultFromCurrentOpen()?.scramble}
-                  />
-                  <i
-                    class="popup-copy-button fa-solid fa-clipboard-list"
-                    onClick={() => {
-                      // copy scramble to clipboard
-                      navigator.clipboard.writeText(
-                        getResultFromCurrentOpen()?.scramble ?? ""
-                      );
-
-                      addNotification({
-                        type: "success",
-                        message: "Copied scramble to clipboard",
-                        duration: 5000
-                      });
-                    }}
-                  ></i>
-                </div>
-              </div>
-            }
             isOpen={[
               () => getCurrentOpen() !== undefined,
               (isOpen) => !isOpen && setCurrentOpen()
             ]}
             id="result-popup"
             wrapperID="result-popup-wrapper"
-          ></Popup>
+          >
+            <div class="popup-content">
+              <div class="popup-title">Result #{getCurrentOpen()}</div>
+              <div class="popup-buttons">
+                <i
+                  class="fas fa-trash"
+                  onClick={() => {
+                    const result = getResultFromCurrentOpen();
+
+                    if (result === undefined) {
+                      return;
+                    }
+
+                    deleteResult(result);
+
+                    setCurrentOpen();
+                  }}
+                ></i>
+              </div>
+              <div class="popup-content">
+                Time: {getResultFromCurrentOpen()?.time}
+              </div>
+              <div class="popup-content">
+                Date:{" "}
+                {new Date(
+                  getResultFromCurrentOpen()?.timestamp ?? 0
+                ).toLocaleDateString()}
+              </div>
+              <div class="popup-content">Session: {currentSession.name}</div>
+              <div class="popup-content">
+                Scramble Type: {currentSession.scrambleType}
+              </div>
+              <div class="popup-content">
+                Scramble:
+                <input
+                  readonly
+                  class="popup-content"
+                  value={getResultFromCurrentOpen()?.scramble}
+                />
+                <i
+                  class="popup-copy-button fa-solid fa-clipboard-list"
+                  onClick={() => {
+                    // copy scramble to clipboard
+                    navigator.clipboard.writeText(
+                      getResultFromCurrentOpen()?.scramble ?? ""
+                    );
+
+                    addNotification({
+                      type: "success",
+                      message: "Copied scramble to clipboard",
+                      duration: 5000
+                    });
+                  }}
+                ></i>
+              </div>
+            </div>
+          </Popup>
           <table>
             <thead>
               <tr>
