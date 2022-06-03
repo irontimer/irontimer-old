@@ -3,7 +3,7 @@ export function randomInteger(min: number, max: number): number {
 }
 
 export function randomFloat(min: number, max: number): number {
-  return Math.random() * (max - min + 1) + min;
+  return Math.random() * (max - min) + min;
 }
 
 export function randomBoolean(): boolean {

@@ -1,19 +1,22 @@
-import type { ScrambleType } from "../../constants/scramble-type";
-import { generate2x2x2Scramble } from "./2x2x2";
-import { generate3x3x3Scramble } from "./3x3x3";
+import {
+  ScrambleType,
+  DEFAULT_SCRAMBLE_LENGTH
+} from "../../constants/scramble-type";
+import { randomMoveGenerator } from "./random-move-generator";
 
 export function generateScramble(
   scrambleType: ScrambleType,
   length?: number
 ): string {
-  switch (scrambleType) {
-    case "3x3x3":
-      return generate3x3x3Scramble(length ?? 25);
+  const l = length ?? DEFAULT_SCRAMBLE_LENGTH[scrambleType];
 
-    case "2x2x2":
-      return generate2x2x2Scramble(length ?? 10);
+  const gen = randomMoveGenerator(scrambleType, l);
 
-    default:
-      return "unimplemented scramble type";
+  const scramble: string[] = [];
+
+  for (const move of gen) {
+    scramble.push(move);
   }
+
+  return scramble.join(" ");
 }
