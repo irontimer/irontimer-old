@@ -5,42 +5,41 @@ import { addResult } from "../state/result";
 
 export const TimerInput: Component = () => {
   return (
-    <div class="timer-input">
-      <input
-        placeholder="Enter time"
-        onKeyPress={(e) => {
-          if (e.key !== "Enter") {
-            if (/[^0-9.:,]/.test(e.key)) {
-              e.preventDefault();
-            }
-
-            return;
+    <input
+      class="timer-input"
+      placeholder="Enter time"
+      onKeyPress={(e) => {
+        if (e.key !== "Enter") {
+          if (/[^0-9.:,]/.test(e.key)) {
+            e.preventDefault();
           }
 
-          const val = e.currentTarget.value.replace(/,/g, "");
+          return;
+        }
 
-          let float = /[^0-9.]/.test(val) ? NaN : parseFloat(val);
+        const val = e.currentTarget.value.replace(/,/g, "");
 
-          if (isNaN(float)) {
-            float = parseTimeString(val);
+        let float = /[^0-9.]/.test(val) ? NaN : parseFloat(val);
+
+        if (isNaN(float)) {
+          float = parseTimeString(val);
+        }
+
+        if (isNaN(float)) {
+          Notifications.add({
+            type: "error",
+            message: "Entered time is not a number"
+          });
+        } else {
+          if (float % 1 === 0 && !val.includes(".")) {
+            float /= 1000;
           }
 
-          if (isNaN(float)) {
-            Notifications.add({
-              type: "error",
-              message: "Entered time is not a number"
-            });
-          } else {
-            if (float % 1 === 0 && !val.includes(".")) {
-              float /= 1000;
-            }
+          addResult(float);
+        }
 
-            addResult(float);
-          }
-
-          e.currentTarget.value = "";
-        }}
-      />
-    </div>
+        e.currentTarget.value = "";
+      }}
+    />
   );
 };

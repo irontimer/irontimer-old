@@ -106,6 +106,7 @@ $remaining_height: 90vh;
 
   #timer {
     align-self: center;
+    justify-self: center;
     height: $remaining_height;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;

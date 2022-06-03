@@ -1,9 +1,11 @@
-.timer-input input {
-  font-size: 7.5rem;
+.timer-input {
+  font-size: 5rem;
   text-align: center;
   border-width: thick;
   border-style: solid;
   border-color: black;
   border-radius: 5rem;
   background-color: lightgray;
+  height: fit-content;
+  width: fit-content;
 }

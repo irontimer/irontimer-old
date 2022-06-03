@@ -1,4 +1,4 @@
-import { DEFAULT_CONFIG_ENTRIES } from "../../../constants/default-config";
+import { DEFAULT_CONFIG_KEYS } from "../../../constants/default-config";
 import { Client, Endpoints, EndpointData, Config, Saved } from "../../../types";
 
 const BASE_PATH = "/configs";
@@ -12,7 +12,7 @@ export default function getConfigsEndpoints(
 
   async function save(config: Config | Saved<Config, string>): EndpointData {
     const strippedConfig = Object.fromEntries(
-      DEFAULT_CONFIG_ENTRIES.map((key) => [key, config[key]])
+      DEFAULT_CONFIG_KEYS.map((key) => [key, config[key]])
     );
 
     return await apiClient.patch(BASE_PATH, {
