@@ -23,6 +23,8 @@ function getCurrentDifference(): number {
 }
 
 function press(e: KeyboardEvent | TouchEvent): void {
+  e.preventDefault();
+
   if (isKeyboardEvent(e)) {
     if (e.code !== "Space") {
       return;
@@ -67,6 +69,8 @@ function press(e: KeyboardEvent | TouchEvent): void {
 }
 
 function release(e: KeyboardEvent | TouchEvent): void {
+  e.preventDefault();
+
   if (isKeyboardEvent(e)) {
     if (e.code !== "Space") {
       return;
