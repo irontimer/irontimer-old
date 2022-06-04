@@ -28,11 +28,11 @@ function press(e: KeyboardEvent | TouchEvent): void {
     return;
   }
 
-  e.preventDefault();
-
   if (isKeyboardEvent(e) && e.code !== "Space") {
     return;
   }
+
+  e.preventDefault();
 
   switch (getReadyState()) {
     case "unready":
@@ -76,20 +76,20 @@ function release(e: KeyboardEvent | TouchEvent): void {
     return;
   }
 
-  e.preventDefault();
-
   if (isKeyboardEvent(e) && e.code !== "Space") {
     return;
   }
 
+  e.preventDefault();
+
   switch (getReadyState()) {
     case "unready":
-      break;
-
-    case "almost-ready":
       setTimestamp(0);
 
+      break;
+    case "almost-ready":
       setReadyState("unready");
+
       break;
 
     case "ready":
