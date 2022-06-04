@@ -1,5 +1,6 @@
 import { Component, createSignal } from "solid-js";
 import { formatTime } from "../functions/time";
+import { config } from "../state/config";
 import { addResult, getLastResult } from "../state/result";
 
 type ReadyState = "unready" | "almost-ready" | "ready" | "running";
@@ -23,12 +24,14 @@ function getCurrentDifference(): number {
 }
 
 function press(e: KeyboardEvent | TouchEvent): void {
+  if (config.timerType !== "timer") {
+    return;
+  }
+
   e.preventDefault();
 
-  if (isKeyboardEvent(e)) {
-    if (e.code !== "Space") {
-      return;
-    }
+  if (isKeyboardEvent(e) && e.code !== "Space") {
+    return;
   }
 
   switch (getReadyState()) {
@@ -69,12 +72,14 @@ function press(e: KeyboardEvent | TouchEvent): void {
 }
 
 function release(e: KeyboardEvent | TouchEvent): void {
+  if (config.timerType !== "timer") {
+    return;
+  }
+
   e.preventDefault();
 
-  if (isKeyboardEvent(e)) {
-    if (e.code !== "Space") {
-      return;
-    }
+  if (isKeyboardEvent(e) && e.code !== "Space") {
+    return;
   }
 
   switch (getReadyState()) {
@@ -136,10 +141,7 @@ function isKeyboardEvent(e: KeyboardEvent | TouchEvent): e is KeyboardEvent {
   return (e as KeyboardEvent).code !== undefined;
 }
 
-// Keyboard
 document.addEventListener("keydown", press);
-document.addEventListener("keyup", release);
-
-// Touchscreen
 document.addEventListener("touchstart", press);
+document.addEventListener("keyup", release);
 document.addEventListener("touchend", release);
