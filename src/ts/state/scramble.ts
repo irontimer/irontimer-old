@@ -1,8 +1,5 @@
 import { createEffect, createSignal } from "solid-js";
-import {
-  DEFAULT_SCRAMBLE_TYPE,
-  ScrambleType
-} from "../../constants/scramble-type";
+import { DEFAULT_SCRAMBLE_TYPE } from "../../constants/scramble-type";
 import { generateScramble } from "../scramble-generator";
 import { getResults } from "./result";
 import { getConfigChange } from "./config";

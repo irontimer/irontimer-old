@@ -1,5 +1,4 @@
 import type { UpdateResult } from "mongodb";
-import _ from "lodash";
 import { Config } from "../models/config";
 import type { Config as IConfig, Saved } from "../../types";
 
@@ -21,8 +20,6 @@ export async function saveConfig(
   userID: string,
   config: Saved<IConfig> | IConfig
 ): Promise<UpdateResult> {
-  const configChanges = _.mapKeys(config, (_value, key) => `config.${key}`);
-
   const existingConfig = await Config.findById(userID);
 
   if (existingConfig === null) {
@@ -31,7 +28,7 @@ export async function saveConfig(
 
   return await Config.updateOne(
     { _id: userID },
-    { $set: configChanges },
+    { $set: config },
     { upsert: true }
   );
 }
