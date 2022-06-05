@@ -14,7 +14,11 @@ node_modules
 src/config/firebase-config.ts
 src/backend/credentials/serviceAccountKey.json
 
-#backend
+# Backend
 server.version
 yarn-error.log
 logs/
+
+# Tauri
+src-tauri/target/
+src-tauri/WixTools

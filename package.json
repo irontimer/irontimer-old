@@ -5,12 +5,14 @@
   "author": "Evan <evanrayweigel@outlook.com>",
   "license": "AGPL-3.0",
   "scripts": {
-    "dev": "concurrently \"yarn dev-frontend\" \"yarn dev-backend\"",
+    "dev": "concurrently \"yarn dev-frontend\" \"yarn dev-backend\" \"yarn dev-tauri\"",
     "dev-frontend": "vite",
     "dev-backend": "nodemon",
-    "build": "yarn build-frontend && yarn build-backend",
+    "dev-tauri": "tauri dev",
+    "build": "yarn build-frontend && yarn build-backend && yarn build-tauri",
     "build-frontend": "tsc --noEmit && vite build",
     "build-backend": "cd ./src/backend && tsc",
+    "build-tauri": "tauri build",
     "serve": "vite preview",
     "deploy": "yarn build && firebase deploy",
     "pretty": "prettier \"src/**/*.{ts,tsx,scss}\"",
@@ -19,6 +21,7 @@
     "lint-fix": "eslint --fix \"src/**/*.{ts,tsx,scss}\""
   },
   "devDependencies": {
+    "@tauri-apps/cli": "1.0.0-rc.13",
     "@types/babel__core": "7.1.19",
     "@types/bcrypt": "5.0.0",
     "@types/cors": "2.8.12",
