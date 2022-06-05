@@ -93,7 +93,7 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
         lastTimestamp: lastResultTimestamp,
         earliestPossible,
         now: nowMilliseconds,
-        testDuration: timeMilliseconds,
+        time: timeMilliseconds,
         difference: nowMilliseconds - earliestPossible
       },
       userID

@@ -15,7 +15,6 @@ export const LogSchema = new Schema<ILog>({
     required: true
   },
   message: {
-    type: String,
     required: false
   }
 });
