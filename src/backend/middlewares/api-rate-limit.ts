@@ -1,6 +1,6 @@
-// import { Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { Request } from "../../types";
-import rateLimit /*, { Options }*/ from "express-rate-limit";
+import rateLimit, { Options } from "express-rate-limit";
 import IronTimerError from "../utils/error";
 
 const REQUEST_MULTIPLIER = process.env.MODE === "dev" ? 100 : 1;
@@ -9,10 +9,12 @@ const getKey = (req: Request /*, _res: Response*/): string => {
   return req?.ctx?.decodedToken?.userID;
 };
 
-const customHandler = (/* _req: Request,
-// _res: Response,
-// _next: NextFunction,
-_options: Options*/): void => {
+const customHandler = (
+  _req: Request,
+  _res: Response,
+  _next: NextFunction,
+  _options: Options
+): void => {
   throw new IronTimerError(429, "Too many attempts, please try again later.");
 };
 

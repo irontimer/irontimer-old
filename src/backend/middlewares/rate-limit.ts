@@ -1,5 +1,5 @@
-// import { Response, NextFunction } from "express";
-import rateLimit /*, { Options }*/ from "express-rate-limit";
+import { Response, NextFunction } from "express";
+import rateLimit, { Options } from "express-rate-limit";
 import IronTimerError from "../utils/error";
 import { Request } from "../../types";
 
@@ -12,10 +12,12 @@ const getAddress = (req: Request /*, _res: Response*/): string => {
     "255.255.255.255") as string;
 };
 
-const customHandler = (/*_req: Request,
+const customHandler = (
+  _req: Request,
   _res: Response,
   _next: NextFunction,
-  _options: Options*/): void => {
+  _options: Options
+): void => {
   throw new IronTimerError(429, "Too many attempts, please try again later.");
 };
 
