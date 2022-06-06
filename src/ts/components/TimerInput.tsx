@@ -10,7 +10,10 @@ export const TimerInput: Component = () => {
       placeholder="Enter time"
       onKeyPress={(e) => {
         if (e.key !== "Enter") {
-          if (/[^0-9.:,]/.test(e.key)) {
+          if (
+            /[^0-9.:,]/.test(e.key) ||
+            /[.]{2}/.test(e.currentTarget.value + e.key)
+          ) {
             e.preventDefault();
           }
 
