@@ -38,6 +38,26 @@ router.post(
   asyncHandler(ResultController.addResult)
 );
 
+router.patch(
+  "/:id",
+  validateConfiguration({
+    criteria: (configuration) => {
+      return configuration.enableSavingResults.enabled;
+    }
+  }),
+  RateLimit.resultsUpdate,
+  authenticateRequest(),
+  validateRequest({
+    params: {
+      id: joi.string().required()
+    },
+    body: {
+      result: resultSchema
+    }
+  }),
+  asyncHandler(ResultController.updateResult)
+);
+
 router.delete(
   "/",
   RateLimit.resultsDeleteAll,

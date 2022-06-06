@@ -7,10 +7,12 @@ import {
   deleteResult,
   getResults,
   getResultsDescending,
-  getResultsAscending
+  getResultsAscending,
+  updateResult,
+  getLastResult
 } from "../state/result";
 import { formatTime } from "../functions/time";
-import { Result, Saved } from "../../types";
+import { Result, Penalty, Saved } from "../../types";
 
 import { Button } from "../components/Button";
 import { isTiming, TimerStopwatch } from "../components/TimerStopwatch";
@@ -19,26 +21,49 @@ import { TimerInput } from "../components/TimerInput";
 import Notifications from "../state/notifications";
 import { currentSession } from "../state/session";
 
+const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
+
+function getResultFromCurrentOpen(): Saved<Result> | Result | undefined {
+  return getResultsAscending()[(getCurrentOpen() ?? 0) - 1];
+}
+
+const averages = [5, 12, 50, 100, 200, 500, 1000]; // TODO use a config setting
+
+function getAllAverages(): { averageOf: number; average: string }[] {
+  return averages
+    .filter((n) => n <= getResults().length)
+    .map((n) => ({
+      averageOf: n,
+      average: formatTime(calculateAverage(getResultsDescending().slice(0, n)))
+    }));
+}
+
+function popupButtonCallback(
+  cb: (result: Saved<Result> | Result) => void,
+  close = false
+): void {
+  const result = getResultFromCurrentOpen();
+
+  if (result === undefined) {
+    return;
+  }
+
+  cb(result);
+
+  if (close) {
+    setCurrentOpen();
+  }
+}
+
+function displayTime(time: number, penalty: Penalty): string {
+  return penalty === "OK"
+    ? formatTime(time)
+    : penalty === "+2"
+    ? `${formatTime(time + 2)}+`
+    : "DNF";
+}
+
 export const Timer: Component = () => {
-  const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
-
-  function getResultFromCurrentOpen(): Saved<Result> | Result | undefined {
-    return getResultsAscending()[(getCurrentOpen() ?? 0) - 1];
-  }
-
-  const averages = [5, 12, 50, 100, 200, 500, 1000]; // TODO use a config setting
-
-  function getAllAverages(): { averageOf: number; average: string }[] {
-    return averages
-      .filter((n) => n <= getResults().length)
-      .map((n) => ({
-        averageOf: n,
-        average: formatTime(
-          calculateAverage(getResultsDescending().slice(0, n))
-        )
-      }));
-  }
-
   return (
     <div class="timer-page">
       <div id="left">
@@ -77,19 +102,14 @@ export const Timer: Component = () => {
                 <div class="popup-title">Result #{getCurrentOpen()}</div>
                 <div class="popup-buttons">
                   <i
-                    class="fas fa-trash"
-                    onClick={() => {
-                      const result = getResultFromCurrentOpen();
-
-                      if (result === undefined) {
-                        return;
-                      }
-
-                      deleteResult(result);
-
-                      setCurrentOpen();
-                    }}
-                  ></i>
+                    class="popup-button fas fa-trash"
+                    onClick={() =>
+                      popupButtonCallback(
+                        (result) => deleteResult(result),
+                        true
+                      )
+                    }
+                  />
                 </div>
                 <div class="popup-content">
                   Time: {getResultFromCurrentOpen()?.time}
@@ -103,6 +123,37 @@ export const Timer: Component = () => {
                 <div class="popup-content">Session: {currentSession.name}</div>
                 <div class="popup-content">
                   Scramble Type: {currentSession.scrambleType}
+                </div>
+                <div class="popup-content">
+                  Penalty:
+                  <select
+                    class="popup-content"
+                    onChange={(e) => {
+                      const penalty = e.currentTarget.value as
+                        | Penalty
+                        | undefined;
+
+                      if (penalty === undefined) {
+                        return;
+                      }
+
+                      popupButtonCallback((result) => {
+                        updateResult(result, { penalty });
+                      });
+                    }}
+                  >
+                    <For each={["OK", "+2", "DNF"]}>
+                      {(penalty) => (
+                        <option
+                          selected={
+                            getResultFromCurrentOpen()?.penalty === penalty
+                          }
+                        >
+                          {penalty}
+                        </option>
+                      )}
+                    </For>
+                  </select>
                 </div>
                 <div class="popup-content">
                   Scramble:
@@ -172,7 +223,7 @@ export const Timer: Component = () => {
                                 setCurrentOpen(getResults().length - getIndex())
                               }
                             >
-                              {formatTime(result.time)}
+                              {displayTime(result.time, result.penalty)}
                             </td>
                             <td class="unselectable">
                               {ao5 !== undefined ? formatTime(ao5) : "-"}
@@ -218,3 +269,28 @@ export const Timer: Component = () => {
     </div>
   );
 };
+
+// listen for ctrl + 1, ctrl + 2, and ctrl + 3 to switch penalties for the last solve
+window.addEventListener("keydown", (e) => {
+  const lastResult = getLastResult();
+
+  if (lastResult === undefined) {
+    return;
+  }
+
+  if (e.ctrlKey) {
+    switch (e.key) {
+      case "1":
+        updateResult(lastResult, { penalty: "OK" });
+        break;
+
+      case "2":
+        updateResult(lastResult, { penalty: "+2" });
+        break;
+
+      case "3":
+        updateResult(lastResult, { penalty: "DNF" });
+        break;
+    }
+  }
+});

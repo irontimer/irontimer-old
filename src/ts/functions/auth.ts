@@ -167,10 +167,17 @@ async function getSessionsFromDatabase(): Promise<void> {
   setSessions(sessions);
 }
 
-createEffect(() => {
+createEffect(async () => {
   getConfigChange();
 
   if (auth.currentUser !== null) {
-    API.configs.save(config);
+    const response = await API.configs.save(config);
+
+    if (response.status !== 200) {
+      Notifications.add({
+        type: "error",
+        message: `Failed to save config\n${response.message}`
+      });
+    }
   }
 });

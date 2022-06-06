@@ -1,7 +1,7 @@
 import _ from "lodash";
 import type { Result as IResult, Saved, User } from "../../types";
 import { Result } from "../models/result";
-import type { DeleteResult } from "mongodb";
+import type { DeleteResult, UpdateResult } from "mongodb";
 import { Types } from "mongoose";
 import IronTimerError from "../utils/error";
 
@@ -71,6 +71,14 @@ export async function getLastResult(
   }
 
   return _.omit(lastResult, "userID");
+}
+
+export async function updateResult(
+  userID: string,
+  resultID: Types.ObjectId,
+  result: Partial<Saved<IResult>>
+): Promise<UpdateResult> {
+  return await Result.updateOne({ _id: resultID, userID }, { $set: result });
 }
 
 export async function getResultByTimestamp(

@@ -19,12 +19,22 @@ export const ResultSchema = new Schema<Saved<IResult>>({
     type: String,
     required: true
   },
+  penalty: {
+    type: String,
+    enum: ["OK", "+2", "DNF"],
+    required: true
+  },
+  enteredBy: {
+    type: String,
+    enum: ["timer", "typing", "stackmat"],
+    required: true
+  },
   scramble: {
     type: String,
     required: true
   },
   solution: {
-    type: [String],
+    type: String,
     required: false
   }
 });

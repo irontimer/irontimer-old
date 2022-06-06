@@ -17,24 +17,55 @@ import * as Bot from "../../tasks/bot";
 import { Request, Result, Saved } from "../../../types";
 import { Types } from "mongoose";
 import { DEFAULT_SCRAMBLE_TYPE } from "../../../constants/scramble-type";
+import _ from "lodash";
 
 export async function getResults(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
+
   const results = await ResultDAL.getResults(userID);
+
   return new IronTimerResponse("Results retrieved", results);
 }
 
 export async function getLastResult(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
+
   const results = await ResultDAL.getLastResult(userID);
+
   return new IronTimerResponse("Result retrieved", results);
+}
+
+export async function updateResult(req: Request): Promise<IronTimerResponse> {
+  const { userID } = req.ctx.decodedToken;
+  const { result } = req.body;
+  const resultID = new Types.ObjectId(req.params.id);
+
+  const toChange: Partial<Pick<Result, "solution" | "penalty">> = _.pickBy(
+    result as Result,
+    (_value, key) => ["solution", "penalty"].includes(key)
+  );
+
+  const updateResult = await ResultDAL.updateResult(userID, resultID, toChange);
+
+  if (updateResult.modifiedCount === 0) {
+    throw new IronTimerError(
+      404,
+      "Result not found",
+      "update result",
+      `Result ID: ${resultID}`
+    );
+  }
+
+  return new IronTimerResponse("Result updated", updateResult);
 }
 
 export async function deleteAll(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
 
   await ResultDAL.deleteAll(userID);
+
   Logger.logToDb("user_results_deleted", "", userID);
+
   return new IronTimerResponse("All results deleted");
 }
 

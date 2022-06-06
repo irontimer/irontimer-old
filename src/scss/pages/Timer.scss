@@ -59,8 +59,13 @@ $remaining_height: 90vh;
           background-color: lightgray;
           overflow-x: auto;
           overflow-y: auto;
-          width: 50vw;
-          height: 50vh;
+          width: 25vw;
+          height: 35vh;
+
+          .popup-content {
+            text-align: center;
+            font-size: 1.25rem;
+          }
 
           .popup-title {
             font-size: 2rem;
@@ -68,9 +73,14 @@ $remaining_height: 90vh;
             margin-bottom: 1rem;
           }
 
-          .popup-content {
-            text-align: center;
-            font-size: 1.25rem;
+          .popup-buttons {
+            .popup-button {
+              margin: 0rem 0.5rem;
+
+              &:hover {
+                color: white;
+              }
+            }
           }
 
           .popup-copy-button {

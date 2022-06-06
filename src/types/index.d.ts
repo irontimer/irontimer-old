@@ -9,6 +9,7 @@ export type AlmostSaved<T> = T & {
 };
 export type Saved<T, ID = ObjectId> = AlmostSaved<T> & {
   _id: ID;
+  __v: number;
 };
 
 export interface Result {
@@ -17,6 +18,7 @@ export interface Result {
   scramble: string;
   session: string;
   enteredBy: TimerType;
+  penalty: Penalty;
   solution?: string;
   isPersonalBest?: boolean;
 }
@@ -132,6 +134,8 @@ export interface UserStats {
 
 export type TimerType = "timer" | "typing" | "stackmat";
 
+export type Penalty = "OK" | "+2" | "DNF";
+
 export interface Session {
   name: string;
   scrambleType: ScrambleType;
@@ -243,8 +247,9 @@ export interface Endpoints {
 
   results: {
     get: Endpoint;
-    save: (result: Result & { userID: string }) => EndpointData;
+    save: (result: AlmostSaved<Result>) => EndpointData;
     delete: (result: Saved<Result>) => EndpointData;
+    update: (result: Saved<Result>) => EndpointData;
     deleteAll: Endpoint;
   };
 

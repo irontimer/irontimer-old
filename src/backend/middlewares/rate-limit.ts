@@ -81,6 +81,13 @@ export const resultsGet = rateLimit({
   handler: customHandler
 });
 
+export const resultsUpdate = rateLimit({
+  windowMs: ONE_HOUR,
+  max: 60 * REQUEST_MULTIPLIER,
+  keyGenerator: getAddress,
+  handler: customHandler
+});
+
 export const resultsAdd = rateLimit({
   windowMs: ONE_HOUR,
   max: 500 * REQUEST_MULTIPLIER,

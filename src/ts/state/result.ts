@@ -12,6 +12,7 @@ import { roundToMilliseconds } from "../functions/time";
 import Notifications from "./notifications";
 import { config } from "./config";
 import { currentSession } from "./session";
+import { Schema } from "mongoose";
 
 export const [getResults, setResults] = createSignal<
   (Saved<Result> | Result)[]
@@ -38,10 +39,13 @@ export async function addResult(time: number): Promise<void> {
     timestamp: Date.now(),
     scramble: getScramble(),
     session: currentSession.name,
-    enteredBy: config.timerType
+    enteredBy: config.timerType,
+    penalty: "OK"
   };
 
   const userID = auth.currentUser?.uid;
+
+  setResults((results) => [...results, unsavedResult]);
 
   if (auth.currentUser !== null && userID !== undefined) {
     const almostSavedResult: AlmostSaved<Result> = {
@@ -68,28 +72,63 @@ export async function addResult(time: number): Promise<void> {
       return;
     }
 
-    setResults((results) => [
-      ...results,
-      { ...almostSavedResult, _id: savedResult.insertedID }
-    ]);
+    addIDToResult(unsavedResult, savedResult.insertedID);
 
     console.log("Saved result to database");
-  } else {
-    setResults((results) => [...results, unsavedResult]);
   }
 }
 
-export function deleteResult(result: Saved<Result> | Result): void {
+export async function deleteResult(
+  result: Saved<Result> | Result
+): Promise<void> {
   setResults((results) => results.filter((r) => r !== result));
 
   if (auth.currentUser !== null && isDatabaseResult(result)) {
-    API.results.delete(result);
+    const response = await API.results.delete(result);
+
+    if (response.status !== 200) {
+      Notifications.add({
+        type: "error",
+        message: `Failed to delete result\n${response.message}`
+      });
+
+      return;
+    }
 
     console.log("Deleted result from database");
   }
 }
 
-export function deleteAll(): void {
+export async function updateResult(
+  result: Saved<Result> | Result,
+  toChange: Partial<Saved<Result>>,
+  db = true
+): Promise<void> {
+  const newResult = { ...result, ...toChange };
+
+  setResults((results) => results.map((r) => (r === result ? newResult : r)));
+
+  if (db && auth.currentUser !== null && isDatabaseResult(newResult)) {
+    const response = await API.results.update(newResult);
+
+    if (response.status !== 200) {
+      Notifications.add({
+        type: "error",
+        message: `Failed to update result\n${response.message}`
+      });
+
+      return;
+    }
+
+    console.log("Updated result in database");
+  }
+}
+
+export function addIDToResult(result: Result, id: Schema.Types.ObjectId): void {
+  updateResult(result, { _id: id }, false);
+}
+
+export async function deleteAll(): Promise<void> {
   if (getResults().length === 0) {
     return;
   }
@@ -97,7 +136,16 @@ export function deleteAll(): void {
   setResults([]);
 
   if (auth.currentUser !== null) {
-    API.results.deleteAll();
+    const response = await API.results.deleteAll();
+
+    if (response.status !== 200) {
+      Notifications.add({
+        type: "error",
+        message: `Failed to delete all results\n${response.message}`
+      });
+
+      return;
+    }
 
     console.log("Deleted all results from database");
   }
@@ -106,12 +154,5 @@ export function deleteAll(): void {
 export function isDatabaseResult(
   result: Partial<Saved<Result>>
 ): result is Saved<Result> {
-  return (
-    result._id !== undefined &&
-    result.userID !== null &&
-    result.time !== undefined &&
-    result.timestamp !== undefined &&
-    result.session !== undefined &&
-    result.scramble !== undefined
-  );
+  return result._id !== undefined && !!result.userID;
 }
