@@ -61,6 +61,8 @@ export async function addResult(time: number): Promise<void> {
         message: `Failed to save result\n${response.message}`
       });
 
+      deleteResult(unsavedResult);
+
       return;
     }
 
