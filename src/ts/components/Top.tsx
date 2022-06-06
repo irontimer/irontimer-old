@@ -55,7 +55,7 @@ export const Top: Component = () => {
         </Show>
       </div>
 
-      <div class="nav">
+      <div id="nav">
         <For each={pages}>
           {(page, getIndex) => (
             <Link
