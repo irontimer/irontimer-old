@@ -62,7 +62,6 @@ function isLegalCharacter(
     const str = e.currentTarget.value + e.key;
 
     if (!inputRegex.test(str)) {
-      console.log(str);
       e.preventDefault();
     }
 

@@ -50,9 +50,8 @@ export async function updateResult(req: Request): Promise<IronTimerResponse> {
   if (updateResult.modifiedCount === 0) {
     throw new IronTimerError(
       404,
-      "Result not found",
-      "update result",
-      `Result ID: ${resultID}`
+      `Result not found\nResult ID: ${resultID}`,
+      "update result"
     );
   }
 
@@ -157,43 +156,6 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
 
   updateTypingStats(userID, result.time);
   PublicStatsDAL.updateStats(result.time);
-
-  // if (result.bailedOut === false) {
-  //   delete result.bailedOut;
-  // }
-  // if (result.blindMode === false) {
-  //   delete result.blindMode;
-  // }
-  // if (result.lazyMode === false) {
-  //   delete result.lazyMode;
-  // }
-  // if (result.difficulty === "normal") {
-  //   delete result.difficulty;
-  // }
-  // if (result.funbox === "none") {
-  //   delete result.funbox;
-  // }
-  // if (result.language === "english") {
-  //   delete result.language;
-  // }
-  // if (result.numbers === false) {
-  //   delete result.numbers;
-  // }
-  // if (result.punctuation === false) {
-  //   delete result.punctuation;
-  // }
-  // if (result.mode !== "custom") {
-  //   delete result.customText;
-  // }
-  // if (result.restartCount === 0) {
-  //   delete result.restartCount;
-  // }
-  // if (result.incompleteTestSeconds === 0) {
-  //   delete result.incompleteTestSeconds;
-  // }
-  // if (result.afkDuration === 0) {
-  //   delete result.afkDuration;
-  // }
 
   const addedResult = await ResultDAL.addResult(userID, result);
 

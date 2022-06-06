@@ -24,9 +24,6 @@ export function handleIronTimerResponse(
     res.statusMessage = message;
   }
 
-  // eslint-disable-next-line
-  //@ts-ignore ignored so that we can see message in swagger stats
-  res.ironTimerMessage = message;
   if ([301, 302].includes(status)) {
     return res.redirect(data);
   }

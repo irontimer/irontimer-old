@@ -1,7 +1,5 @@
 import { config } from "dotenv";
 import admin, { ServiceAccount } from "firebase-admin";
-// eslint-disable-next-line
-// @ts-ignore
 import serviceAccount from "./credentials/serviceAccountKey.json";
 import * as db from "./init/db";
 import jobs from "./jobs";

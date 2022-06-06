@@ -12,6 +12,7 @@ class IronTimerError extends Error {
     userID?: string
   ) {
     super();
+
     this.status = status ?? 500;
     this.errorId = uuidv4();
     this.stack = stack;

@@ -5,15 +5,15 @@ import {
   IronTimerResponse,
   handleIronTimerResponse
 } from "../utils/irontimer-response";
-import { /*NextFunction,*/ Response } from "express";
+import { NextFunction, Response } from "express";
 import { Request } from "../../types";
 import { Error } from "../models/error";
 
 async function errorHandlingMiddleware(
   error: Error,
   req: Request,
-  res: Response
-  /*, _next: NextFunction*/
+  res: Response,
+  _next: NextFunction
 ): Promise<void> {
   const ironTimerError = error as IronTimerError;
 
