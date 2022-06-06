@@ -26,158 +26,173 @@ export const Timer: Component = () => {
     return getResultsAscending()[(getCurrentOpen() ?? 0) - 1];
   }
 
+  const averages = [5, 12, 50, 100, 200, 500, 1000]; // TODO use a config setting
+
+  function getAllAverages(): { averageOf: number; average: string }[] {
+    return averages
+      .filter((n) => n <= getResults().length)
+      .map((n) => ({
+        averageOf: n,
+        average: formatTime(
+          calculateAverage(getResultsDescending().slice(0, n))
+        )
+      }));
+  }
+
   return (
     <div class="timer-page">
-      <Show when={!isTiming()} fallback={<div></div>}>
-        <div id="results">
-          <h1 class="unselectable">{currentSession.name}</h1>
-          <Button
-            class="clear-results-button"
-            onClick={() => {
-              if (
-                window.confirm(
-                  "Are you sure you want to delete all results in this session?"
-                )
-              ) {
-                deleteAll();
+      <div id="left">
+        <Show when={!isTiming()} fallback={<div></div>}>
+          <div id="results">
+            <h1 class="unselectable">{currentSession.name}</h1>
+            <Button
+              class="clear-results-button"
+              onClick={() => {
+                if (
+                  window.confirm(
+                    "Are you sure you want to delete all results in this session?"
+                  )
+                ) {
+                  deleteAll();
 
-                Notifications.add({
-                  type: "success",
-                  message: "All results have been deleted",
-                  duration: 5000
-                });
-              }
-            }}
-          >
-            Clear
-          </Button>
-          <Popup
-            isOpen={[
-              () => getCurrentOpen() !== undefined,
-              (isOpen) => !isOpen && setCurrentOpen()
-            ]}
-            id="result-popup"
-            wrapperID="result-popup-wrapper"
-          >
-            <div class="popup-content">
-              <div class="popup-title">Result #{getCurrentOpen()}</div>
-              <div class="popup-buttons">
-                <i
-                  class="fas fa-trash"
-                  onClick={() => {
-                    const result = getResultFromCurrentOpen();
-
-                    if (result === undefined) {
-                      return;
-                    }
-
-                    deleteResult(result);
-
-                    setCurrentOpen();
-                  }}
-                ></i>
-              </div>
+                  Notifications.add({
+                    type: "success",
+                    message: "All results have been deleted",
+                    duration: 5000
+                  });
+                }
+              }}
+            >
+              Clear
+            </Button>
+            <Popup
+              isOpen={[
+                () => getCurrentOpen() !== undefined,
+                (isOpen) => !isOpen && setCurrentOpen()
+              ]}
+              id="result-popup"
+              wrapperID="result-popup-wrapper"
+            >
               <div class="popup-content">
-                Time: {getResultFromCurrentOpen()?.time}
-              </div>
-              <div class="popup-content">
-                Date:{" "}
-                {new Date(
-                  getResultFromCurrentOpen()?.timestamp ?? 0
-                ).toLocaleDateString()}
-              </div>
-              <div class="popup-content">Session: {currentSession.name}</div>
-              <div class="popup-content">
-                Scramble Type: {currentSession.scrambleType}
-              </div>
-              <div class="popup-content">
-                Scramble:
-                <input
-                  readonly
-                  class="popup-content"
-                  value={getResultFromCurrentOpen()?.scramble}
-                />
-                <i
-                  class="popup-copy-button fa-solid fa-clipboard-list"
-                  onClick={() => {
-                    // copy scramble to clipboard
-                    navigator.clipboard.writeText(
-                      getResultFromCurrentOpen()?.scramble ?? ""
-                    );
+                <div class="popup-title">Result #{getCurrentOpen()}</div>
+                <div class="popup-buttons">
+                  <i
+                    class="fas fa-trash"
+                    onClick={() => {
+                      const result = getResultFromCurrentOpen();
 
-                    Notifications.add({
-                      type: "success",
-                      message: "Copied scramble to clipboard",
-                      duration: 5000
-                    });
-                  }}
-                ></i>
-              </div>
-            </div>
-          </Popup>
-          <table>
-            <thead>
-              <tr>
-                <td class="unselectable">#</td>
-                <td class="unselectable">Time</td>
-                <td class="unselectable">ao5</td>
-                <td class="unselectable">ao12</td>
-              </tr>
-            </thead>
-            <tbody>
-              <For each={getResultsDescending()}>
-                {(result, getIndex) => {
-                  {
-                    const [ao5, ao12] = [5, 12].map((n) => {
-                      const results = getResultsDescending().slice(
-                        getIndex(),
-                        getIndex() + n
-                      );
-
-                      if (results.length !== n) {
+                      if (result === undefined) {
                         return;
                       }
 
-                      return calculateAverage(results);
-                    });
+                      deleteResult(result);
 
-                    return (
-                      <>
-                        <tr>
-                          <td
-                            class="unselectable"
-                            onClick={() =>
-                              setCurrentOpen(getResults().length - getIndex())
-                            }
-                          >
-                            {getResults().length - getIndex()}
-                          </td>
-                          <td
-                            class="unselectable"
-                            onClick={() =>
-                              setCurrentOpen(getResults().length - getIndex())
-                            }
-                          >
-                            {formatTime(result.time)}
-                          </td>
-                          <td class="unselectable">
-                            {ao5 !== undefined ? formatTime(ao5) : "-"}
-                          </td>
-                          <td class="unselectable">
-                            {ao12 !== undefined ? formatTime(ao12) : "-"}
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  }
-                }}
-              </For>
-            </tbody>
-          </table>
-        </div>
-      </Show>
+                      setCurrentOpen();
+                    }}
+                  ></i>
+                </div>
+                <div class="popup-content">
+                  Time: {getResultFromCurrentOpen()?.time}
+                </div>
+                <div class="popup-content">
+                  Date:{" "}
+                  {new Date(
+                    getResultFromCurrentOpen()?.timestamp ?? 0
+                  ).toLocaleDateString()}
+                </div>
+                <div class="popup-content">Session: {currentSession.name}</div>
+                <div class="popup-content">
+                  Scramble Type: {currentSession.scrambleType}
+                </div>
+                <div class="popup-content">
+                  Scramble:
+                  <input
+                    readonly
+                    class="popup-content"
+                    value={getResultFromCurrentOpen()?.scramble}
+                  />
+                  <i
+                    class="popup-copy-button fa-solid fa-clipboard-list"
+                    onClick={() => {
+                      // copy scramble to clipboard
+                      navigator.clipboard.writeText(
+                        getResultFromCurrentOpen()?.scramble ?? ""
+                      );
 
-      <div id="timer">
+                      Notifications.add({
+                        type: "success",
+                        message: "Copied scramble to clipboard",
+                        duration: 5000
+                      });
+                    }}
+                  ></i>
+                </div>
+              </div>
+            </Popup>
+            <table>
+              <thead>
+                <tr>
+                  <td class="unselectable">#</td>
+                  <td class="unselectable">Time</td>
+                  <td class="unselectable">ao5</td>
+                  <td class="unselectable">ao12</td>
+                </tr>
+              </thead>
+              <tbody>
+                <For each={getResultsDescending()}>
+                  {(result, getIndex) => {
+                    {
+                      const [ao5, ao12] = [5, 12].map((n) => {
+                        const results = getResultsDescending().slice(
+                          getIndex(),
+                          getIndex() + n
+                        );
+
+                        if (results.length !== n) {
+                          return;
+                        }
+
+                        return calculateAverage(results);
+                      });
+
+                      return (
+                        <>
+                          <tr>
+                            <td
+                              class="unselectable"
+                              onClick={() =>
+                                setCurrentOpen(getResults().length - getIndex())
+                              }
+                            >
+                              {getResults().length - getIndex()}
+                            </td>
+                            <td
+                              class="unselectable"
+                              onClick={() =>
+                                setCurrentOpen(getResults().length - getIndex())
+                              }
+                            >
+                              {formatTime(result.time)}
+                            </td>
+                            <td class="unselectable">
+                              {ao5 !== undefined ? formatTime(ao5) : "-"}
+                            </td>
+                            <td class="unselectable">
+                              {ao12 !== undefined ? formatTime(ao12) : "-"}
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    }
+                  }}
+                </For>
+              </tbody>
+            </table>
+          </div>
+        </Show>
+      </div>
+
+      <div id="center">
         <div class="spacer" />
         <Switch fallback={<TimerStopwatch />}>
           <Match when={config.timerType === "timer"}>
@@ -187,8 +202,19 @@ export const Timer: Component = () => {
             <TimerInput />
           </Match>
         </Switch>
-        <div class="spacer" />
+        <div id="average-list">
+          <For each={getAllAverages()}>
+            {(avg) => (
+              <div class="average-item">
+                <div class="average-label">ao{avg.averageOf}</div>
+                <div class="average-value">{avg.average}</div>
+              </div>
+            )}
+          </For>
+        </div>
       </div>
+
+      <div id="right"></div>
     </div>
   );
 };

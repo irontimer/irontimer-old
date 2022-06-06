@@ -2,113 +2,149 @@
 
 $remaining_height: 90vh;
 
+@mixin height {
+  height: $remaining_height;
+  max-height: $remaining_height;
+}
+
 .timer-page {
   display: grid;
   grid-template-columns: 1.5fr 5fr 1.5fr;
+  @include height;
 
-  #results {
-    padding: 5px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    background-color: lightgray;
-    overflow-x: auto;
-    overflow-y: auto;
-    width: fit-content;
-    max-width: 25vw;
-    height: fit-content;
-    max-height: $remaining_height;
+  #left {
+    @include height;
 
-    .clear-results-button {
-      margin-top: 5px;
-      margin-bottom: 5px;
-      margin-left: 5px;
-      margin-right: 5px;
+    #results {
+      @include height;
       padding: 5px;
       border-width: 1px;
       border-style: solid;
       border-color: black;
-      background-color: gray;
-      color: black;
-      font-size: 1.5em;
-      font-weight: bold;
-      cursor: pointer;
+      background-color: lightgray;
+      overflow-x: auto;
+      overflow-y: auto;
+      width: fit-content;
+      max-width: 25vw;
+      height: fit-content;
 
-      &:hover {
-        background-color: #fafafa;
-        color: black;
-      }
-    }
-
-    #result-popup-wrapper {
-      #result-popup {
+      .clear-results-button {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 5px;
+        margin-right: 5px;
         padding: 5px;
         border-width: 1px;
         border-style: solid;
         border-color: black;
-        border-radius: 2rem;
-        background-color: lightgray;
-        overflow-x: auto;
-        overflow-y: auto;
-        width: 50vw;
-        height: 50vh;
-
-        .popup-title {
-          font-size: 2rem;
-          font-weight: bold;
-          margin-bottom: 1rem;
-        }
-
-        .popup-content {
-          text-align: center;
-          font-size: 1.25rem;
-        }
-
-        .popup-copy-button {
-          display: inline;
-          margin-left: 0.5rem;
-          &:hover {
-            color: white;
-          }
-        }
-      }
-    }
-
-    h1 {
-      text-align: center;
-      margin-top: 5px;
-      margin-bottom: 5px;
-    }
-
-    table {
-      thead,
-      tbody {
-        tr {
-          align-items: center;
-
-          td {
-            border-width: thin;
-            border-style: solid;
-            border-color: black;
-            background-color: white;
-            text-align: center;
-            padding: 5px;
-          }
-        }
-      }
-
-      tbody tr td:hover {
-        background-color: lightgray;
+        background-color: gray;
+        color: black;
+        font-size: 1.5em;
+        font-weight: bold;
         cursor: pointer;
+
+        &:hover {
+          background-color: #fafafa;
+          color: black;
+        }
+      }
+
+      #result-popup-wrapper {
+        #result-popup {
+          padding: 5px;
+          border-width: 1px;
+          border-style: solid;
+          border-color: black;
+          border-radius: 2rem;
+          background-color: lightgray;
+          overflow-x: auto;
+          overflow-y: auto;
+          width: 50vw;
+          height: 50vh;
+
+          .popup-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+          }
+
+          .popup-content {
+            text-align: center;
+            font-size: 1.25rem;
+          }
+
+          .popup-copy-button {
+            display: inline;
+            margin-left: 0.5rem;
+            &:hover {
+              color: white;
+            }
+          }
+        }
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+
+      table {
+        thead,
+        tbody {
+          tr {
+            align-items: center;
+
+            td {
+              border-width: thin;
+              border-style: solid;
+              border-color: black;
+              background-color: white;
+              text-align: center;
+              padding: 5px;
+            }
+          }
+        }
+
+        tbody tr td:hover {
+          background-color: lightgray;
+          cursor: pointer;
+        }
       }
     }
   }
 
-  #timer {
-    align-self: center;
-    justify-self: center;
-    height: $remaining_height;
+  #center {
+    @include height;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
+
+    .timer-stopwatch,
+    .timer-input {
+      text-align: center;
+    }
+
+    #average-list {
+      align-items: center;
+      vertical-align: bottom;
+
+      .average-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        .average-label,
+        .average-value {
+          text-align: center;
+          font-size: 1.5rem;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+  #right {
+    // TODO fill in with tools
+    @include height;
   }
 }

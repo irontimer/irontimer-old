@@ -22,7 +22,7 @@ interface Statuses {
 const statuses: Statuses = {
   RESULT_TOO_FAST: {
     code: 460,
-    message: "Test too short"
+    message: "Solve is too fast"
   },
   SESSION_NOT_FOUND: {
     code: 461,
