@@ -25,7 +25,8 @@ export const Top: Component = () => {
 
       <div class="unselectable" id="scramble">
         <Switch fallback="">
-          <Match when={getScramble() === "" && !isTiming()}>
+          <Match when={isTiming()}>{""}</Match>
+          <Match when={getScramble() === ""}>
             <Button
               class="generate-scramble-button unselectable"
               onClick={() => setAndGenerateScramble()}
@@ -33,7 +34,6 @@ export const Top: Component = () => {
               Generate Scramble
             </Button>
           </Match>
-          <Match when={isTiming()}>{""}</Match>
           <Match when={getScramble() !== ""}>{getScramble()}</Match>
         </Switch>
       </div>

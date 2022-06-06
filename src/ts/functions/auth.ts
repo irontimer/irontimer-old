@@ -4,10 +4,9 @@ import { getAuth, createUserWithEmailAndPassword, User } from "firebase/auth";
 import API from "../api-client";
 import { setResults } from "../state/result";
 import { Config, Result, Saved, Session } from "../../types";
-import { config, getConfigChange, setConfig } from "../state/config";
+import { config, setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
 import Notifications from "../state/notifications";
-import { createEffect } from "solid-js";
 import { setCurrentSession, setSessions } from "../state/session";
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -166,18 +165,3 @@ async function getSessionsFromDatabase(): Promise<void> {
 
   setSessions(sessions);
 }
-
-createEffect(async () => {
-  getConfigChange();
-
-  if (auth.currentUser !== null) {
-    const response = await API.configs.save(config);
-
-    if (response.status !== 200) {
-      Notifications.add({
-        type: "error",
-        message: `Failed to save config\n${response.message}`
-      });
-    }
-  }
-});

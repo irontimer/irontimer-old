@@ -25,6 +25,7 @@ import { Account } from "./ts/pages/Account";
 import { Settings } from "./ts/pages/Settings";
 import { SignIn } from "./ts/pages/SignIn";
 import { Timer } from "./ts/pages/Timer";
+import "./ts/state/effect";
 
 export const App: Component = () => {
   return (

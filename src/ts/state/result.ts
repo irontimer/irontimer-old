@@ -7,7 +7,7 @@ import type {
 } from "../../types";
 import API from "../api-client/index";
 import { auth } from "../functions/auth";
-import { setAndGenerateScramble, getScramble } from "./scramble";
+import { setAndGenerateScramble, getScramble, setScramble } from "./scramble";
 import { roundToMilliseconds } from "../functions/time";
 import Notifications from "./notifications";
 import { config } from "./config";
@@ -32,6 +32,15 @@ export function getLastResult(): Result | Saved<Result> | undefined {
 }
 
 export async function addResult(time: number): Promise<void> {
+  if (getScramble() === "Loading...") {
+    Notifications.add({
+      type: "error",
+      message: "Cannot add result while scramble is loading"
+    });
+
+    return;
+  }
+
   const roundedTime = roundToMilliseconds(time);
 
   const unsavedResult: Result = {
@@ -48,6 +57,8 @@ export async function addResult(time: number): Promise<void> {
   setResults((results) => [...results, unsavedResult]);
 
   if (auth.currentUser !== null && userID !== undefined) {
+    setScramble("Loading...");
+
     const almostSavedResult: AlmostSaved<Result> = {
       ...unsavedResult,
       userID
