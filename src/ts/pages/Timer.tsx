@@ -206,8 +206,8 @@ export const Timer: Component = () => {
           <For each={getAllAverages()}>
             {(avg) => (
               <div class="average-item">
-                <div class="average-label">ao{avg.averageOf}</div>
-                <div class="average-value">{avg.average}</div>
+                <div class="average-label unselectable">ao{avg.averageOf}</div>
+                <div class="average-value unselectable">{avg.average}</div>
               </div>
             )}
           </For>
