@@ -7,7 +7,7 @@ import type {
 } from "../../types";
 import API from "../api-client/index";
 import { auth } from "../functions/auth";
-import { setAndGenerateScramble, getScramble, setScramble } from "./scramble";
+import { setAndGenerateScramble, getScramble } from "./scramble";
 import { roundToMilliseconds } from "../functions/time";
 import Notifications from "./notifications";
 import { config } from "./config";
@@ -17,6 +17,8 @@ import { Schema } from "mongoose";
 export const [getResults, setResults] = createSignal<
   (Saved<Result> | Result)[]
 >([]);
+
+export const [isSavingResult, setIsSavingResult] = createSignal(false);
 
 // for some reason, not using the spread operator mutates the signal
 export const getResultsAscending = createMemo(() =>
@@ -32,10 +34,10 @@ export function getLastResult(): Result | Saved<Result> | undefined {
 }
 
 export async function addResult(time: number): Promise<void> {
-  if (getScramble() === "Loading...") {
+  if (isSavingResult()) {
     Notifications.add({
       type: "error",
-      message: "Cannot add result while scramble is loading"
+      message: "Cannot add result while a result is saving"
     });
 
     return;
@@ -57,7 +59,7 @@ export async function addResult(time: number): Promise<void> {
   setResults((results) => [...results, unsavedResult]);
 
   if (auth.currentUser !== null && userID !== undefined) {
-    setScramble("Loading...");
+    setIsSavingResult(true);
 
     const almostSavedResult: AlmostSaved<Result> = {
       ...unsavedResult,
@@ -86,6 +88,8 @@ export async function addResult(time: number): Promise<void> {
     }
 
     addIDToResult(unsavedResult, savedResult.insertedID);
+
+    setIsSavingResult(false);
 
     console.log("Saved result to database");
   }
