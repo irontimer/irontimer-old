@@ -18,7 +18,8 @@
     "pretty": "prettier \"src/**/*.{ts,tsx,scss}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,tsx,scss}\"",
     "lint": "eslint \"src/**/*.{ts,tsx,scss}\"",
-    "lint-fix": "eslint --fix \"src/**/*.{ts,tsx,scss}\""
+    "lint-fix": "eslint --fix \"src/**/*.{ts,tsx,scss}\"",
+    "postinstall": "yarn build-backend"
   },
   "devDependencies": {
     "@tauri-apps/cli": "1.0.0-rc.13",
