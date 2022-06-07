@@ -1,5 +1,3 @@
-/** @format */
-
 import { Navigate } from "solid-app-router";
 import { Component, Show } from "solid-js";
 import { Button } from "../components/Button";

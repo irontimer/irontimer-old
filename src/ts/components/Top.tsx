@@ -1,5 +1,3 @@
-/** @format */
-
 import { Component, For, Match, Show, Switch } from "solid-js";
 import { Link } from "solid-app-router";
 import { getScramble, setAndGenerateScramble } from "../state/scramble";

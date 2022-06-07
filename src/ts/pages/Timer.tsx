@@ -1,4 +1,3 @@
-/** @format */
 import { Component, createSignal, For, Match, Show, Switch } from "solid-js";
 import { Popup } from "../components/Popup";
 import { calculateAverage, formatTime, actualTimeString } from "../utils/misc";

@@ -1,5 +1,3 @@
-/** @format */
-
 import { ObjectId } from "mongoose";
 import { Request as ExpressRequest } from "express";
 import type { ScrambleType } from "../constants/scramble-type";

@@ -1,5 +1,3 @@
-/** @format */
-
 // solid-js
 import { Component } from "solid-js";
 import { Route, Routes } from "solid-app-router";

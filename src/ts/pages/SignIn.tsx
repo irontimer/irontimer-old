@@ -1,4 +1,3 @@
-/** @format */
 import { Component } from "solid-js";
 import { Button } from "../components/Button";
 import { signIn, signUp } from "../utils/auth";
