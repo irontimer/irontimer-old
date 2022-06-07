@@ -7,7 +7,11 @@ import type {
 } from "../../types";
 import API from "../api-client/index";
 import { auth } from "../functions/auth";
-import { setAndGenerateScramble, getScramble } from "./scramble";
+import {
+  setAndGenerateScramble,
+  getScramble,
+  revertScramble
+} from "./scramble";
 import { roundToMilliseconds } from "../functions/time";
 import Notifications from "./notifications";
 import { config } from "./config";
@@ -77,8 +81,9 @@ export async function addResult(
         message: `Failed to save result\n${response.message}`
       });
 
+      revertScramble();
       deleteResult(unsavedResult);
-
+      revertScramble();
       setIsSavingResult(false);
 
       return;

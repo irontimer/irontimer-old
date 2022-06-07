@@ -3,25 +3,28 @@ import { DEFAULT_SCRAMBLE_TYPE } from "../../constants/scramble-type";
 import { generateScramble } from "../scramble-generator";
 import { currentSession, setCurrentSession } from "./session";
 
+export const [getPreviousScramble, setPreviousScramble] = createSignal("");
 export const [getScramble, setScramble] = createSignal("");
 
 export function setAndGenerateScramble(
   scrambleType = currentSession.scrambleType ?? DEFAULT_SCRAMBLE_TYPE
 ): void {
   if (scrambleType === currentSession.scrambleType) {
+    setPreviousScramble(getScramble());
     setScramble(generateScramble(scrambleType));
-  } else {
-    // prompt the user if they want to change the scramble type on the session
-    // if they do, set the scramble type to the new value
-    // if they don't, do nothing
-    if (
-      window.confirm(
-        `Changing the scramble type will reset the session. Are you sure you want to change the scramble type to ${scrambleType}?`
-      )
-    ) {
-      setCurrentSession("scrambleType", scrambleType);
+  } else if (
+    window.confirm(
+      `Changing the scramble type will reset the session. Are you sure you want to change the scramble type to ${scrambleType}?`
+    )
+  ) {
+    setCurrentSession("scrambleType", scrambleType);
 
-      setScramble(generateScramble(scrambleType));
-    }
+    setPreviousScramble(getScramble());
+    setScramble(generateScramble(scrambleType));
   }
+}
+
+export function revertScramble(): void {
+  setScramble(getPreviousScramble());
+  setPreviousScramble("");
 }

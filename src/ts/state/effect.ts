@@ -1,4 +1,4 @@
-import { createEffect } from "solid-js";
+import { createEffect, untrack } from "solid-js";
 import API from "../api-client";
 import { auth } from "../functions/auth";
 import { config, getConfigChange } from "./config";
@@ -13,7 +13,7 @@ createEffect(() => {
   getConfigChange();
 
   // This also updates a scramble when the scramble type changes
-  setAndGenerateScramble();
+  untrack(() => setAndGenerateScramble());
 });
 
 createEffect(async () => {
