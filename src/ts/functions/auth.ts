@@ -109,6 +109,11 @@ async function getConfigFromDatabase(user: User): Promise<void> {
   }
 
   if (config?._id !== user.uid) {
+    Notifications.add({
+      type: "error",
+      message: "Config does not belong to user"
+    });
+
     return;
   }
 

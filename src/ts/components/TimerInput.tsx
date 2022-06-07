@@ -3,8 +3,8 @@ import { parseTimeString } from "../functions/time";
 import Notifications from "../state/notifications";
 import { addResult } from "../state/result";
 
-const inputRegex = /^([0-9]{0,2}):?([0-9]{0,2}):?([0-9]*)\.?([0-9]{1,3})?$/;
-const finalInputRegex = /^(([0-9]{1,2}:){0,2})([0-9]+)(\.[0-9]{1,3})?$/;
+const inputRegex = /^([0-9]{0,2}):?([0-9]{0,2}):?([0-9]*)\.?([0-9]{1,3})?\+?$/;
+const finalInputRegex = /^(([0-9]{1,2}:){0,2})([0-9]+)(\.[0-9]{1,3})?\+?$/;
 
 export const TimerInput: Component = () => {
   return (
@@ -20,9 +20,9 @@ export const TimerInput: Component = () => {
           return;
         }
 
-        const val = e.currentTarget.value;
+        const str = e.currentTarget.value;
 
-        if (!finalInputRegex.test(val)) {
+        if (!finalInputRegex.test(str)) {
           Notifications.add({
             type: "error",
             message: "Invalid time format"
@@ -30,6 +30,9 @@ export const TimerInput: Component = () => {
 
           return;
         }
+
+        const isPlusTwo = str.endsWith("+");
+        const val = isPlusTwo ? str.substring(0, str.length - 1) : str;
 
         let float = /[^0-9.]/.test(val) ? NaN : parseFloat(val);
 
@@ -47,7 +50,7 @@ export const TimerInput: Component = () => {
             float /= 1000;
           }
 
-          addResult(float);
+          addResult(float, isPlusTwo);
         }
 
         e.currentTarget.value = "";

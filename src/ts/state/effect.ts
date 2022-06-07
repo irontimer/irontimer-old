@@ -27,6 +27,10 @@ createEffect(async () => {
         type: "error",
         message: `Failed to save config\n${response.message}`
       });
+
+      return;
     }
+
+    console.log("Saved config to database");
   }
 });

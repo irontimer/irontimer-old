@@ -33,7 +33,10 @@ export function getLastResult(): Result | Saved<Result> | undefined {
   return getResultsAscending().at(-1);
 }
 
-export async function addResult(time: number): Promise<void> {
+export async function addResult(
+  time: number,
+  isPlusTwo = false
+): Promise<void> {
   if (isSavingResult()) {
     Notifications.add({
       type: "error",
@@ -51,7 +54,7 @@ export async function addResult(time: number): Promise<void> {
     scramble: getScramble(),
     session: currentSession.name,
     enteredBy: config.timerType,
-    penalty: "OK"
+    penalty: isPlusTwo ? "+2" : "OK"
   };
 
   const userID = auth.currentUser?.uid;
@@ -75,6 +78,8 @@ export async function addResult(time: number): Promise<void> {
       });
 
       deleteResult(unsavedResult);
+
+      setIsSavingResult(false);
 
       return;
     }
