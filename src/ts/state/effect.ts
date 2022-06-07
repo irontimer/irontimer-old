@@ -1,6 +1,6 @@
 import { createEffect, untrack } from "solid-js";
 import API from "../api-client";
-import { auth } from "../functions/auth";
+import { auth } from "../utils/auth";
 import { config, getConfigChange } from "./config";
 import { getResults } from "./result";
 import { setAndGenerateScramble } from "./scramble";

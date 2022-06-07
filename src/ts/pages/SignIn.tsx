@@ -4,7 +4,7 @@ import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Component } from "solid-js";
 import { Button } from "../components/Button";
-import { auth, signUp } from "../functions/auth";
+import { auth, signUp } from "../utils/auth";
 import API from "../api-client";
 import Notifications from "../state/notifications";
 

@@ -6,13 +6,13 @@ import type {
   AlmostSaved
 } from "../../types";
 import API from "../api-client/index";
-import { auth } from "../functions/auth";
+import { auth } from "../utils/auth";
 import {
   setAndGenerateScramble,
   getScramble,
   revertScramble
 } from "./scramble";
-import { roundToMilliseconds } from "../functions/time";
+import { roundToMilliseconds } from "../utils/misc";
 import Notifications from "./notifications";
 import { config } from "./config";
 import { currentSession } from "./session";

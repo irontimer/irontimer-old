@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { PersonalBest, Result, Saved } from "../../types";
+import { actualTime } from "./misc";
 
 interface CheckAndUpdatePersonalBestResult {
   isPersonalBest: boolean;
@@ -15,7 +16,7 @@ export function checkAndUpdatePersonalBest(
   let isPersonalBest = false;
 
   if (personalBestMatch !== undefined) {
-    if (result.time >= personalBestMatch.time) {
+    if (actualTime(result) >= personalBestMatch.time) {
       isPersonalBest = false;
     } else {
       const updatedPersonalBest = buildPersonalBest(result);
@@ -51,7 +52,7 @@ function matchesPersonalBest(
 
 function buildPersonalBest(result: Saved<Result>): PersonalBest {
   return {
-    time: result.time,
+    time: actualTime(result),
     timestamp: result.timestamp,
     scramble: result.scramble,
     session: result.session,

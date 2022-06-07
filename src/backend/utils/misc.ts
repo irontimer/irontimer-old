@@ -1,6 +1,6 @@
 import _ from "lodash";
 import uaparser from "ua-parser-js";
-import { Request } from "../../types";
+import { Request, Result } from "../../types";
 
 export function roundTo2(num: number): number {
   return _.round(num, 2);
@@ -80,4 +80,21 @@ export function padNumbers(
   return numbers.map((number) =>
     number.toString().padStart(maxLength, fillString)
   );
+}
+
+export function actualTime(result: Result | undefined): number {
+  if (result === undefined) {
+    return 0;
+  }
+
+  switch (result.penalty) {
+    case "OK":
+      return result.time;
+
+    case "+2":
+      return result.time + 2;
+
+    case "DNF":
+      return Infinity;
+  }
 }

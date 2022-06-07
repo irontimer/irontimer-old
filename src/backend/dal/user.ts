@@ -12,6 +12,7 @@ import { updateUserEmail } from "../utils/auth";
 import { checkAndUpdatePersonalBest as checkAndUpdatePersonalBest } from "../utils/personal-best";
 import IronTimerError from "../utils/error";
 import type { DeleteResult, UpdateResult } from "mongodb";
+import { actualTime } from "../utils/misc";
 
 export async function addUser(
   username: string,
@@ -200,7 +201,10 @@ export async function incrementCubes(
     .filter((pb) => pb.session === result.session)
     .sort((a, b) => b.time - a.time)[0];
 
-  if (personalBest === undefined || result.time >= personalBest.time * 0.75) {
+  if (
+    personalBest === undefined ||
+    actualTime(result) >= personalBest.time * 0.75
+  ) {
     // Increment when no record found or wpm is within 25% of the record
     return await User.updateOne({ _id: userID }, { $inc: { cubes: 1 } });
   }

@@ -18,6 +18,7 @@ import { Request, Result, Saved } from "../../../types";
 import { Types } from "mongoose";
 import { DEFAULT_SCRAMBLE_TYPE } from "../../../constants/scramble-type";
 import _ from "lodash";
+import { actualTime } from "../../utils/misc";
 
 export async function getResults(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
@@ -144,7 +145,7 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
     incrementCubes(userID, result);
 
     if (isPersonalBest && user.discordUserID) {
-      Bot.updateDiscordRole(user.discordUserID, result.time);
+      Bot.updateDiscordRole(user.discordUserID, actualTime(result));
     }
   }
 
@@ -162,7 +163,9 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
   if (isPersonalBest) {
     Logger.logToDb(
       "user_new_pb",
-      `${session.scrambleType} ${result.time} ${result.scramble} (${addedResult.insertedID})`,
+      `${session.scrambleType} ${actualTime(result)} ${result.scramble} (${
+        addedResult.insertedID
+      })`,
       userID
     );
   }

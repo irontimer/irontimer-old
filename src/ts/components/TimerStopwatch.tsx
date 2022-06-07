@@ -1,5 +1,5 @@
 import { Component, createSignal } from "solid-js";
-import { formatTime } from "../functions/time";
+import { formatTime } from "../utils/misc";
 import { config } from "../state/config";
 import { addResult, getLastResult } from "../state/result";
 

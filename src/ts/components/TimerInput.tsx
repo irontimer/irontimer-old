@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { parseTimeString } from "../functions/time";
+import { parseTimeString } from "../utils/misc";
 import Notifications from "../state/notifications";
 import { addResult } from "../state/result";
 

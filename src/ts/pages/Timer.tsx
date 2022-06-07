@@ -1,7 +1,7 @@
 /** @format */
 import { Component, createSignal, For, Match, Show, Switch } from "solid-js";
 import { Popup } from "../components/Popup";
-import { calculateAverage } from "../functions/average";
+import { calculateAverage, formatTime, actualTimeString } from "../utils/misc";
 import {
   deleteAll,
   deleteResult,
@@ -11,7 +11,6 @@ import {
   updateResult,
   getLastResult
 } from "../state/result";
-import { formatTime } from "../functions/time";
 import { Result, Penalty, Saved } from "../../types";
 
 import { Button } from "../components/Button";
@@ -53,14 +52,6 @@ function popupButtonCallback(
   if (close) {
     setCurrentOpen();
   }
-}
-
-function displayTime(time: number, penalty: Penalty): string {
-  return penalty === "OK"
-    ? formatTime(time)
-    : penalty === "+2"
-    ? `${formatTime(time + 2)}+`
-    : "DNF";
 }
 
 export const Timer: Component = () => {
@@ -112,7 +103,7 @@ export const Timer: Component = () => {
                   />
                 </div>
                 <div class="popup-content">
-                  Time: {getResultFromCurrentOpen()?.time}
+                  Time: {actualTimeString(getResultFromCurrentOpen())}
                 </div>
                 <div class="popup-content">
                   Date:{" "}
@@ -223,7 +214,7 @@ export const Timer: Component = () => {
                                 setCurrentOpen(getResults().length - getIndex())
                               }
                             >
-                              {displayTime(result.time, result.penalty)}
+                              {actualTimeString(result)}
                             </td>
                             <td class="unselectable">
                               {ao5 !== undefined ? formatTime(ao5) : "-"}

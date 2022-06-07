@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import endpoints from "./endpoints";
-import { auth } from "../functions/auth";
+import { auth } from "../utils/auth";
 import { getIdToken } from "firebase/auth";
 import {
   RequestOptions,

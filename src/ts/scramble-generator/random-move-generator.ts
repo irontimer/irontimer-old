@@ -4,7 +4,7 @@ import {
   SCRAMBLE_FACES,
   TURN_COUNT_PER_CYCLE
 } from "../../constants/scramble-type";
-import { randomBoolean, randomInteger } from "../functions/random";
+import { randomBoolean, randomInteger } from "../utils/misc";
 import { isRedundant } from "./redudancy-check";
 
 export function* randomMoveGenerator<T extends ScrambleType>(
