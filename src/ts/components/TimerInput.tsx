@@ -12,7 +12,11 @@ export const TimerInput: Component = () => {
       class="timer-input"
       placeholder="Enter time"
       onKeyPress={(e) => {
-        if (!isLegalCharacter(e)) {
+        if (e.key !== "Enter") {
+          if (!isLegalCharacter(e)) {
+            e.preventDefault();
+          }
+
           return;
         }
 
@@ -58,13 +62,9 @@ function isLegalCharacter(
     target: Element;
   }
 ): boolean {
-  if (e.key !== "Enter") {
-    const str = e.currentTarget.value + e.key;
+  const str = e.currentTarget.value + e.key;
 
-    if (!inputRegex.test(str)) {
-      e.preventDefault();
-    }
-
+  if (!inputRegex.test(str)) {
     return false;
   }
 
