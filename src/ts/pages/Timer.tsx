@@ -254,14 +254,18 @@ export const Timer: Component = () => {
           </Match>
         </Switch>
         <div id="average-list">
-          <For each={getAllAverages()}>
-            {(avg) => (
-              <div class="average-item">
-                <div class="average-label unselectable">ao{avg.averageOf}</div>
-                <div class="average-value unselectable">{avg.average}</div>
-              </div>
-            )}
-          </For>
+          <Show when={!isTiming()}>
+            <For each={getAllAverages()}>
+              {(avg) => (
+                <div class="average-item">
+                  <div class="average-label unselectable">
+                    ao{avg.averageOf}
+                  </div>
+                  <div class="average-value unselectable">{avg.average}</div>
+                </div>
+              )}
+            </For>
+          </Show>
         </div>
       </div>
 
