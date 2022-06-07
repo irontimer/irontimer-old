@@ -87,6 +87,7 @@ function release(e: KeyboardEvent | TouchEvent): void {
       setTimestamp(0);
 
       break;
+
     case "almost-ready":
       setReadyState("unready");
 
