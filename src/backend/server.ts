@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 import admin, { ServiceAccount } from "firebase-admin";
-import serviceAccount from "./credentials/serviceAccountKey.json";
+import { readFileSync } from "fs";
 import * as db from "./init/db";
 import jobs from "./jobs";
 import { getLiveConfiguration } from "./init/configuration";
@@ -21,10 +21,16 @@ async function bootServer(port: number): Promise<Server> {
     Logger.success("Connected to database");
 
     Logger.info("Initializing Firebase app instance...");
+
+    const serviceAccount: ServiceAccount = JSON.parse(
+      (process.env.FIREBASE_SERVICE_ACCOUNT !== undefined
+        ? Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT, "base64")
+        : readFileSync("./src/backend/credentials/serviceAccountKey.json")
+      ).toString()
+    );
+
     admin.initializeApp({
-      credential: admin.credential.cert(
-        serviceAccount as unknown as ServiceAccount
-      )
+      credential: admin.credential.cert(serviceAccount)
     });
     Logger.success("Firebase app initialized");
 
