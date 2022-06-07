@@ -4,6 +4,9 @@
   "description": "A modern and customizable Rubik's Cube timer with inspiration from Monkeytype.",
   "author": "Evan <evanrayweigel@outlook.com>",
   "license": "AGPL-3.0",
+  "engines": {
+    "node": "16.13.2"
+  },
   "scripts": {
     "dev": "concurrently \"yarn dev-frontend\" \"yarn dev-backend\" \"yarn dev-tauri\"",
     "dev-frontend": "vite",
