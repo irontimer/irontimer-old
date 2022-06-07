@@ -53,16 +53,22 @@ export function parseTimeString(timeString: string): number {
   return hours * HOUR + minutes * MINUTE + seconds * SECOND;
 }
 
-export function randomInteger(min: number, max: number): number {
-  return Math.floor(randomFloat(min, max));
-}
-
 export function randomFloat(min: number, max: number): number {
   return Math.random() * (max - min) + min;
 }
 
+export function randomInteger(min: number, max: number): number {
+  const num = Math.floor(randomFloat(min, max));
+
+  return num;
+}
+
 export function randomBoolean(): boolean {
   return Math.round(Math.random()) === 1;
+}
+
+export function randomChance(percent: number): boolean {
+  return randomFloat(0, 100) <= percent;
 }
 
 export function calculateAverage(results: Result[]): number {
@@ -105,10 +111,10 @@ export function actualTimeString(result: Result | undefined): string {
 
   switch (result.penalty) {
     case "OK":
-      return result.time.toString();
+      return formatTime(result.time);
 
     case "+2":
-      return `${actualTime(result)}+`;
+      return `${formatTime(actualTime(result))}+`;
 
     case "DNF":
       return "DNF";
