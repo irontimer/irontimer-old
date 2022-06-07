@@ -57,7 +57,6 @@ async function bootServer(port: number): Promise<Server> {
   } catch (error: any) {
     Logger.error("Failed to boot server");
     Logger.error(error);
-    console.trace(error);
     return process.exit(1);
   }
 
