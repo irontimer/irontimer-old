@@ -12,7 +12,7 @@
     "dev-frontend": "vite",
     "dev-backend": "nodemon",
     "dev-tauri": "tauri dev",
-    "start": "ts-node src/backend/index.ts",
+    "start": "node build/backend/index.js",
     "build-all": "yarn build-frontend && yarn build-backend && yarn build-tauri",
     "build-frontend": "tsc --noEmit && vite build",
     "build-backend": "cd ./src/backend && tsc",
