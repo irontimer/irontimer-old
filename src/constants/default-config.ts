@@ -2,7 +2,7 @@ import { Config } from "../types";
 
 export const DEFAULT_CONFIG: Config = {
   timerType: "timer",
-  currentSession: "3x3x3"
+  currentSession: "Default"
 };
 
 export const DEFAULT_CONFIG_KEYS = Object.keys(
