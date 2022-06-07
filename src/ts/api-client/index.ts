@@ -13,7 +13,7 @@ import {
 } from "../../types";
 
 const DEV_SERVER_HOST = "http://localhost:3005";
-const PROD_SERVER_HOST = "https://api.irontimer.com:3005";
+const PROD_SERVER_HOST = "https://guarded-bayou-82640.herokuapp.com/"; //"https://api.irontimer.com:3005";
 
 const API_PATH = "";
 const BASE_URL =
