@@ -1,8 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../config/firebase-config";
-import { getAuth, createUserWithEmailAndPassword, User } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  User,
+  signInWithEmailAndPassword
+} from "firebase/auth";
 import API from "../api-client";
-import { setResults } from "../state/result";
+import { setIsSavingResult, setResults } from "../state/result";
 import { Config, Result, Saved, Session } from "../../types";
 import { config, setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
@@ -13,16 +18,21 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth = getAuth(firebaseApp);
 
-export async function signUp(
+export async function signIn(
   email: string,
   password: string
 ): Promise<User | undefined> {
-  const credential = await createUserWithEmailAndPassword(
+  const credential = await signInWithEmailAndPassword(
     auth,
     email,
     password
   ).catch((err) => {
     console.log(err);
+
+    Notifications.add({
+      type: "error",
+      message: `Error signing in\n${err.code}\n${err.message}`
+    });
 
     return undefined;
   });
@@ -30,25 +40,87 @@ export async function signUp(
   return credential?.user;
 }
 
+export async function signUp(
+  email: string,
+  username: string,
+  password: string,
+  confirmPassword: string
+): Promise<User | undefined> {
+  if (password !== confirmPassword) {
+    Notifications.add({
+      type: "error",
+      message: "Passwords do not match"
+    });
+
+    return;
+  }
+
+  const isValid = await API.users.getNameAvailability(username);
+
+  if (isValid.status !== 200) {
+    Notifications.add({
+      type: "error",
+      message: "Username is invalid or already taken"
+    });
+
+    return;
+  }
+
+  const credential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  ).catch((err) => {
+    console.log(err);
+
+    Notifications.add({
+      type: "error",
+      message: `Failed to sign up\n${err.message}`
+    });
+
+    return undefined;
+  });
+
+  const user = credential?.user;
+
+  if (user === undefined) {
+    Notifications.add({
+      type: "error",
+      message: "Something went wrong"
+    });
+
+    return;
+  }
+
+  const response = await API.users.create(username, email ?? "", user.uid);
+
+  if (response.status !== 200) {
+    Notifications.add({
+      type: "error",
+      message: "Something went wrong"
+    });
+
+    return;
+  }
+
+  return user;
+}
+
 auth.onAuthStateChanged(async (user) => {
   if (user !== null) {
     console.log("user logged in");
 
-    const user = auth.currentUser;
-
-    if (user === null) {
-      return;
-    }
+    setIsSavingResult(true);
+    await getResultsFromDatabase();
+    await getConfigFromDatabase(user);
+    await getSessionsFromDatabase();
+    setIsSavingResult(false);
 
     if (window.location.pathname === "/sign-in") {
       window.location.replace("/");
 
       return;
     }
-
-    await getResultsFromDatabase();
-    await getConfigFromDatabase(user);
-    await getSessionsFromDatabase();
   } else {
     console.log("user logged out");
 
@@ -105,7 +177,18 @@ async function getConfigFromDatabase(user: User): Promise<void> {
       return;
     }
 
-    config = saveResponse.data as Saved<Config, string> | null;
+    const newConfig = await API.configs.get();
+
+    if (newConfig.status !== 200) {
+      Notifications.add({
+        type: "error",
+        message: `Failed to get config\n${newConfig.message}`
+      });
+
+      return;
+    }
+
+    config = newConfig.data as Saved<Config, string>;
   }
 
   if (config?._id !== user.uid) {

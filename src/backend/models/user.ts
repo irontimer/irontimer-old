@@ -18,7 +18,9 @@ export const UserSchema = new Schema<IUser>({
   },
   discordUserID: {
     type: String,
-    required: false
+    required: false,
+    unique: true,
+    sparse: true
   },
   personalBests: {
     type: [

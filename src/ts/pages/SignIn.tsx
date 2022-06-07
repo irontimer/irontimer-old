@@ -1,21 +1,22 @@
 /** @format */
-
-import { FirebaseError } from "firebase/app";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { Component } from "solid-js";
 import { Button } from "../components/Button";
-import { auth, signUp } from "../utils/auth";
-import API from "../api-client";
-import Notifications from "../state/notifications";
+import { signIn, signUp } from "../utils/auth";
+import { createStore } from "solid-js/store";
 
 export const SignIn: Component = () => {
-  let signUpEmail = "";
-  let signUpUsername = "";
-  let signUpPassword = "";
-  let signUpConfirmPassword = "";
-
-  let signInEmail = "";
-  let signInPassword = "";
+  const [info, setInfo] = createStore({
+    signUp: {
+      email: "",
+      password: "",
+      username: "",
+      confirmPassword: ""
+    },
+    signIn: {
+      email: "",
+      password: ""
+    }
+  });
 
   return (
     <div class="signin-page">
@@ -31,7 +32,7 @@ export const SignIn: Component = () => {
             type="email"
             class="sign-up-form-input"
             placeholder="Enter email"
-            onChange={(e) => (signUpEmail = e.currentTarget.value)}
+            onChange={(e) => setInfo("signUp", "email", e.currentTarget.value)}
           />
 
           <label for="username" class="sign-up-form-input-label">
@@ -42,7 +43,9 @@ export const SignIn: Component = () => {
             type="text"
             class="sign-up-form-input"
             placeholder="Enter username"
-            onChange={(e) => (signUpUsername = e.currentTarget.value)}
+            onChange={(e) =>
+              setInfo("signUp", "username", e.currentTarget.value)
+            }
           />
 
           <label for="password" class="sign-up-form-input-label">
@@ -53,7 +56,9 @@ export const SignIn: Component = () => {
             type="password"
             class="sign-up-form-input"
             placeholder="Password"
-            onChange={(e) => (signUpPassword = e.currentTarget.value)}
+            onChange={(e) =>
+              setInfo("signUp", "password", e.currentTarget.value)
+            }
           />
 
           <label for="password-confirm" class="sign-up-form-input-label">
@@ -64,57 +69,21 @@ export const SignIn: Component = () => {
             type="password"
             class="sign-up-form-input"
             placeholder="Confirm Password"
-            onChange={(e) => (signUpConfirmPassword = e.currentTarget.value)}
+            onChange={(e) =>
+              setInfo("signUp", "confirmPassword", e.currentTarget.value)
+            }
           />
 
           <Button
             class="sign-up-form-button"
-            onClick={async () => {
-              if (signUpPassword !== signUpConfirmPassword) {
-                Notifications.add({
-                  type: "error",
-                  message: "Passwords do not match"
-                });
-
-                return;
-              }
-
-              const isValid = await API.users.getNameAvailability(
-                signUpUsername
-              );
-
-              if (isValid.status !== 200) {
-                Notifications.add({
-                  type: "error",
-                  message: "Username is invalid or already taken"
-                });
-
-                return;
-              }
-
-              const user = await signUp(signUpEmail, signUpPassword).catch(
-                () => {
-                  Notifications.add({
-                    type: "error",
-                    message: "Error signing up"
-                  });
-
-                  return undefined;
-                }
-              );
-
-              if (user !== undefined) {
-                API.users
-                  .create(signUpUsername, signUpEmail, user?.uid)
-                  .catch((err) => {
-                    console.log(err);
-
-                    Notifications.add({ type: "error", message: err.message });
-
-                    auth.currentUser?.delete();
-                  });
-              }
-            }}
+            onClick={() =>
+              signUp(
+                info.signUp.email,
+                info.signUp.username,
+                info.signUp.password,
+                info.signUp.confirmPassword
+              )
+            }
           >
             Sign Up
           </Button>
@@ -132,7 +101,7 @@ export const SignIn: Component = () => {
             type="email"
             class="sign-in-form-input"
             placeholder="Enter email"
-            onChange={(e) => (signInEmail = e.currentTarget.value)}
+            onChange={(e) => setInfo("signIn", "email", e.currentTarget.value)}
           />
 
           <label for="password" class="sign-in-form-input-label">
@@ -143,25 +112,14 @@ export const SignIn: Component = () => {
             type="password"
             class="sign-in-form-input"
             placeholder="Password"
-            onChange={(e) => (signInPassword = e.currentTarget.value)}
+            onChange={(e) =>
+              setInfo("signIn", "password", e.currentTarget.value)
+            }
           />
 
           <Button
             class="sign-in-form-button"
-            onClick={() => {
-              signInWithEmailAndPassword(
-                auth,
-                signInEmail,
-                signInPassword
-              ).catch((err: FirebaseError) => {
-                console.error(err.code, err.message);
-
-                Notifications.add({
-                  type: "error",
-                  message: `Error signing in\n${err.code}\n${err.message}`
-                });
-              });
-            }}
+            onClick={() => signIn(info.signIn.email, info.signIn.password)}
           >
             Sign In
           </Button>
