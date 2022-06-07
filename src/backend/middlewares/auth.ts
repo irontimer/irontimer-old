@@ -100,6 +100,7 @@ async function authenticateWithAuthHeader(
   switch (authScheme) {
     case "Bearer":
       return await authenticateWithBearerToken(credentials);
+
     case "ApiKey":
       return await authenticateWithApiKey(credentials, configuration, options);
   }

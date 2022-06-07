@@ -42,9 +42,11 @@ const coloredOutputFormat = format.printf((log) => {
     case "error":
       color = errorColor;
       break;
+
     case "warning":
       color = warningColor;
       break;
+
     case "success":
       color = successColor;
       break;

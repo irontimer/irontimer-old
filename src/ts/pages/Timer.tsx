@@ -265,8 +265,7 @@ export const Timer: Component = () => {
   );
 };
 
-// listen for ctrl + 1, ctrl + 2, and ctrl + 3 to switch penalties for the last solve
-window.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", (e) => {
   const lastResult = getLastResult();
 
   if (lastResult === undefined) {
@@ -276,15 +275,24 @@ window.addEventListener("keydown", (e) => {
   if (e.ctrlKey) {
     switch (e.key) {
       case "1":
-        updateResult(lastResult, { penalty: "OK" });
+        if (lastResult.penalty !== "OK") {
+          updateResult(lastResult, { penalty: "OK" });
+        }
+
         break;
 
       case "2":
-        updateResult(lastResult, { penalty: "+2" });
+        if (lastResult.penalty !== "+2") {
+          updateResult(lastResult, { penalty: "+2" });
+        }
+
         break;
 
       case "3":
-        updateResult(lastResult, { penalty: "DNF" });
+        if (lastResult.penalty !== "DNF") {
+          updateResult(lastResult, { penalty: "DNF" });
+        }
+
         break;
     }
   }
