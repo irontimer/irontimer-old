@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import API from "../api-client";
 import { setIsSavingResult, setResults } from "../state/result";
-import { config, setConfig, setConfigTemp } from "../state/config";
+import { config, setConfig, _setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
 import Notifications from "../state/notifications";
 import { setCurrentSession, setSessions } from "../state/session";
@@ -219,7 +219,7 @@ async function getConfigFromDatabase(user: User): Promise<void> {
     return;
   }
 
-  setConfigTemp(config);
+  _setConfig(config);
 }
 
 async function getSessionsFromDatabase(): Promise<void> {
