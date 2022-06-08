@@ -18,7 +18,7 @@
     "build-backend": "cd ./src/backend && tsc",
     "build-tauri": "tauri build",
     "serve": "vite preview",
-    "deploy": "yarn build && firebase deploy",
+    "deploy": "yarn build-frontend && firebase deploy --only hosting",
     "pretty": "prettier \"src/**/*.{ts,tsx,scss}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,tsx,scss}\"",
     "lint": "eslint \"src/**/*.{ts,tsx,scss}\"",
