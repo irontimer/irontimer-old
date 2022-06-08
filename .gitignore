@@ -22,3 +22,6 @@ logs/
 # Tauri
 src-tauri/target/
 src-tauri/WixTools
+
+# Rollup Visualizer
+stats.html
