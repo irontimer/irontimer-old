@@ -8,16 +8,16 @@ const MAX_PRESETS = 10;
 
 function getPresetKeyFilter(
   userID: string,
-  keyId: string
+  apiKeyID: string
 ): FilterQuery<IPreset> {
   return {
-    _id: new Types.ObjectId(keyId),
+    _id: new Types.ObjectId(apiKeyID),
     userID
   };
 }
 
 interface PresetCreationResult {
-  presetId: string;
+  presetID: string;
 }
 
 export async function getPresets(userID: string): Promise<IPreset[]> {
@@ -44,30 +44,30 @@ export async function addPreset(
   });
 
   return {
-    presetId: preset._id.toString()
+    presetID: preset._id.toString()
   };
 }
 
 export async function editPreset(
   userID: string,
-  presetId: string,
+  presetID: string,
   name: string,
   config: Saved<Config, string>
 ): Promise<void> {
   const presetUpdates =
     config && Object.keys(config).length > 0 ? { name, config } : { name };
 
-  await Preset.updateOne(getPresetKeyFilter(userID, presetId), {
+  await Preset.updateOne(getPresetKeyFilter(userID, presetID), {
     $set: presetUpdates
   });
 }
 
 export async function removePreset(
   userID: string,
-  presetId: string
+  presetID: string
 ): Promise<void> {
   const deleteResult = await Preset.deleteOne(
-    getPresetKeyFilter(userID, presetId)
+    getPresetKeyFilter(userID, presetID)
   );
 
   if (deleteResult.deletedCount === 0) {

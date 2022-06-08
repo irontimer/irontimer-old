@@ -38,14 +38,14 @@ const customThemeColorsValidation = joi
     "array.length": "The colors array must have 10 colors"
   });
 
-const customThemeIdValidation = joi
+const customThemeIDValidation = joi
   .string()
   .length(24)
   .regex(/^[0-9a-fA-F]+$/)
   .required()
   .messages({
-    "string.length": "The themeId must be 24 characters long",
-    "string.pattern.base": "The themeId must be valid hexadecimal string"
+    "string.length": "The themeID must be 24 characters long",
+    "string.pattern.base": "The themeID must be valid hexadecimal string"
   });
 
 const usernameValidation = joi
@@ -158,7 +158,7 @@ router.delete(
   authenticateRequest(),
   validateRequest({
     body: {
-      themeId: customThemeIdValidation
+      themeID: customThemeIDValidation
     }
   }),
   asyncHandler(UserController.removeCustomTheme)
@@ -170,7 +170,7 @@ router.patch(
   authenticateRequest(),
   validateRequest({
     body: {
-      themeId: customThemeIdValidation,
+      themeID: customThemeIDValidation,
       theme: {
         name: customThemeNameValidation,
         colors: customThemeColorsValidation

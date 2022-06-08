@@ -53,12 +53,12 @@ router.patch(
 );
 
 router.delete(
-  "/:presetId",
+  "/:presetID",
   RateLimit.presetsRemove,
   authenticateRequest(),
   validateRequest({
     params: {
-      presetId: joi.string().required()
+      presetID: joi.string().required()
     }
   }),
   asyncHandler(PresetController.removePreset)

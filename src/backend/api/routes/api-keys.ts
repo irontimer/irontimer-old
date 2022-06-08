@@ -61,13 +61,13 @@ router.post(
 );
 
 router.patch(
-  "/:apiKeyId",
+  "/:apiKeyID",
   RateLimit.apiKeysUpdate,
   authenticateRequest(),
   checkIfUserCanManageApiKeys,
   validateRequest({
     params: {
-      apiKeyId: joi.string().required()
+      apiKeyID: joi.string().required()
     },
     body: {
       name: apiKeyNameSchema,
@@ -78,13 +78,13 @@ router.patch(
 );
 
 router.delete(
-  "/:apiKeyId",
+  "/:apiKeyID",
   RateLimit.apiKeysDelete,
   authenticateRequest(),
   checkIfUserCanManageApiKeys,
   validateRequest({
     params: {
-      apiKeyId: joi.string().required()
+      apiKeyID: joi.string().required()
     }
   }),
   asyncHandler(ApiKeyController.deleteApiKey)

@@ -34,13 +34,16 @@ export async function addApiKey(apiKey: IApiKey): Promise<string> {
 
 async function updateApiKey(
   userID: string,
-  keyId: string,
+  apiKeyID: string,
   updates: MatchKeysAndValues<IApiKey>
 ): Promise<void> {
-  const updateResult = await ApiKey.updateOne(getApiKeyFilter(userID, keyId), {
-    $inc: { useCount: _.has(updates, "lastUsedOn") ? 1 : 0 },
-    $set: _.pickBy(updates, (value) => !_.isNil(value))
-  });
+  const updateResult = await ApiKey.updateOne(
+    getApiKeyFilter(userID, apiKeyID),
+    {
+      $inc: { useCount: _.has(updates, "lastUsedOn") ? 1 : 0 },
+      $set: _.pickBy(updates, (value) => !_.isNil(value))
+    }
+  );
 
   if (updateResult.modifiedCount === 0) {
     throw new IronTimerError(404, "ApiKey not found");
@@ -49,7 +52,7 @@ async function updateApiKey(
 
 export async function editApiKey(
   userID: string,
-  keyId: string,
+  apiKeyID: string,
   name: string,
   enabled: boolean
 ): Promise<void> {
@@ -59,18 +62,18 @@ export async function editApiKey(
     modifiedOn: Date.now()
   };
 
-  await updateApiKey(userID, keyId, apiKeyUpdates);
+  await updateApiKey(userID, apiKeyID, apiKeyUpdates);
 }
 
 export async function updateLastUsedOn(
   userID: string,
-  keyId: string
+  apiKeyID: string
 ): Promise<void> {
   const apiKeyUpdates = {
     lastUsedOn: Date.now()
   };
 
-  await updateApiKey(userID, keyId, apiKeyUpdates);
+  await updateApiKey(userID, apiKeyID, apiKeyUpdates);
 }
 
 export async function deleteApiKey(

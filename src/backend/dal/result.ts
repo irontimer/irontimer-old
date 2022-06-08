@@ -10,7 +10,7 @@ import { getUser } from "./user";
 export async function addResult(
   userID: string,
   result: Partial<Saved<IResult>>
-): Promise<{ insertedID: Types.ObjectId }> {
+): Promise<Types.ObjectId> {
   const user: User | undefined = await getUser(userID, "add result").catch(
     () => undefined
   );
@@ -30,9 +30,7 @@ export async function addResult(
     _id
   });
 
-  return {
-    insertedID: _id
-  };
+  return _id;
 }
 
 export async function deleteAll(userID: string): Promise<DeleteResult> {

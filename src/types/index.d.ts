@@ -164,107 +164,36 @@ export interface Notification {
 // API
 ////////////////////////////////////////////////////////////////////////////////
 
-export type ClientMethod = (
-  endpoint: string,
-  config?: RequestOptions
-) => Promise<Response>;
-
-export interface ApiResponse {
-  message: string;
-  data: any | null;
-}
-
-export interface Client {
-  get: ClientMethod;
-  post: ClientMethod;
-  put: ClientMethod;
-  patch: ClientMethod;
-  delete: ClientMethod;
-}
-
-export type MethodTypes = keyof Client;
-
-export interface RequestOptions {
+export interface RequestOptions<Payload = any, QueryType = any> {
   headers?: Record<string, string>;
-  searchQuery?: Record<string, any>;
-  payload?: any;
+  searchQuery?: Record<string, QueryType>;
+  payload?: Payload;
 }
 
-export interface Response {
+export interface HttpClientResponse<T = any> {
   status: number;
   message: string;
-  data?: any;
+  data?: T;
 }
 
-export type EndpointData = Promise<Response>;
-export type Endpoint = () => EndpointData;
+export type EndpointData<T = any> = Promise<HttpClientResponse<T>>;
 
-export interface Endpoints {
-  configs: {
-    get: Endpoint;
-    save: (config: Config | Saved<Config, string>) => EndpointData;
-  };
+export type HttpClientMethod = (
+  endpoint: string,
+  config?: RequestOptions
+) => Promise<HttpClientResponse>;
 
-  presets: {
-    get: Endpoint;
-    add: (presetName: string, configChanges: ConfigChanges) => EndpointData;
-    edit: (
-      presetId: string,
-      presetName: string,
-      configChanges: ConfigChanges
-    ) => EndpointData;
-    delete: (presetId: string) => EndpointData;
-  };
+export interface HttpClient {
+  get: HttpClientMethod;
+  post: HttpClientMethod;
+  put: HttpClientMethod;
+  patch: HttpClientMethod;
+  delete: HttpClientMethod;
+}
 
-  psas: {
-    get: Endpoint;
-  };
+export type HttpMethodTypes = keyof HttpClient;
 
-  users: {
-    getData: Endpoint;
-    create: (name: string, email: string, userID: string) => EndpointData;
-    getNameAvailability: (name: string) => EndpointData;
-    delete: Endpoint;
-    updateName: (name: string) => EndpointData;
-    updateEmail: (newEmail: string, previousEmail: string) => EndpointData;
-    deletePersonalBests: Endpoint;
-    getCustomThemes: () => EndpointData;
-    addCustomTheme: (newTheme: Partial<Theme>) => EndpointData;
-    editCustomTheme: (
-      themeId: string,
-      newTheme: Partial<Theme>
-    ) => EndpointData;
-    deleteCustomTheme: (themeId: string) => EndpointData;
-    linkDiscord: (data: {
-      tokenType: string;
-      accessToken: string;
-      userID?: string;
-    }) => EndpointData;
-    unlinkDiscord: Endpoint;
-  };
-
-  results: {
-    get: Endpoint;
-    save: (result: AlmostSaved<Result>) => EndpointData;
-    delete: (result: Saved<Result>) => EndpointData;
-    update: (result: Saved<Result>) => EndpointData;
-    deleteAll: Endpoint;
-  };
-
-  apiKeys: {
-    get: Endpoint;
-    generate: (name: string, enabled: boolean) => EndpointData;
-    update: (
-      apiKeyId: string,
-      updates: { name?: string; enabled?: boolean }
-    ) => EndpointData;
-    delete: (apiKeyId: string) => EndpointData;
-  };
-
-  sessions: {
-    get: Endpoint;
-    add: (session: Session) => EndpointData;
-    delete: (session: Saved<Session>) => EndpointData;
-    deleteAll: Endpoint;
-  };
+export interface ApiResponse<T = any> {
+  message: string;
+  data: T | null;
 }

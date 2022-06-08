@@ -28,10 +28,10 @@ export async function editPreset(req: Request): Promise<IronTimerResponse> {
 }
 
 export async function removePreset(req: Request): Promise<IronTimerResponse> {
-  const { presetId } = req.params;
+  const { presetID } = req.params;
   const { userID } = req.ctx.decodedToken;
 
-  await PresetDAL.removePreset(userID, presetId);
+  await PresetDAL.removePreset(userID, presetID);
 
   return new IronTimerResponse("Preset deleted");
 }

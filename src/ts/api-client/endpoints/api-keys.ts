@@ -1,35 +1,30 @@
-import { Client, Endpoints, EndpointData } from "../../../types";
+import { HttpClient, EndpointData } from "../../../types";
 
 const BASE_PATH = "/api-keys";
 
-export default function getApiKeysEndpoints(
-  apiClient: Client
-): Endpoints["apiKeys"] {
-  async function get(): EndpointData {
-    return await apiClient.get(BASE_PATH);
+export default class ApiKeys {
+  constructor(private httpClient: HttpClient) {
+    this.httpClient = httpClient;
   }
 
-  async function generate(name: string, enabled: boolean): EndpointData {
+  async get(): EndpointData {
+    return await this.httpClient.get(BASE_PATH);
+  }
+
+  async generate(name: string, enabled: boolean): EndpointData {
     const payload = { name, enabled };
-    return await apiClient.post(BASE_PATH, { payload });
+    return await this.httpClient.post(BASE_PATH, { payload });
   }
 
-  async function update(
+  async update(
     apiKeyID: string,
     updates: { name?: string; enabled?: boolean }
   ): EndpointData {
     const payload = { ...updates };
-    return await apiClient.patch(`${BASE_PATH}/${apiKeyID}`, { payload });
+    return await this.httpClient.patch(`${BASE_PATH}/${apiKeyID}`, { payload });
   }
 
-  async function _delete(apiKeyID: string): EndpointData {
-    return await apiClient.delete(`${BASE_PATH}/${apiKeyID}`);
+  async delete(apiKeyID: string): EndpointData {
+    return await this.httpClient.delete(`${BASE_PATH}/${apiKeyID}`);
   }
-
-  return {
-    get,
-    generate,
-    update,
-    delete: _delete
-  };
 }

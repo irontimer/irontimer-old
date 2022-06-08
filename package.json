@@ -51,7 +51,7 @@
     "vite-plugin-solid": "2.2.6"
   },
   "dependencies": {
-    "axios": "0.27.2",
+    "axios": "0.21.4",
     "bcrypt": "5.0.1",
     "bullmq": "1.83.2",
     "chalk": "4.1.2",

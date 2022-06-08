@@ -1,7 +1,7 @@
 import { compare } from "bcrypt";
 import { getApiKey, updateLastUsedOn } from "../dal/api-keys";
 import IronTimerError from "../utils/error";
-import { verifyIdToken } from "../utils/auth";
+import { verifyIDToken } from "../utils/auth";
 import { base64UrlDecode } from "../utils/misc";
 import { NextFunction, Response, Handler } from "express";
 import statuses from "../constants/irontimer-status-codes";
@@ -116,7 +116,7 @@ async function authenticateWithBearerToken(
   token: string
 ): Promise<DecodedToken> {
   try {
-    const decodedToken = await verifyIdToken(token);
+    const decodedToken = await verifyIDToken(token);
 
     return {
       type: "Bearer",
@@ -162,9 +162,9 @@ async function authenticateWithApiKey(
 
   try {
     const decodedKey = base64UrlDecode(key);
-    const [keyId, apiKey] = decodedKey.split(".");
+    const [apiKeyID, apiKey] = decodedKey.split(".");
 
-    const targetApiKey = await getApiKey(keyId);
+    const targetApiKey = await getApiKey(apiKeyID);
     if (!targetApiKey) {
       throw new IronTimerError(404, "ApiKey not found");
     }
@@ -180,7 +180,7 @@ async function authenticateWithApiKey(
       throw new IronTimerError(code, message);
     }
 
-    await updateLastUsedOn(targetApiKey.userID, keyId);
+    await updateLastUsedOn(targetApiKey.userID, apiKeyID);
 
     return {
       type: "ApiKey",

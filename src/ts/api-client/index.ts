@@ -1,16 +1,5 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import endpoints from "./endpoints";
-import { auth } from "../utils/auth";
-import { getIdToken } from "firebase/auth";
-import {
-  RequestOptions,
-  MethodTypes,
-  ClientMethod,
-  EndpointData,
-  ApiResponse,
-  Client,
-  Endpoints
-} from "../../types";
+import { buildHttpClient } from "./adapters/axios-adapter";
 
 const DEV_SERVER_HOST = "http://localhost:3005";
 const PROD_SERVER_HOST = "https://guarded-bayou-82640.herokuapp.com/"; //"https://api.irontimer.com:3005";
@@ -20,114 +9,15 @@ const BASE_URL =
   window.location.hostname === "localhost" ? DEV_SERVER_HOST : PROD_SERVER_HOST;
 const API_URL = `${BASE_URL}${API_PATH}`;
 
-// Adapts the api client's view of request options to the underlying HTTP client.
-async function adaptRequestOptions(
-  options: RequestOptions
-): Promise<AxiosRequestConfig> {
-  const currentUser = auth.currentUser;
-  const idToken = currentUser && (await getIdToken(currentUser));
-
-  return {
-    params: options.searchQuery,
-    data: options.payload,
-    headers: {
-      ...options.headers,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      ...(idToken && { Authorization: `Bearer ${idToken}` })
-    }
-  };
-}
-
-type AxiosClientMethod = (
-  endpoint: string,
-  config: AxiosRequestConfig
-) => Promise<AxiosResponse>;
-
-type AxiosClientDataMethod = (
-  endpoint: string,
-  data: any,
-  config: AxiosRequestConfig
-) => Promise<AxiosResponse>;
-
-type AxiosClientMethods = AxiosClientMethod & AxiosClientDataMethod;
-
-// Wrap the underlying HTTP client's method with our own.
-function transformClientMethod(
-  clientMethod: AxiosClientMethods,
-  methodType: MethodTypes
-): ClientMethod {
-  return async (
-    endpoint: string,
-    options: RequestOptions = {}
-  ): EndpointData => {
-    let errorMessage = "";
-
-    try {
-      const requestOptions: AxiosRequestConfig = await adaptRequestOptions(
-        options
-      );
-
-      let response;
-      if (methodType === "get" || methodType === "delete") {
-        response = await clientMethod(endpoint, requestOptions);
-      } else {
-        response = await clientMethod(
-          endpoint,
-          requestOptions.data,
-          requestOptions
-        );
-      }
-
-      const { message, data } = response.data as ApiResponse;
-
-      return {
-        status: response.status,
-        message,
-        data
-      };
-    } catch (error) {
-      const typedError = error as Error;
-      errorMessage = typedError.message;
-
-      if (axios.isAxiosError(typedError)) {
-        return {
-          status: typedError.response?.status ?? 500,
-          message: typedError.message,
-          ...(typedError.response?.data as any)
-        };
-      }
-    }
-
-    return {
-      status: 500,
-      message: errorMessage
-    };
-  };
-}
-
-const axiosClient = axios.create({
-  baseURL: API_URL,
-  timeout: 10000
-});
-
-const apiClient: Client = {
-  get: transformClientMethod(axiosClient.get, "get"),
-  post: transformClientMethod(axiosClient.post, "post"),
-  put: transformClientMethod(axiosClient.put, "put"),
-  patch: transformClientMethod(axiosClient.patch, "patch"),
-  delete: transformClientMethod(axiosClient.delete, "delete")
-};
+const httpClient = buildHttpClient(API_URL, 10000);
 
 // API Endpoints
-const API: Endpoints = {
-  users: endpoints.getUsersEndpoints(apiClient),
-  configs: endpoints.getConfigsEndpoints(apiClient),
-  results: endpoints.getResultsEndpoints(apiClient),
-  psas: endpoints.getPsasEndpoints(apiClient),
-  presets: endpoints.getPresetsEndpoints(apiClient),
-  apiKeys: endpoints.getApiKeysEndpoints(apiClient),
-  sessions: endpoints.getSessionsEndpoints(apiClient)
+export default {
+  users: new endpoints.Users(httpClient),
+  configs: new endpoints.Configs(httpClient),
+  results: new endpoints.Results(httpClient),
+  psas: new endpoints.Psas(httpClient),
+  presets: new endpoints.Presets(httpClient),
+  sessions: new endpoints.Sessions(httpClient),
+  apiKeys: new endpoints.ApiKeys(httpClient)
 };
-
-export default API;

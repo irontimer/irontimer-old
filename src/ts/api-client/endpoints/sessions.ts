@@ -1,51 +1,27 @@
-import {
-  Client,
-  Endpoints,
-  EndpointData,
-  Saved,
-  Session
-} from "../../../types";
-import { CLIENT_VERSION } from "../../version";
+import { HttpClient, EndpointData, Session } from "../../../types";
 
 const BASE_PATH = "/sessions";
 
-export default function getSessionsEndpoints(
-  apiClient: Client
-): Endpoints["sessions"] {
-  async function get(): EndpointData {
-    return await apiClient.get(BASE_PATH, {
-      headers: {
-        "Client-Version": CLIENT_VERSION
-      }
+export default class Sessions {
+  constructor(private httpClient: HttpClient) {
+    this.httpClient = httpClient;
+  }
+
+  async get(): EndpointData {
+    return await this.httpClient.get(BASE_PATH);
+  }
+
+  async add(session: Session): EndpointData {
+    return await this.httpClient.post(BASE_PATH, {
+      payload: { session }
     });
   }
 
-  async function add(session: Session): EndpointData {
-    return await apiClient.post(BASE_PATH, {
-      headers: {
-        "Client-Version": CLIENT_VERSION
-      },
-      payload: {
-        session
-      }
-    });
+  async deleteAll(): EndpointData {
+    return await this.httpClient.delete(BASE_PATH);
   }
 
-  async function deleteAll(): EndpointData {
-    return await apiClient.delete(BASE_PATH, {
-      headers: {
-        "Client-Version": CLIENT_VERSION
-      }
-    });
+  async delete(): EndpointData {
+    return await this.httpClient.delete(BASE_PATH);
   }
-
-  async function deleteSession(session: Saved<Session>): EndpointData {
-    return await apiClient.delete(`${BASE_PATH}/${session._id}`, {
-      headers: {
-        "Client-Version": CLIENT_VERSION
-      }
-    });
-  }
-
-  return { get, add, deleteAll, delete: deleteSession };
 }

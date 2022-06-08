@@ -20,7 +20,7 @@ async function errorHandlingMiddleware(
   const ironTimerResponse = new IronTimerResponse();
   ironTimerResponse.status = 500;
   ironTimerResponse.data = {
-    errorId: ironTimerError.errorId ?? uuidv4(),
+    errorID: ironTimerError.errorID ?? uuidv4(),
     userID: ironTimerError.userID ?? req.ctx?.decodedToken?.userID
   };
 
@@ -34,11 +34,11 @@ async function errorHandlingMiddleware(
     ironTimerResponse.message = error.message;
     ironTimerResponse.status = error.status;
   } else {
-    ironTimerResponse.message = `Oops! Please try again later. - ${ironTimerResponse.data.errorId}`;
+    ironTimerResponse.message = `Oops! Please try again later. - ${ironTimerResponse.data.errorID}`;
   }
 
   if (process.env.MODE !== "dev" && ironTimerResponse.status >= 500) {
-    const { userID, errorId } = ironTimerResponse.data;
+    const { userID, errorID } = ironTimerResponse.data;
 
     try {
       await Logger.logToDb(
@@ -47,7 +47,7 @@ async function errorHandlingMiddleware(
         userID
       );
       await Error.create({
-        _id: errorId,
+        _id: errorID,
         timestamp: Date.now(),
         status: ironTimerResponse.status,
         userID,

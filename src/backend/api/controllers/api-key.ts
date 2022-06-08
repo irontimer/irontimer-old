@@ -51,30 +51,30 @@ export async function generateApiKey(req: Request): Promise<IronTimerResponse> {
     useCount: 0
   });
 
-  const apiKeyId = await ApiKeysDAL.addApiKey(apiKeyObject);
+  const apiKeyID = await ApiKeysDAL.addApiKey(apiKeyObject);
 
   return new IronTimerResponse("ApiKey generated", {
-    apiKey: base64UrlEncode(`${apiKeyId}.${apiKey}`),
-    apiKeyId,
+    apiKey: base64UrlEncode(`${apiKeyID}.${apiKey}`),
+    apiKeyID,
     apiKeyDetails: cleanApiKey(apiKeyObject)
   });
 }
 
 export async function editApiKey(req: Request): Promise<IronTimerResponse> {
-  const { apiKeyId } = req.params;
+  const { apiKeyID } = req.params;
   const { name, enabled } = req.body;
   const { userID } = req.ctx.decodedToken;
 
-  await ApiKeysDAL.editApiKey(userID, apiKeyId, name, enabled);
+  await ApiKeysDAL.editApiKey(userID, apiKeyID, name, enabled);
 
   return new IronTimerResponse("ApiKey updated");
 }
 
 export async function deleteApiKey(req: Request): Promise<IronTimerResponse> {
-  const { apiKeyId } = req.params;
+  const { apiKeyID } = req.params;
   const { userID } = req.ctx.decodedToken;
 
-  await ApiKeysDAL.deleteApiKey(userID, apiKeyId);
+  await ApiKeysDAL.deleteApiKey(userID, apiKeyID);
 
   return new IronTimerResponse("ApiKey deleted");
 }

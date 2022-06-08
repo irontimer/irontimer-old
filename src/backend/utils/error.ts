@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 class IronTimerError extends Error {
   status: number;
-  errorId: string;
+  errorID: string;
   userID?: string;
 
   constructor(
@@ -14,7 +14,7 @@ class IronTimerError extends Error {
     super();
 
     this.status = status ?? 500;
-    this.errorId = uuidv4();
+    this.errorID = uuidv4();
     this.stack = stack;
     this.userID = userID;
 
@@ -25,7 +25,7 @@ class IronTimerError extends Error {
     } else {
       if (this.stack && this.status >= 500) {
         this.stack = this.message + "\n" + this.stack;
-        this.message = "Internal Server Error " + this.errorId;
+        this.message = "Internal Server Error " + this.errorID;
       } else {
         this.message = String(message);
       }

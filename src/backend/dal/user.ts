@@ -18,7 +18,7 @@ export async function addUser(
   username: string,
   email: string,
   userID: string
-): Promise<{ insertedId: string }> {
+): Promise<{ insertedID: string }> {
   const user = await User.findById(userID);
 
   if (user !== null) {
@@ -39,7 +39,7 @@ export async function addUser(
   });
 
   return {
-    insertedId: newUser._id
+    insertedID: newUser._id
   };
 }
 

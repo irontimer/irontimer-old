@@ -66,11 +66,11 @@ export async function getLiveConfiguration(): Promise<IConfiguration> {
     if (liveConfiguration) {
       const baseConfiguration = _.cloneDeep(BASE_CONFIGURATION);
 
-      const liveConfigurationWithoutId = _.omit(
+      const liveConfigurationWithoutID = _.omit(
         liveConfiguration,
         "_id"
       ) as IConfiguration;
-      mergeConfigurations(baseConfiguration, liveConfigurationWithoutId);
+      mergeConfigurations(baseConfiguration, liveConfigurationWithoutID);
 
       pushConfiguration(baseConfiguration);
       configuration = baseConfiguration;

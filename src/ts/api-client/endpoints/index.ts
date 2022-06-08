@@ -1,17 +1,17 @@
-import getConfigsEndpoints from "./configs";
-import getPresetsEndpoints from "./presets";
-import getPsasEndpoints from "./psas";
-import getResultsEndpoints from "./results";
-import getUsersEndpoints from "./users";
-import getApiKeysEndpoints from "./api-keys";
-import getSessionsEndpoints from "./sessions";
+import ApiKeys from "./api-keys";
+import Configs from "./configs";
+import Presets from "./presets";
+import Psas from "./psas";
+import Results from "./results";
+import Sessions from "./sessions";
+import Users from "./users";
 
 export default {
-  getConfigsEndpoints,
-  getPresetsEndpoints,
-  getPsasEndpoints,
-  getResultsEndpoints,
-  getUsersEndpoints,
-  getApiKeysEndpoints,
-  getSessionsEndpoints
+  ApiKeys,
+  Configs,
+  Presets,
+  Psas,
+  Results,
+  Sessions,
+  Users
 };

@@ -1,43 +1,40 @@
-import { Client, Endpoints, EndpointData, ConfigChanges } from "../../../types";
+import { HttpClient, EndpointData, ConfigChanges } from "../../../types";
 
 const BASE_PATH = "/presets";
 
-export default function getPresetsEndpoints(
-  apiClient: Client
-): Endpoints["presets"] {
-  async function get(): EndpointData {
-    return await apiClient.get(BASE_PATH);
+export default class Presets {
+  constructor(private httpClient: HttpClient) {
+    this.httpClient = httpClient;
   }
 
-  async function add(
-    presetName: string,
-    configChanges: ConfigChanges
-  ): EndpointData {
+  async get(): EndpointData {
+    return await this.httpClient.get(BASE_PATH);
+  }
+
+  async add(presetName: string, configChanges: ConfigChanges): EndpointData {
     const payload = {
       name: presetName,
       config: configChanges
     };
 
-    return await apiClient.post(BASE_PATH, { payload });
+    return await this.httpClient.post(BASE_PATH, { payload });
   }
 
-  async function edit(
-    presetId: string,
+  async edit(
+    presetID: string,
     presetName: string,
     configChanges: ConfigChanges
   ): EndpointData {
     const payload = {
-      _id: presetId,
+      _id: presetID,
       name: presetName,
       config: configChanges
     };
 
-    return await apiClient.patch(BASE_PATH, { payload });
+    return await this.httpClient.patch(BASE_PATH, { payload });
   }
 
-  async function _delete(presetId: string): EndpointData {
-    return await apiClient.delete(`${BASE_PATH}/${presetId}`);
+  async delete(presetID: string): EndpointData {
+    return await this.httpClient.delete(`${BASE_PATH}/${presetID}`);
   }
-
-  return { get, add, edit, delete: _delete };
 }

@@ -158,14 +158,14 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
   updateTypingStats(userID, result.time);
   PublicStatsDAL.updateStats(result.time);
 
-  const addedResult = await ResultDAL.addResult(userID, result);
+  const addedResultID = await ResultDAL.addResult(userID, result);
 
   if (isPersonalBest) {
     Logger.logToDb(
       "user_new_pb",
-      `${session.scrambleType} ${actualTime(result)} ${result.scramble} (${
-        addedResult.insertedID
-      })`,
+      `${session.scrambleType} ${actualTime(result)} ${
+        result.scramble
+      } (${addedResultID})`,
       userID
     );
   }
@@ -173,7 +173,7 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
   const data = {
     isPersonalBest,
     username: user.username,
-    insertedID: addedResult.insertedID
+    insertedID: addedResultID
   };
 
   incrementResult(result);

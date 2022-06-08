@@ -206,8 +206,8 @@ export async function removeCustomTheme(
   req: Request
 ): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
-  const { themeId } = req.body;
-  await UserDAL.removeTheme(userID, themeId);
+  const { themeID } = req.body;
+  await UserDAL.removeTheme(userID, themeID);
   return new IronTimerResponse("Custom theme removed");
 }
 
@@ -215,9 +215,9 @@ export async function editCustomTheme(
   req: Request
 ): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
-  const { themeId, theme } = req.body;
+  const { themeID, theme } = req.body;
 
-  await UserDAL.editTheme(userID, themeId, theme);
+  await UserDAL.editTheme(userID, themeID, theme);
   return new IronTimerResponse("Custom theme updated");
 }
 
