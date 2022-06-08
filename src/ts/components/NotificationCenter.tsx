@@ -1,11 +1,12 @@
 import { Component, For, Show } from "solid-js";
 import Notifications, { notificationBuffer } from "../state/notifications";
+import { isTauri } from "../utils/tauri";
 import { isTiming } from "./TimerStopwatch";
 
 export const NotificationCenter: Component = () => {
   return (
     <div id="notification-center">
-      <Show when={!isTiming()}>
+      <Show when={!isTiming() && !isTauri}>
         <For each={Object.keys(notificationBuffer).reverse()}>
           {(id) => {
             const notification = notificationBuffer[id];

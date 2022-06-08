@@ -169,11 +169,14 @@ export interface Preset {
   config: Saved<Config, string>;
 }
 
-export interface Notification {
-  id: string;
+export interface NotificationOptions {
   type: "success" | "error" | "info";
   message: string;
   duration?: number;
+}
+
+export interface Notification extends NotificationOptions {
+  id: string;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
