@@ -8,7 +8,7 @@ export class IronTimerResponse {
 
   constructor(message?: string, data?: any, status = 200) {
     this.message = message ?? "ok";
-    this.data = data ?? null;
+    this.data = data ?? undefined;
     this.status = status;
   }
 }

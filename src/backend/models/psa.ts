@@ -17,4 +17,4 @@ export const PSASchema = new Schema<IPSA>({
   }
 });
 
-export const PSA = model<IPSA>("psa", PSASchema);
+export const PSA = model("psa", PSASchema);

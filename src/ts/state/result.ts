@@ -1,10 +1,5 @@
 import { createMemo, createSignal } from "solid-js";
-import type {
-  AddResultResponse,
-  Result,
-  Saved,
-  AlmostSaved
-} from "../../types";
+import type { Result, Saved, AlmostSaved } from "../../types";
 import API from "../api-client/index";
 import { auth } from "../utils/auth";
 import {
@@ -16,7 +11,7 @@ import { roundToMilliseconds } from "../utils/misc";
 import Notifications from "./notifications";
 import { config } from "./config";
 import { currentSession } from "./session";
-import { Schema } from "mongoose";
+import type { Types } from "mongoose";
 
 export const [getResults, setResults] = createSignal<
   (Saved<Result> | Result)[]
@@ -89,7 +84,7 @@ export async function addResult(
       return;
     }
 
-    const savedResult = response.data as AddResultResponse | undefined;
+    const savedResult = response.data;
 
     if (savedResult === undefined) {
       setAndGenerateScramble();
@@ -151,7 +146,7 @@ export async function updateResult(
   }
 }
 
-export function addIDToResult(result: Result, id: Schema.Types.ObjectId): void {
+export function addIDToResult(result: Result, id: Types.ObjectId): void {
   updateResult(result, { _id: id }, false);
 }
 

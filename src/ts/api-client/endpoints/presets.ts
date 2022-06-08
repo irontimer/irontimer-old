@@ -1,4 +1,9 @@
-import { HttpClient, EndpointData, ConfigChanges } from "../../../types";
+import {
+  HttpClient,
+  EndpointData,
+  ConfigChanges,
+  Preset
+} from "../../../types";
 
 const BASE_PATH = "/presets";
 
@@ -7,11 +12,14 @@ export default class Presets {
     this.httpClient = httpClient;
   }
 
-  async get(): EndpointData {
+  async get(): EndpointData<Preset[]> {
     return await this.httpClient.get(BASE_PATH);
   }
 
-  async add(presetName: string, configChanges: ConfigChanges): EndpointData {
+  async add(
+    presetName: string,
+    configChanges: ConfigChanges
+  ): EndpointData<undefined> {
     const payload = {
       name: presetName,
       config: configChanges
@@ -24,7 +32,7 @@ export default class Presets {
     presetID: string,
     presetName: string,
     configChanges: ConfigChanges
-  ): EndpointData {
+  ): EndpointData<undefined> {
     const payload = {
       _id: presetID,
       name: presetName,
@@ -34,7 +42,7 @@ export default class Presets {
     return await this.httpClient.patch(BASE_PATH, { payload });
   }
 
-  async delete(presetID: string): EndpointData {
+  async delete(presetID: string): EndpointData<undefined> {
     return await this.httpClient.delete(`${BASE_PATH}/${presetID}`);
   }
 }

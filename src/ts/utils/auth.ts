@@ -8,7 +8,6 @@ import {
 } from "firebase/auth";
 import API from "../api-client";
 import { setIsSavingResult, setResults } from "../state/result";
-import { Config, Result, Saved, Session } from "../../types";
 import { config, setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
 import Notifications from "../state/notifications";
@@ -146,7 +145,16 @@ async function getResultsFromDatabase(): Promise<void> {
     return;
   }
 
-  const results = response.data as Saved<Result>[];
+  const results = response.data;
+
+  if (results === undefined) {
+    Notifications.add({
+      type: "error",
+      message: "Something went wrong"
+    });
+
+    return;
+  }
 
   setResults(results);
 }
@@ -163,9 +171,9 @@ async function getConfigFromDatabase(user: User): Promise<void> {
     return;
   }
 
-  let config = response.data as Saved<Config, string> | null;
+  let config = response.data;
 
-  if (config === null) {
+  if (config === undefined) {
     const saveResponse = await API.configs.save(DEFAULT_CONFIG);
 
     if (saveResponse.status !== 200) {
@@ -177,21 +185,32 @@ async function getConfigFromDatabase(user: User): Promise<void> {
       return;
     }
 
-    const newConfig = await API.configs.get();
+    const newResponse = await API.configs.get();
 
-    if (newConfig.status !== 200) {
+    if (newResponse.status !== 200) {
       Notifications.add({
         type: "error",
-        message: `Failed to get config\n${newConfig.message}`
+        message: `Failed to get config\n${newResponse.message}`
       });
 
       return;
     }
 
-    config = newConfig.data as Saved<Config, string>;
+    const newConfig = newResponse.data;
+
+    if (newConfig === undefined) {
+      Notifications.add({
+        type: "error",
+        message: "Something went wrong"
+      });
+
+      return;
+    }
+
+    config = newConfig;
   }
 
-  if (config?._id !== user.uid) {
+  if (config._id !== user.uid) {
     Notifications.add({
       type: "error",
       message: "Config does not belong to user"
@@ -215,7 +234,16 @@ async function getSessionsFromDatabase(): Promise<void> {
     return;
   }
 
-  const sessions = response.data as Saved<Session>[];
+  const sessions = response.data;
+
+  if (sessions === undefined) {
+    Notifications.add({
+      type: "error",
+      message: "Something went wrong"
+    });
+
+    return;
+  }
 
   const currentSession = sessions.find(
     (session) => config.currentSession === session.name
@@ -241,7 +269,16 @@ async function getSessionsFromDatabase(): Promise<void> {
         return;
       }
 
-      const session = response.data as Saved<Session>;
+      const session = response.data;
+
+      if (session === undefined) {
+        Notifications.add({
+          type: "error",
+          message: "Something went wrong"
+        });
+
+        return;
+      }
 
       setSessions([session]);
 

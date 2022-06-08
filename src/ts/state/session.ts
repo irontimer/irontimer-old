@@ -30,7 +30,11 @@ export async function addSession(
     const response = await API.sessions.add(unsavedSession);
 
     if (response.status === 200) {
-      const session = response.data as Saved<Session>;
+      const session = response.data;
+
+      if (session === undefined) {
+        throw new Error("Session was not added");
+      }
 
       setSessions([...getSessions(), session]);
     } else {

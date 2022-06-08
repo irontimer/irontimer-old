@@ -39,4 +39,4 @@ export const ResultSchema = new Schema<Saved<IResult>>({
   }
 });
 
-export const Result = model<Saved<IResult>>("result", ResultSchema);
+export const Result = model("result", ResultSchema);

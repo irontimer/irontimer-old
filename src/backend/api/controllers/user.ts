@@ -5,16 +5,37 @@ import { IronTimerResponse } from "../../utils/irontimer-response";
 import { linkAccount } from "../../utils/discord";
 import { buildAgentLog } from "../../utils/misc";
 import * as Bot from "../../tasks/bot";
-import type { Request, User } from "../../../types";
+import type { Request } from "../../../types";
 import admin from "firebase-admin";
 import { isUsernameValid } from "../../utils/validation";
 import type { ScrambleType } from "../../../constants/scramble-type";
+
+export async function getUser(req: Request): Promise<IronTimerResponse> {
+  const { userID } = req.ctx.decodedToken;
+
+  const userInfo = await UserDAL.getUser(userID, "get user").catch(async () => {
+    await admin.auth().deleteUser(userID);
+
+    throw new IronTimerError(
+      404,
+      "User not found. Please try to sign up again.",
+      "get user",
+      userID
+    );
+  });
+
+  const agentLog = buildAgentLog(req);
+  Logger.logToDb("user_data_requested", agentLog, userID);
+
+  return new IronTimerResponse("User data retrieved", userInfo);
+}
 
 export async function createNewUser(req: Request): Promise<IronTimerResponse> {
   const { username } = req.body;
   const { email, userID } = req.ctx.decodedToken;
 
   const available = await UserDAL.isNameAvailable(username);
+
   if (!available) {
     throw new IronTimerError(409, "Username unavailable");
   }
@@ -26,26 +47,14 @@ export async function createNewUser(req: Request): Promise<IronTimerResponse> {
   return new IronTimerResponse("User created");
 }
 
-export async function deleteUser(req: Request): Promise<IronTimerResponse> {
-  const { userID } = req.ctx.decodedToken;
-
-  const userInfo = await UserDAL.getUser(userID, "delete user");
-  await UserDAL.deleteUser(userID);
-  Logger.logToDb(
-    "user_deleted",
-    `${userInfo.email} ${userInfo.username}`,
-    userID
-  );
-
-  return new IronTimerResponse("User deleted");
-}
-
 export async function updateName(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
   const { name } = req.body;
 
   const oldUser = await UserDAL.getUser(userID, "update name");
+
   await UserDAL.updateName(userID, name);
+
   Logger.logToDb(
     "user_name_updated",
     `changed name from ${oldUser.username} to ${name}`,
@@ -55,15 +64,16 @@ export async function updateName(req: Request): Promise<IronTimerResponse> {
   return new IronTimerResponse("User's name updated");
 }
 
-export async function clearPersonalBest(
+export async function clearPersonalBests(
   req: Request
 ): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
 
-  await UserDAL.clearPersonalBest(userID);
+  await UserDAL.clearPersonalBests(userID);
+
   Logger.logToDb("user_cleared_pbs", "", userID);
 
-  return new IronTimerResponse("User's PB cleared");
+  return new IronTimerResponse("User's Personal Bests cleared");
 }
 
 export async function checkName(req: Request): Promise<IronTimerResponse> {
@@ -91,37 +101,13 @@ export async function updateEmail(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
   const { newEmail } = req.body;
 
-  try {
-    await UserDAL.updateEmail(userID, newEmail);
-  } catch (e: any) {
+  await UserDAL.updateEmail(userID, newEmail).catch((e) => {
     throw new IronTimerError(404, e.message, "update email", userID);
-  }
+  });
 
   Logger.logToDb("user_email_updated", `changed email to ${newEmail}`, userID);
 
   return new IronTimerResponse("Email updated");
-}
-
-export async function getUser(req: Request): Promise<IronTimerResponse> {
-  const { userID } = req.ctx.decodedToken;
-
-  let userInfo: User;
-  try {
-    userInfo = await UserDAL.getUser(userID, "get user");
-  } catch (e) {
-    await admin.auth().deleteUser(userID);
-    throw new IronTimerError(
-      404,
-      "User not found. Please try to sign up again.",
-      "get user",
-      userID
-    );
-  }
-
-  const agentLog = buildAgentLog(req);
-  Logger.logToDb("user_data_requested", agentLog, userID);
-
-  return new IronTimerResponse("User data retrieved", userInfo);
 }
 
 export async function linkDiscord(req: Request): Promise<IronTimerResponse> {
@@ -131,7 +117,8 @@ export async function linkDiscord(req: Request): Promise<IronTimerResponse> {
   } = req.body;
 
   const userInfo = await UserDAL.getUser(userID, "link discord");
-  if (userInfo.discordUserID) {
+
+  if (userInfo.discordUserID !== undefined) {
     throw new IronTimerError(
       409,
       "This account is already linked to a Discord account"
@@ -151,6 +138,7 @@ export async function linkDiscord(req: Request): Promise<IronTimerResponse> {
   const discordUserIDAvailable = await UserDAL.isDiscordUserIDAvailable(
     discordUserID
   );
+
   if (!discordUserIDAvailable) {
     throw new IronTimerError(
       409,
@@ -159,8 +147,8 @@ export async function linkDiscord(req: Request): Promise<IronTimerResponse> {
   }
 
   await UserDAL.linkDiscord(userID, discordUserID);
+  await Bot.linkDiscord(discordUserID, userID);
 
-  Bot.linkDiscord(discordUserID, userID);
   Logger.logToDb("user_discord_link", `linked to ${discordUserID}`, userID);
 
   return new IronTimerResponse("Discord account linked", discordUserID);
@@ -170,6 +158,7 @@ export async function unlinkDiscord(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
 
   const userInfo = await UserDAL.getUser(userID, "unlink discord");
+
   if (!userInfo.discordUserID) {
     throw new IronTimerError(
       404,
@@ -177,8 +166,9 @@ export async function unlinkDiscord(req: Request): Promise<IronTimerResponse> {
     );
   }
 
-  Bot.unlinkDiscord(userInfo.discordUserID, userID);
   await UserDAL.unlinkDiscord(userID);
+  await Bot.unlinkDiscord(userInfo.discordUserID, userID);
+
   Logger.logToDb("user_discord_unlinked", userInfo.discordUserID, userID);
 
   return new IronTimerResponse("Discord account unlinked");
@@ -188,7 +178,9 @@ export async function getCustomThemes(
   req: Request
 ): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
+
   const customThemes = await UserDAL.getThemes(userID);
+
   return new IronTimerResponse("Custom themes retrieved", customThemes);
 }
 
@@ -197,9 +189,8 @@ export async function addCustomTheme(req: Request): Promise<IronTimerResponse> {
   const { name, colors } = req.body;
 
   const addedTheme = await UserDAL.addTheme(userID, { name, colors });
-  return new IronTimerResponse("Custom theme added", {
-    theme: addedTheme
-  });
+
+  return new IronTimerResponse("Custom theme added", addedTheme);
 }
 
 export async function removeCustomTheme(
@@ -207,7 +198,9 @@ export async function removeCustomTheme(
 ): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
   const { themeID } = req.body;
+
   await UserDAL.removeTheme(userID, themeID);
+
   return new IronTimerResponse("Custom theme removed");
 }
 
@@ -218,6 +211,7 @@ export async function editCustomTheme(
   const { themeID, theme } = req.body;
 
   await UserDAL.editTheme(userID, themeID, theme);
+
   return new IronTimerResponse("Custom theme updated");
 }
 
@@ -227,15 +221,34 @@ export async function getPersonalBests(
   const { userID } = req.ctx.decodedToken;
   const { scrambleType } = req.query;
 
-  const data =
-    (await UserDAL.getPersonalBests(userID, scrambleType as ScrambleType)) ??
-    null;
-  return new IronTimerResponse("Personal bests retrieved", data);
+  const personalBests = await UserDAL.getPersonalBests(
+    userID,
+    scrambleType as ScrambleType
+  );
+
+  return new IronTimerResponse("Personal bests retrieved", personalBests);
 }
 
 export async function getStats(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
 
-  const data = (await UserDAL.getStats(userID)) ?? null;
-  return new IronTimerResponse("Personal stats retrieved", data);
+  const stats = await UserDAL.getStats(userID);
+
+  return new IronTimerResponse("Personal stats retrieved", stats);
+}
+
+export async function deleteUser(req: Request): Promise<IronTimerResponse> {
+  const { userID } = req.ctx.decodedToken;
+
+  const userInfo = await UserDAL.getUser(userID, "delete user");
+
+  await UserDAL.deleteUser(userID);
+
+  Logger.logToDb(
+    "user_deleted",
+    `${userInfo.email} ${userInfo.username}`,
+    userID
+  );
+
+  return new IronTimerResponse("User deleted");
 }

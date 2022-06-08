@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 import { ApiKey as IApiKey } from "../../types";
 
 export const ApiKeySchema = new Schema<IApiKey>({
@@ -13,4 +13,4 @@ export const ApiKeySchema = new Schema<IApiKey>({
   useCount: Number
 });
 
-export const ApiKey = model<IApiKey>("api-key", ApiKeySchema);
+export const ApiKey = model("api-key", ApiKeySchema);

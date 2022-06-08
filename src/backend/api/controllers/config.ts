@@ -5,8 +5,9 @@ import { Request } from "../../../types";
 export async function getConfig(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
 
-  const data = await ConfigDAL.getConfig(userID);
-  return new IronTimerResponse("Configuration retrieved", data);
+  const config = await ConfigDAL.getConfig(userID);
+
+  return new IronTimerResponse("Configuration retrieved", config);
 }
 
 export async function saveConfig(req: Request): Promise<IronTimerResponse> {

@@ -25,12 +25,12 @@ export async function addResult(
 
   const _id = new Types.ObjectId();
 
-  await Result.create({
+  const newResult = await Result.create({
     ...result,
     _id
   });
 
-  return _id;
+  return newResult._id;
 }
 
 export async function deleteAll(userID: string): Promise<DeleteResult> {

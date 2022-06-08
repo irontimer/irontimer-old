@@ -19,17 +19,9 @@ export async function addSession(req: Request): Promise<IronTimerResponse> {
 
   session.userID = userID;
 
-  const sessionID = await SessionDAL.addSession(session);
+  const newSession = await SessionDAL.addSession(session);
 
-  return new IronTimerResponse("Session added", sessionID);
-}
-
-export async function deleteAll(req: Request): Promise<IronTimerResponse> {
-  const { userID } = req.ctx.decodedToken;
-
-  await SessionDAL.deleteAll(userID);
-
-  return new IronTimerResponse("Sessions deleted");
+  return new IronTimerResponse("Session added", newSession);
 }
 
 export async function deleteSession(req: Request): Promise<IronTimerResponse> {
@@ -42,4 +34,12 @@ export async function deleteSession(req: Request): Promise<IronTimerResponse> {
   await SessionDAL.deleteSession(_id);
 
   return new IronTimerResponse("Session deleted");
+}
+
+export async function deleteAll(req: Request): Promise<IronTimerResponse> {
+  const { userID } = req.ctx.decodedToken;
+
+  await SessionDAL.deleteAll(userID);
+
+  return new IronTimerResponse("Sessions deleted");
 }

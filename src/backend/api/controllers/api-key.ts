@@ -5,7 +5,7 @@ import * as ApiKeysDAL from "../../dal/api-keys";
 import IronTimerError from "../../utils/error";
 import { IronTimerResponse } from "../../utils/irontimer-response";
 import { base64UrlEncode } from "../../utils/misc";
-import { Request } from "../../../types";
+import { GenerateApiKeyResponse, Request } from "../../../types";
 import { ApiKey as IApiKey } from "../../../types";
 import { ApiKey } from "../../models/api-key";
 
@@ -17,6 +17,7 @@ export async function getApiKeys(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
 
   const apiKeys = await ApiKeysDAL.getApiKeys(userID);
+
   const cleanedKeys = _(apiKeys).keyBy("_id").mapValues(cleanApiKey).value();
 
   return new IronTimerResponse("ApiKeys retrieved", cleanedKeys);
@@ -38,6 +39,7 @@ export async function generateApiKey(req: Request): Promise<IronTimerResponse> {
   }
 
   const apiKey = randomBytes(apiKeyBytes).toString("base64url");
+
   const saltyHash = await hash(apiKey, apiKeySaltRounds);
 
   const apiKeyObject = new ApiKey({
@@ -53,11 +55,13 @@ export async function generateApiKey(req: Request): Promise<IronTimerResponse> {
 
   const apiKeyID = await ApiKeysDAL.addApiKey(apiKeyObject);
 
-  return new IronTimerResponse("ApiKey generated", {
+  const res: GenerateApiKeyResponse = {
     apiKey: base64UrlEncode(`${apiKeyID}.${apiKey}`),
     apiKeyID,
     apiKeyDetails: cleanApiKey(apiKeyObject)
-  });
+  };
+
+  return new IronTimerResponse("ApiKey generated", res);
 }
 
 export async function editApiKey(req: Request): Promise<IronTimerResponse> {

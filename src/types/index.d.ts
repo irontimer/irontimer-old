@@ -1,11 +1,13 @@
-import { ObjectId } from "mongoose";
-import { Request as ExpressRequest } from "express";
+export type { UpdateResult, DeleteResult } from "mongodb";
+import type { Types } from "mongoose";
+import type { Request as ExpressRequest } from "express";
 import type { ScrambleType } from "../constants/scramble-type";
 
 export type AlmostSaved<T> = T & {
   userID: string;
 };
-export type Saved<T, ID = ObjectId> = AlmostSaved<T> & {
+
+export type Saved<T, ID = Types.ObjectId> = AlmostSaved<T> & {
   _id: ID;
   __v: number;
 };
@@ -21,8 +23,8 @@ export interface Result {
   isPersonalBest?: boolean;
 }
 
-export interface AddResultResponse {
-  insertedID: ObjectId;
+export interface ResultCreationResult {
+  insertedID: Types.ObjectId;
   isPersonalBest: boolean;
   username: string;
 }
@@ -100,7 +102,7 @@ declare module "express-serve-static-core" {
 }
 
 export interface ApiKey {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   userID: string;
   name: string;
   hash: string;
@@ -111,15 +113,21 @@ export interface ApiKey {
   enabled: boolean;
 }
 
+export interface GenerateApiKeyResponse {
+  apiKey: string;
+  apiKeyID: string;
+  apiKeyDetails: Partial<ApiKey>;
+}
+
 export interface PSA {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   sticky?: boolean;
   message: string;
   level?: number;
 }
 
 export interface PublicStats {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   resultCount: number;
   timeCubing: number;
   type: string;
@@ -147,7 +155,7 @@ export interface Config {
 export type ConfigChanges = Partial<Saved<Config, string>>;
 
 export interface Preset {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   userID: string;
   name: string;
   config: Saved<Config, string>;

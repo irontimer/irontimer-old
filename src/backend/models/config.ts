@@ -1,8 +1,8 @@
 import type { Config as IConfig, Saved } from "../../types";
 import { Schema, model } from "mongoose";
 
-export const ConfigSchema = new Schema<Saved<IConfig>>({
-  // since the userID is unique to each use we can use it as the _id
+export const ConfigSchema = new Schema<Saved<IConfig, string>>({
+  // since the userID is unique to each user we can use it as the _id
   _id: {
     type: String,
     required: true
@@ -18,4 +18,4 @@ export const ConfigSchema = new Schema<Saved<IConfig>>({
   }
 });
 
-export const Config = model<Saved<IConfig>>("config", ConfigSchema);
+export const Config = model("config", ConfigSchema);

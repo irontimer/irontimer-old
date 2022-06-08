@@ -26,4 +26,4 @@ export const PresetSchema = new Schema<IPreset>({
   }
 });
 
-export const Preset = model<IPreset>("preset", PresetSchema);
+export const Preset = model("preset", PresetSchema);

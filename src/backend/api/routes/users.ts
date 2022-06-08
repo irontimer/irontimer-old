@@ -129,7 +129,7 @@ router.delete(
   "/personalBests",
   RateLimit.userClearPB,
   authenticateRequest(),
-  asyncHandler(UserController.clearPersonalBest)
+  asyncHandler(UserController.clearPersonalBests)
 );
 
 router.get(

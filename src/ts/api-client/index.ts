@@ -12,7 +12,7 @@ const API_URL = `${BASE_URL}${API_PATH}`;
 const httpClient = buildHttpClient(API_URL, 10000);
 
 // API Endpoints
-export default {
+const API = {
   users: new endpoints.Users(httpClient),
   configs: new endpoints.Configs(httpClient),
   results: new endpoints.Results(httpClient),
@@ -21,3 +21,5 @@ export default {
   sessions: new endpoints.Sessions(httpClient),
   apiKeys: new endpoints.ApiKeys(httpClient)
 };
+
+export default API;

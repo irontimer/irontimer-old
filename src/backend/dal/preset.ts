@@ -16,10 +16,6 @@ function getPresetKeyFilter(
   };
 }
 
-interface PresetCreationResult {
-  presetID: string;
-}
-
 export async function getPresets(userID: string): Promise<IPreset[]> {
   const presets = await Preset.find({ userID }).sort({ timestamp: -1 });
 
@@ -30,7 +26,7 @@ export async function addPreset(
   userID: string,
   name: string,
   config: Saved<Config, string>
-): Promise<PresetCreationResult> {
+): Promise<Types.ObjectId> {
   const presets = await getPresets(userID);
 
   if (presets.length >= MAX_PRESETS) {
@@ -43,9 +39,7 @@ export async function addPreset(
     config
   });
 
-  return {
-    presetID: preset._id.toString()
-  };
+  return preset._id;
 }
 
 export async function editPreset(

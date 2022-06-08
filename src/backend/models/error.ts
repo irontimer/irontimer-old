@@ -38,4 +38,4 @@ const ErrorSchema = new Schema<IError>({
   }
 });
 
-export const Error = model<IError>("error", ErrorSchema);
+export const Error = model("error", ErrorSchema);

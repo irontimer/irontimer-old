@@ -5,17 +5,18 @@ import { Request } from "../../../types";
 export async function getPresets(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;
 
-  const data = await PresetDAL.getPresets(userID);
-  return new IronTimerResponse("Preset retrieved", data);
+  const preset = await PresetDAL.getPresets(userID);
+
+  return new IronTimerResponse("Preset retrieved", preset);
 }
 
 export async function addPreset(req: Request): Promise<IronTimerResponse> {
   const { name, config } = req.body;
   const { userID } = req.ctx.decodedToken;
 
-  const data = await PresetDAL.addPreset(userID, name, config);
+  await PresetDAL.addPreset(userID, name, config);
 
-  return new IronTimerResponse("Preset created", data);
+  return new IronTimerResponse("Preset created");
 }
 
 export async function editPreset(req: Request): Promise<IronTimerResponse> {

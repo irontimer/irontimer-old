@@ -80,7 +80,9 @@ export async function updateName(
   );
 }
 
-export async function clearPersonalBest(userID: string): Promise<UpdateResult> {
+export async function clearPersonalBests(
+  userID: string
+): Promise<UpdateResult> {
   return await User.updateOne(
     { _id: userID },
     {
@@ -111,9 +113,11 @@ export async function updateEmail(
 
 export async function getUser(userID: string, stack: string): Promise<IUser> {
   const user = await User.findById(userID);
+
   if (!user) {
     throw new IronTimerError(404, "User not found", stack);
   }
+
   return user;
 }
 

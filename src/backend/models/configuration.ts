@@ -36,7 +36,4 @@ export const ConfigurationSchema = new Schema<IConfiguration>({
   }
 });
 
-export const Configuration = model<IConfiguration>(
-  "configuration",
-  ConfigurationSchema
-);
+export const Configuration = model("configuration", ConfigurationSchema);

@@ -19,4 +19,4 @@ export const SessionSchema = new Schema<Saved<ISession>>({
   }
 });
 
-export const Session = model<Saved<ISession>>("Session", SessionSchema);
+export const Session = model("Session", SessionSchema);

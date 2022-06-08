@@ -8,11 +8,11 @@ export default class Configs {
     this.httpClient = httpClient;
   }
 
-  async get(): EndpointData {
+  async get(): EndpointData<Saved<Config, string>> {
     return await this.httpClient.get(BASE_PATH);
   }
 
-  async save(config: Config | Saved<Config, string>): EndpointData {
+  async save(config: Config | Saved<Config, string>): EndpointData<undefined> {
     const strippedConfig = strip(config);
 
     return await this.httpClient.patch(BASE_PATH, {

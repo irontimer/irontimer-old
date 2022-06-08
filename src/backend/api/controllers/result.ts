@@ -14,7 +14,7 @@ import { isResultTooFast } from "../../utils/validation";
 import IronTimerStatusCodes from "../../constants/irontimer-status-codes";
 import { incrementResult } from "../../utils/prometheus";
 import * as Bot from "../../tasks/bot";
-import { Request, Result, Saved } from "../../../types";
+import { Request, Result, ResultCreationResult, Saved } from "../../../types";
 import { Types } from "mongoose";
 import { DEFAULT_SCRAMBLE_TYPE } from "../../../constants/scramble-type";
 import _ from "lodash";
@@ -170,7 +170,7 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
     );
   }
 
-  const data = {
+  const resultCreationResult: ResultCreationResult = {
     isPersonalBest,
     username: user.username,
     insertedID: addedResultID
@@ -178,5 +178,5 @@ export async function addResult(req: Request): Promise<IronTimerResponse> {
 
   incrementResult(result);
 
-  return new IronTimerResponse("Result saved", data);
+  return new IronTimerResponse("Result saved", resultCreationResult);
 }

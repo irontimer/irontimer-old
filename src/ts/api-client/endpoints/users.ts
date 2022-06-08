@@ -1,4 +1,11 @@
-import { HttpClient, EndpointData, Theme } from "../../../types";
+import {
+  HttpClient,
+  EndpointData,
+  Theme,
+  User,
+  PersonalBest,
+  UserStats
+} from "../../../types";
 
 const BASE_PATH = "/users";
 
@@ -7,11 +14,15 @@ export default class Users {
     this.httpClient = httpClient;
   }
 
-  async getData(): EndpointData {
+  async getData(): EndpointData<User> {
     return await this.httpClient.get(BASE_PATH);
   }
 
-  async create(name: string, email?: string, uid?: string): EndpointData {
+  async create(
+    name: string,
+    email?: string,
+    uid?: string
+  ): EndpointData<undefined> {
     const payload = {
       email,
       name,
@@ -21,21 +32,20 @@ export default class Users {
     return await this.httpClient.post(`${BASE_PATH}/signup`, { payload });
   }
 
-  async getNameAvailability(name: string): EndpointData {
+  async getNameAvailability(name: string): EndpointData<undefined> {
     return await this.httpClient.get(`${BASE_PATH}/checkName/${name}`);
   }
 
-  async delete(): EndpointData {
-    return await this.httpClient.delete(BASE_PATH);
-  }
-
-  async updateName(name: string): EndpointData {
+  async updateName(name: string): EndpointData<undefined> {
     return await this.httpClient.patch(`${BASE_PATH}/name`, {
       payload: { name }
     });
   }
 
-  async updateEmail(newEmail: string, previousEmail: string): EndpointData {
+  async updateEmail(
+    newEmail: string,
+    previousEmail: string
+  ): EndpointData<undefined> {
     const payload = {
       newEmail,
       previousEmail
@@ -44,18 +54,27 @@ export default class Users {
     return await this.httpClient.patch(`${BASE_PATH}/email`, { payload });
   }
 
-  async deletePersonalBests(): EndpointData {
+  async getPersonalBests(): EndpointData<PersonalBest[] | undefined> {
+    return await this.httpClient.get(`${BASE_PATH}/personalBests`);
+  }
+
+  async deletePersonalBests(): EndpointData<undefined> {
     return await this.httpClient.delete(`${BASE_PATH}/personalBests`);
   }
 
-  async getCustomThemes(): EndpointData {
+  async getCustomThemes(): EndpointData<Theme[]> {
     return await this.httpClient.get(`${BASE_PATH}/customThemes`);
+  }
+
+  async addCustomTheme(newTheme: Partial<Theme>): EndpointData<string> {
+    const payload = { name: newTheme.name, colors: newTheme.colors };
+    return await this.httpClient.post(`${BASE_PATH}/customThemes`, { payload });
   }
 
   async editCustomTheme(
     themeID: string,
     newTheme: Partial<Theme>
-  ): EndpointData {
+  ): EndpointData<undefined> {
     const payload = {
       themeID: themeID,
       theme: {
@@ -63,32 +82,40 @@ export default class Users {
         colors: newTheme.colors
       }
     };
+
     return await this.httpClient.patch(`${BASE_PATH}/customThemes`, {
       payload
     });
   }
 
-  async deleteCustomTheme(themeID: string): EndpointData {
+  async deleteCustomTheme(themeID: string): EndpointData<undefined> {
     const payload = {
       themeID: themeID
     };
+
     return await this.httpClient.delete(`${BASE_PATH}/customThemes`, {
       payload
     });
   }
 
-  async addCustomTheme(newTheme: Partial<Theme>): EndpointData {
-    const payload = { name: newTheme.name, colors: newTheme.colors };
-    return await this.httpClient.post(`${BASE_PATH}/customThemes`, { payload });
-  }
-
-  async linkDiscord(tokenType: string, accessToken: string): EndpointData {
+  async linkDiscord(
+    tokenType: string,
+    accessToken: string
+  ): EndpointData<string> {
     return await this.httpClient.post(`${BASE_PATH}/discord/link`, {
       payload: { tokenType, accessToken }
     });
   }
 
-  async unlinkDiscord(): EndpointData {
+  async unlinkDiscord(): EndpointData<undefined> {
     return await this.httpClient.post(`${BASE_PATH}/discord/unlink`);
+  }
+
+  async getStats(): EndpointData<UserStats> {
+    return await this.httpClient.get(`${BASE_PATH}/stats`);
+  }
+
+  async delete(): EndpointData<undefined> {
+    return await this.httpClient.delete(BASE_PATH);
   }
 }

@@ -18,4 +18,4 @@ export const PublicStatsSchema = new Schema<IPublicStats>({
   }
 });
 
-export const PublicStats = model<IPublicStats>("public", PublicStatsSchema);
+export const PublicStats = model("public", PublicStatsSchema);

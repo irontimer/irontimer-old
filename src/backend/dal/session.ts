@@ -1,4 +1,4 @@
-import { ObjectId, Types } from "mongoose";
+import { Types } from "mongoose";
 import type { Session as ISession, Saved, AlmostSaved } from "../../types";
 import { Session } from "../models/session";
 
@@ -15,12 +15,12 @@ export async function getSession(
 
 export async function addSession(
   session: AlmostSaved<ISession>
-): Promise<ObjectId> {
+): Promise<Saved<ISession>> {
   const _id = new Types.ObjectId();
 
-  const insertionResult = await Session.create({ ...session, _id });
+  const newSession = await Session.create({ ...session, _id });
 
-  return insertionResult._id;
+  return newSession;
 }
 
 export async function deleteAll(userID: string): Promise<void> {
@@ -29,7 +29,7 @@ export async function deleteAll(userID: string): Promise<void> {
 
 export async function deleteSession(
   _id: string
-): Promise<ObjectId | undefined> {
+): Promise<Types.ObjectId | undefined> {
   const id = new Types.ObjectId(_id);
 
   return (await Session.findByIdAndDelete(id))?._id;

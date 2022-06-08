@@ -1,6 +1,12 @@
-import { HttpClient, EndpointData, Result, Saved } from "../../../types";
+import {
+  HttpClient,
+  EndpointData,
+  Result,
+  Saved,
+  ResultCreationResult,
+  UpdateResult
+} from "../../../types";
 import { strip } from "../strip";
-import { CLIENT_VERSION } from "../../version";
 
 const BASE_PATH = "/results";
 
@@ -9,18 +15,21 @@ export default class Results {
     this.httpClient = httpClient;
   }
 
-  async get(): EndpointData {
+  async get(): EndpointData<Saved<Result>[]> {
     return await this.httpClient.get(BASE_PATH);
   }
 
-  async save(result: Result): EndpointData {
+  async getLast(): EndpointData<Saved<Result>> {
+    return await this.httpClient.get(`${BASE_PATH}/last`);
+  }
+
+  async save(result: Result): EndpointData<ResultCreationResult> {
     return await this.httpClient.post(BASE_PATH, {
-      payload: { result },
-      headers: { "Client-Version": CLIENT_VERSION }
+      payload: { result }
     });
   }
 
-  async update(result: Saved<Result>): EndpointData {
+  async update(result: Saved<Result>): EndpointData<UpdateResult> {
     const strippedResult = strip(result);
 
     return await this.httpClient.patch(`${BASE_PATH}/${result._id}`, {
@@ -28,11 +37,11 @@ export default class Results {
     });
   }
 
-  async delete(result: Saved<Result>): EndpointData {
+  async delete(result: Saved<Result>): EndpointData<undefined> {
     return await this.httpClient.delete(`${BASE_PATH}/${result._id}`);
   }
 
-  async deleteAll(): EndpointData {
+  async deleteAll(): EndpointData<undefined> {
     return await this.httpClient.delete(BASE_PATH);
   }
 }
