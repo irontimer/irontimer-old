@@ -8,7 +8,7 @@
     "node": "16.13.2"
   },
   "scripts": {
-    "dev": "concurrently \"yarn dev-frontend\" \"yarn dev-backend\" \"yarn dev-tauri\"",
+    "dev": "concurrently \"yarn dev-backend\" \"yarn dev-frontend\" \"yarn dev-tauri\"",
     "dev-frontend": "vite",
     "dev-backend": "nodemon",
     "dev-tauri": "tauri dev",
