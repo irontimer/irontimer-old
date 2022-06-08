@@ -3,6 +3,14 @@ import type { Types } from "mongoose";
 import type { Request as ExpressRequest } from "express";
 import type { ScrambleType } from "../constants/scramble-type";
 
+declare global {
+  interface Window {
+    __TAURI__?: {
+      [key: string]: any;
+    };
+  }
+}
+
 export type AlmostSaved<T> = T & {
   userID: string;
 };
