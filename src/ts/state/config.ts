@@ -2,7 +2,7 @@ import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
 import { Config, Saved } from "../../types";
-import isEqual from "lodash/isEqual";
+import { isShallowEqual } from "../utils/misc";
 
 export const [getConfigChange, setConfigChange] = createSignal(false);
 export const [config, _setConfig] = createStore<Config | Saved<Config, string>>(
@@ -23,7 +23,7 @@ export const setConfig: typeof _setConfig = (...args) => {
 
   const newConfig = { ...config };
 
-  if (!isEqual(previousConfig, newConfig)) {
+  if (!isShallowEqual(previousConfig, newConfig)) {
     setConfigChange(!getConfigChange());
   }
 };
