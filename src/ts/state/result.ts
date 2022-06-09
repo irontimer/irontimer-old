@@ -1,7 +1,6 @@
 import { createMemo, createSignal } from "solid-js";
 import type { Result, Saved, AlmostSaved } from "../../types";
 import API from "../api-client/index";
-import { auth } from "../utils/auth";
 import {
   setAndGenerateScramble,
   getScramble,
@@ -12,6 +11,7 @@ import Notifications from "./notifications";
 import { config } from "./config";
 import { currentSession } from "./session";
 import type { Types } from "mongoose";
+import { User } from "firebase/auth";
 
 export const [getResults, setResults] = createSignal<
   (Saved<Result> | Result)[]
@@ -34,6 +34,7 @@ export function getLastResult(): Result | Saved<Result> | undefined {
 
 export async function addResult(
   time: number,
+  user: User | null,
   isPlusTwo = false
 ): Promise<void> {
   if (isSavingResult()) {
@@ -56,11 +57,11 @@ export async function addResult(
     penalty: isPlusTwo ? "+2" : "OK"
   };
 
-  const userID = auth.currentUser?.uid;
+  const userID = user?.uid;
 
   setResults((results) => [...results, unsavedResult]);
 
-  if (auth.currentUser !== null && userID !== undefined) {
+  if (user !== null && userID !== undefined) {
     setIsSavingResult(true);
 
     const almostSavedResult: AlmostSaved<Result> = {
@@ -77,7 +78,7 @@ export async function addResult(
       });
 
       revertScramble();
-      deleteResult(unsavedResult);
+      deleteResult(unsavedResult, user);
       revertScramble();
       setIsSavingResult(false);
 
@@ -92,7 +93,7 @@ export async function addResult(
       return;
     }
 
-    addIDToResult(unsavedResult, savedResult.insertedID);
+    addIDToResult(unsavedResult, savedResult.insertedID, user);
 
     setIsSavingResult(false);
 
@@ -101,11 +102,12 @@ export async function addResult(
 }
 
 export async function deleteResult(
-  result: Saved<Result> | Result
+  result: Saved<Result> | Result,
+  user: User | null
 ): Promise<void> {
   setResults((results) => results.filter((r) => r !== result));
 
-  if (auth.currentUser !== null && isDatabaseResult(result)) {
+  if (user !== null && isDatabaseResult(result)) {
     const response = await API.results.delete(result);
 
     if (response.status !== 200) {
@@ -124,13 +126,14 @@ export async function deleteResult(
 export async function updateResult(
   result: Saved<Result> | Result,
   toChange: Partial<Saved<Result>>,
+  user: User | null,
   db = true
 ): Promise<void> {
   const newResult = { ...result, ...toChange };
 
   setResults((results) => results.map((r) => (r === result ? newResult : r)));
 
-  if (db && auth.currentUser !== null && isDatabaseResult(newResult)) {
+  if (db && user !== null && isDatabaseResult(newResult)) {
     const response = await API.results.update(newResult);
 
     if (response.status !== 200) {
@@ -146,18 +149,22 @@ export async function updateResult(
   }
 }
 
-export function addIDToResult(result: Result, id: Types.ObjectId): void {
-  updateResult(result, { _id: id }, false);
+export function addIDToResult(
+  result: Result,
+  id: Types.ObjectId,
+  user: User | null
+): void {
+  updateResult(result, { _id: id }, user, false);
 }
 
-export async function deleteAll(): Promise<void> {
+export async function deleteAll(user: User | null): Promise<void> {
   if (getResults().length === 0) {
     return;
   }
 
   setResults([]);
 
-  if (auth.currentUser !== null) {
+  if (user !== null) {
     const response = await API.results.deleteAll();
 
     if (response.status !== 200) {

@@ -2,6 +2,7 @@ import { Component, createSignal } from "solid-js";
 import { formatTime } from "../utils/misc";
 import { config } from "../state/config";
 import { addResult, getLastResult } from "../state/result";
+import { auth } from "../utils/auth";
 
 type ReadyState = "unready" | "almost-ready" | "ready" | "running";
 
@@ -58,7 +59,7 @@ function press(e: KeyboardEvent | TouchEvent): void {
 
     case "running":
       setPreviousTimestamp(getCurrentDifference());
-      addResult(getCurrentDifference() / 1000);
+      addResult(getCurrentDifference() / 1000, auth.currentUser);
 
       setTimestamp(0);
 

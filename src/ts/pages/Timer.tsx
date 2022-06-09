@@ -18,6 +18,7 @@ import { config } from "../state/config";
 import { TimerInput } from "../components/TimerInput";
 import Notifications from "../state/notifications";
 import { currentSession } from "../state/session";
+import { auth } from "../utils/auth";
 
 const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
 
@@ -68,7 +69,7 @@ export const Timer: Component = () => {
                     "Are you sure you want to delete all results in this session?"
                   )
                 ) {
-                  deleteAll();
+                  deleteAll(auth.currentUser);
 
                   Notifications.add({
                     type: "success",
@@ -95,7 +96,7 @@ export const Timer: Component = () => {
                     class="popup-button fas fa-trash"
                     onClick={() =>
                       popupButtonCallback(
-                        (result) => deleteResult(result),
+                        (result) => deleteResult(result, auth.currentUser),
                         true
                       )
                     }
@@ -128,7 +129,7 @@ export const Timer: Component = () => {
                       }
 
                       popupButtonCallback((result) => {
-                        updateResult(result, { penalty });
+                        updateResult(result, { penalty }, auth.currentUser);
                       });
                     }}
                   >
@@ -271,21 +272,21 @@ document.addEventListener("keydown", (e) => {
     switch (e.key) {
       case "1":
         if (lastResult.penalty !== "OK") {
-          updateResult(lastResult, { penalty: "OK" });
+          updateResult(lastResult, { penalty: "OK" }, auth.currentUser);
         }
 
         break;
 
       case "2":
         if (lastResult.penalty !== "+2") {
-          updateResult(lastResult, { penalty: "+2" });
+          updateResult(lastResult, { penalty: "+2" }, auth.currentUser);
         }
 
         break;
 
       case "3":
         if (lastResult.penalty !== "DNF") {
-          updateResult(lastResult, { penalty: "DNF" });
+          updateResult(lastResult, { penalty: "DNF" }, auth.currentUser);
         }
 
         break;

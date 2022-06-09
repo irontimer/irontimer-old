@@ -23,7 +23,8 @@
     "pretty-fix": "prettier --write \"src/**/*.{ts,tsx,scss}\"",
     "lint": "eslint \"src/**/*.{ts,tsx,scss}\"",
     "lint-fix": "eslint --fix \"src/**/*.{ts,tsx,scss}\"",
-    "postinstall": "yarn build-backend"
+    "postinstall": "yarn build-backend",
+    "dep-graph": "npx madge --extensions tsx,ts \"src/ts\" --image dep-graph.png"
   },
   "devDependencies": {
     "@tauri-apps/cli": "1.0.0-rc.13",

@@ -2,6 +2,7 @@ import { Component } from "solid-js";
 import { parseTimeString } from "../utils/misc";
 import Notifications from "../state/notifications";
 import { addResult } from "../state/result";
+import { auth } from "../utils/auth";
 
 const inputRegex = /^([0-9]{0,2}):?([0-9]{0,2}):?([0-9]*)\.?([0-9]{1,3})?\+?$/;
 const finalInputRegex = /^(([0-9]{1,2}:){0,2})([0-9]+)(\.[0-9]{1,3})?\+?$/;
@@ -50,7 +51,7 @@ export const TimerInput: Component = () => {
             float /= 1000;
           }
 
-          addResult(float, isPlusTwo);
+          addResult(float, auth.currentUser, isPlusTwo);
         }
 
         e.currentTarget.value = "";

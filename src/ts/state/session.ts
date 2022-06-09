@@ -1,10 +1,10 @@
 import API from "../api-client";
 import { createSignal } from "solid-js";
 import { Saved, Session } from "../../types";
-import { auth } from "../utils/auth";
 import Notifications from "./notifications";
 import { ScrambleType } from "../../constants/scramble-type";
 import { createStore } from "solid-js/store";
+import { User } from "firebase/auth";
 
 export const [getSessions, setSessions] = createSignal<
   Session[] | Saved<Session>[]
@@ -19,14 +19,15 @@ export const [currentSession, setCurrentSession] = createStore<
 
 export async function addSession(
   name: string,
-  scrambleType: ScrambleType
+  scrambleType: ScrambleType,
+  user: User | null
 ): Promise<void> {
   const unsavedSession: Session = {
     name,
     scrambleType
   };
 
-  if (auth.currentUser !== null) {
+  if (user !== null) {
     const response = await API.sessions.add(unsavedSession);
 
     if (response.status === 200) {

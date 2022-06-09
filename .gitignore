@@ -25,3 +25,6 @@ src-tauri/WixTools
 
 # Rollup Visualizer
 stats.html
+
+# Madge
+dep-graph.png
