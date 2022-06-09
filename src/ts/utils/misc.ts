@@ -74,9 +74,18 @@ export function randomChance(percent: number): boolean {
 export function calculateAverage(results: Result[]): number {
   const sorted = results.sort((a, b) => actualTime(a) - actualTime(b));
 
-  const middle = sorted.slice(1, results.length - 1); // this gets rid of the best and worst results respectively
+  // we trim off 10% of the solves to avoid outliers
+  // if 5% of the length is not even, we take one less of the best and one more of the worst
+  // otherwise we trim 5% of the best and 5% of the worst
+  const toTrim = Math.max(results.length * 0.1, 2) / 2;
+  const toTrimLeft = Math.floor(toTrim);
+  const toTrimRight = Math.ceil(toTrim);
 
-  return mean(middle.map((result) => actualTime(result))); // means the three middle results
+  // get rid of the best and worst results
+  const middle = sorted.slice(toTrimLeft, results.length - toTrimRight);
+
+  // means the three middle results
+  return mean(middle.map((result) => actualTime(result)));
 }
 
 export function calculateAverageString(results: Result[]): string {
