@@ -77,6 +77,7 @@ export function calculateAverage(results: Result[]): number {
   // we trim off 10% of the solves to avoid outliers
   // if 5% of the length is not even, we take one less of the best and one more of the worst
   // otherwise we trim 5% of the best and 5% of the worst
+  // at minimum we remove the best and worst solve
   const toTrim = Math.max(results.length * 0.1, 2) / 2;
   const toTrimLeft = Math.floor(toTrim);
   const toTrimRight = Math.ceil(toTrim);
