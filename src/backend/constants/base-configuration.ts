@@ -14,7 +14,7 @@ const BASE_CONFIGURATION: Configuration = {
     apiKeyBytes: 24,
     apiKeySaltRounds: 5
   },
-  enableSavingResults: {
+  enableSavingSolves: {
     enabled: false
   }
 };

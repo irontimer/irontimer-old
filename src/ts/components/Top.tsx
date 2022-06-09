@@ -5,7 +5,7 @@ import { SCRAMBLE_TYPES, ScrambleType } from "../../constants/scramble-type";
 import { Button } from "./Button";
 import { isTiming } from "./TimerStopwatch";
 import { setCurrentSession } from "../state/session";
-import { isSavingResult } from "../state/result";
+import { isSavingSolve } from "../state/solve";
 
 const pages = ["Timer", "Account", "Settings"];
 const icons = ["fa-cube", "fa-user", "fa-cog"];
@@ -24,7 +24,7 @@ export const Top: Component = () => {
 
       <div class="unselectable" id="scramble">
         <Switch fallback="">
-          <Match when={isSavingResult()}>Loading...</Match>
+          <Match when={isSavingSolve()}>Loading...</Match>
           <Match when={isTiming()}>{""}</Match>
           <Match when={getScramble() === ""}>
             <Button

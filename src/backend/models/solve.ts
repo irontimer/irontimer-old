@@ -1,7 +1,7 @@
-import { Result as IResult, Saved } from "../../types";
+import { Solve as ISolve, Saved } from "../../types";
 import { Schema, model } from "mongoose";
 
-export const ResultSchema = new Schema<Saved<IResult>>({
+export const SolveSchema = new Schema<Saved<ISolve>>({
   _id: Schema.Types.ObjectId,
   userID: {
     type: String,
@@ -39,4 +39,4 @@ export const ResultSchema = new Schema<Saved<IResult>>({
   }
 });
 
-export const Result = model("result", ResultSchema);
+export const Solve = model("solve", SolveSchema);

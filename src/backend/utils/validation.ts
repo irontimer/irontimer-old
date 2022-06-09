@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { MINIMUM_NECESSARY_TIME } from "../../constants/scramble-type";
-import type { Result, Saved, Session } from "../../types";
+import type { Solve, Saved, Session } from "../../types";
 import profanities from "../constants/profanities";
 
 export function inRange(value: number, min: number, max: number): boolean {
@@ -39,9 +39,9 @@ export function isPresetNameValid(name: string): boolean {
   return VALID_NAME_PATTERN.test(name);
 }
 
-export function isResultTooFast(
-  result: Saved<Result>,
+export function isSolveTooFast(
+  solve: Saved<Solve>,
   session: Saved<Session> | Session
 ): boolean {
-  return result.time < MINIMUM_NECESSARY_TIME[session.scrambleType];
+  return solve.time < MINIMUM_NECESSARY_TIME[session.scrambleType];
 }

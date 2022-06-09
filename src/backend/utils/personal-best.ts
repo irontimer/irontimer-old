@@ -1,25 +1,23 @@
 import _ from "lodash";
-import { PersonalBest, Result, Saved } from "../../types";
+import { PersonalBest, Solve, Saved } from "../../types";
 import { actualTime } from "./misc";
-
-interface CheckAndUpdatePersonalBestResult {
-  isPersonalBest: boolean;
-  personalBests: PersonalBest[];
-}
 
 export function checkAndUpdatePersonalBest(
   userPersonalBests: PersonalBest[],
-  result: Saved<Result>
-): CheckAndUpdatePersonalBestResult {
-  const personalBestMatch = findMatchingPersonalBest(userPersonalBests, result);
+  solve: Saved<Solve>
+): {
+  isPersonalBest: boolean;
+  personalBests: PersonalBest[];
+} {
+  const personalBestMatch = findMatchingPersonalBest(userPersonalBests, solve);
 
   let isPersonalBest = false;
 
   if (personalBestMatch !== undefined) {
-    if (actualTime(result) >= personalBestMatch.time) {
+    if (actualTime(solve) >= personalBestMatch.time) {
       isPersonalBest = false;
     } else {
-      const updatedPersonalBest = buildPersonalBest(result);
+      const updatedPersonalBest = buildPersonalBest(solve);
 
       userPersonalBests[userPersonalBests.indexOf(personalBestMatch)] =
         updatedPersonalBest;
@@ -27,7 +25,7 @@ export function checkAndUpdatePersonalBest(
       isPersonalBest = true;
     }
   } else {
-    userPersonalBests.push(buildPersonalBest(result));
+    userPersonalBests.push(buildPersonalBest(solve));
   }
 
   return {
@@ -38,24 +36,24 @@ export function checkAndUpdatePersonalBest(
 
 export function findMatchingPersonalBest(
   personalBests: PersonalBest[],
-  result: Saved<Result>
+  solve: Saved<Solve>
 ): PersonalBest | undefined {
-  return personalBests.find((pb) => matchesPersonalBest(result, pb));
+  return personalBests.find((pb) => matchesPersonalBest(solve, pb));
 }
 
 function matchesPersonalBest(
-  result: Saved<Result>,
+  solve: Saved<Solve>,
   personalBest: PersonalBest
 ): boolean {
-  return _.isEqual(buildPersonalBest(result), personalBest);
+  return _.isEqual(buildPersonalBest(solve), personalBest);
 }
 
-function buildPersonalBest(result: Saved<Result>): PersonalBest {
+function buildPersonalBest(solve: Saved<Solve>): PersonalBest {
   return {
-    time: actualTime(result),
-    timestamp: result.timestamp,
-    scramble: result.scramble,
-    session: result.session,
-    solution: result.solution
+    time: actualTime(solve),
+    timestamp: solve.timestamp,
+    scramble: solve.scramble,
+    session: solve.session,
+    solution: solve.solution
   };
 }

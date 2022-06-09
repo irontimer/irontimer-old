@@ -1,5 +1,5 @@
 import { Counter, Histogram } from "prom-client";
-import { Result, Saved } from "../../types";
+import { Solve, Saved } from "../../types";
 
 const auth = new Counter({
   name: "api_request_auth_total",
@@ -7,20 +7,20 @@ const auth = new Counter({
   labelNames: ["type"]
 });
 
-const result = new Counter({
-  name: "result_saved_total",
-  help: "Counts result saves",
+const solve = new Counter({
+  name: "solve_saved_total",
+  help: "Counts solve saves",
   labelNames: ["session"]
 });
 
-const resultSession = new Counter({
-  name: "result_session_total",
+const solveSession = new Counter({
+  name: "solve_session_total",
   help: "Counts scramble types",
   labelNames: ["session"]
 });
 
-const resultTime = new Histogram({
-  name: "result_time_seconds",
+const solveTime = new Histogram({
+  name: "solve_time_seconds",
   help: "Time to solve a scramble",
   buckets: [
     1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000,
@@ -32,16 +32,16 @@ export function incrementAuth(type: "Bearer" | "ApiKey" | "None"): void {
   auth.inc({ type });
 }
 
-export function incrementResult(res: Saved<Result>): void {
-  result.inc({
+export function incrementSolve(res: Saved<Solve>): void {
+  solve.inc({
     session: res.session
   });
 
-  resultSession.inc({
+  solveSession.inc({
     session: res.session
   });
 
-  resultTime.observe(res.time);
+  solveTime.observe(res.time);
 }
 
 const clientVersionsCounter = new Counter({

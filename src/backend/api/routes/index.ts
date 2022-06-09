@@ -2,7 +2,7 @@ import _ from "lodash";
 import psas from "./psas";
 import users from "./users";
 import configs from "./configs";
-import results from "./results";
+import solves from "./solves";
 import presets from "./presets";
 import apiKeys from "./api-keys";
 import sessions from "./sessions";
@@ -20,7 +20,7 @@ const APP_START_TIME = Date.now();
 const API_ROUTE_MAP = {
   "/users": users,
   "/configs": configs,
-  "/results": results,
+  "/solves": solves,
   "/presets": presets,
   "/psas": psas,
   "/api-keys": apiKeys,

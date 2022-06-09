@@ -2,14 +2,14 @@ import { createEffect, untrack } from "solid-js";
 import API from "../api-client";
 import { auth } from "../utils/auth";
 import { config, getConfigChange } from "./config";
-import { getResults } from "./result";
+import { getSolves } from "./solve";
 import { setAndGenerateScramble } from "./scramble";
 import Notifications from "./notifications";
 
 createEffect(() => {
-  // Update scramble when results list changes
+  // Update scramble when solves list changes
   // Basically, calling a signal is like a dependency array in React
-  getResults();
+  getSolves();
   getConfigChange();
 
   // This also updates a scramble when the scramble type changes

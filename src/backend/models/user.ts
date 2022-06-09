@@ -58,7 +58,7 @@ export const UserSchema = new Schema<IUser>({
     type: Number,
     required: true
   },
-  resultCount: {
+  solveCount: {
     type: Number,
     required: true
   },

@@ -6,11 +6,11 @@ interface Status {
 }
 
 interface Statuses {
-  RESULT_TOO_FAST: Status;
+  SOLVE_TOO_FAST: Status;
   SESSION_NOT_FOUND: Status;
-  RESULT_HASH_INVALID: Status;
-  RESULT_DATA_INVALID: Status;
-  RESULT_SPACING_INVALID: Status;
+  SOLVE_HASH_INVALID: Status;
+  SOLVE_DATA_INVALID: Status;
+  SOLVE_SPACING_INVALID: Status;
   MISSING_KEY_DATA: Status;
   BOT_DETECTED: Status;
   GIT_GUD: Status;
@@ -20,7 +20,7 @@ interface Statuses {
 }
 
 const statuses: Statuses = {
-  RESULT_TOO_FAST: {
+  SOLVE_TOO_FAST: {
     code: 460,
     message: "Solve is too fast"
   },
@@ -28,17 +28,17 @@ const statuses: Statuses = {
     code: 461,
     message: "Session not found"
   },
-  RESULT_HASH_INVALID: {
+  SOLVE_HASH_INVALID: {
     code: 461,
-    message: "Result hash invalid"
+    message: "Solve hash invalid"
   },
-  RESULT_SPACING_INVALID: {
+  SOLVE_SPACING_INVALID: {
     code: 462,
-    message: "Result spacing invalid"
+    message: "Solve spacing invalid"
   },
-  RESULT_DATA_INVALID: {
+  SOLVE_DATA_INVALID: {
     code: 463,
-    message: "Result data invalid"
+    message: "Solve data invalid"
   },
   MISSING_KEY_DATA: {
     code: 464,

@@ -1,6 +1,5 @@
-import type { UpdateResult } from "mongodb";
 import { Config } from "../models/config";
-import type { Config as IConfig, Saved } from "../../types";
+import type { Config as IConfig, Saved, UpdateResult } from "../../types";
 
 export async function addConfig(
   userID: string,

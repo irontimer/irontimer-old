@@ -1,5 +1,5 @@
-import * as ResultController from "../controllers/result";
-import resultSchema from "../schemas/result-schema";
+import * as SolveController from "../controllers/solve";
+import solveSchema from "../schemas/solve-schema";
 import joi from "joi";
 import {
   asyncHandler,
@@ -15,76 +15,76 @@ const router = Router();
 
 router.get(
   "/",
-  RateLimit.resultsGet,
+  RateLimit.solvesGet,
   authenticateRequest(),
-  asyncHandler(ResultController.getResults)
+  asyncHandler(SolveController.getSolves)
 );
 
 router.post(
   "/",
   validateConfiguration({
     criteria: (configuration) => {
-      return configuration.enableSavingResults.enabled;
+      return configuration.enableSavingSolves.enabled;
     },
-    invalidMessage: "Results are not being saved at this time."
+    invalidMessage: "Solves are not being saved at this time."
   }),
-  RateLimit.resultsAdd,
+  RateLimit.solvesAdd,
   authenticateRequest(),
   validateRequest({
     body: {
-      result: resultSchema
+      solve: solveSchema
     }
   }),
-  asyncHandler(ResultController.addResult)
+  asyncHandler(SolveController.addSolve)
 );
 
 router.patch(
   "/:id",
   validateConfiguration({
     criteria: (configuration) => {
-      return configuration.enableSavingResults.enabled;
+      return configuration.enableSavingSolves.enabled;
     }
   }),
-  RateLimit.resultsUpdate,
+  RateLimit.solvesUpdate,
   authenticateRequest(),
   validateRequest({
     params: {
       id: joi.string().required()
     },
     body: {
-      result: resultSchema
+      solve: solveSchema
     }
   }),
-  asyncHandler(ResultController.updateResult)
+  asyncHandler(SolveController.updateSolve)
 );
 
 router.delete(
   "/",
-  RateLimit.resultsDeleteAll,
+  RateLimit.solvesDeleteAll,
   authenticateRequest(),
-  asyncHandler(ResultController.deleteAll)
+  asyncHandler(SolveController.deleteAll)
 );
 
 router.delete(
   "/:id",
-  RateLimit.resultsDelete,
+  RateLimit.solvesDelete,
   authenticateRequest(),
   validateRequest({
     params: {
       id: joi.string().required()
     }
   }),
-  asyncHandler(ResultController.deleteResult)
+  asyncHandler(SolveController.deleteSolve)
 );
 
 router.get(
   "/last",
-  RateLimit.resultsGet,
+  RateLimit.solvesGet,
   authenticateRequest({
     acceptApiKeys: true
   }),
   apiRateLimit,
-  asyncHandler(ResultController.getLastResult)
+  asyncHandler(SolveController.getLastSolve)
 );
 
 export default router;

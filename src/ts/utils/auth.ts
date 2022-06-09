@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword
 } from "firebase/auth";
 import API from "../api-client";
-import { setIsSavingResult, setResults } from "../state/result";
+import { setIsSavingSolve, setSolves } from "../state/solve";
 import { config, setConfig, _setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "../../constants/default-config";
 import Notifications from "../state/notifications";
@@ -109,11 +109,11 @@ auth.onAuthStateChanged(async (user) => {
   if (user !== null) {
     console.log("user logged in");
 
-    setIsSavingResult(true);
-    await getResultsFromDatabase();
+    setIsSavingSolve(true);
+    await getSolvesFromDatabase();
     await getConfigFromDatabase(user);
     await getSessionsFromDatabase();
-    setIsSavingResult(false);
+    setIsSavingSolve(false);
 
     if (window.location.pathname === "/sign-in") {
       window.location.replace("/");
@@ -133,21 +133,21 @@ auth.onAuthStateChanged(async (user) => {
   return user;
 });
 
-async function getResultsFromDatabase(): Promise<void> {
-  const response = await API.results.get();
+async function getSolvesFromDatabase(): Promise<void> {
+  const response = await API.solves.get();
 
   if (response.status !== 200) {
     Notifications.add({
       type: "error",
-      message: `Failed to get results\n${response.message}`
+      message: `Failed to get solves\n${response.message}`
     });
 
     return;
   }
 
-  const results = response.data;
+  const solves = response.data;
 
-  if (results === undefined) {
+  if (solves === undefined) {
     Notifications.add({
       type: "error",
       message: "Something went wrong"
@@ -156,7 +156,7 @@ async function getResultsFromDatabase(): Promise<void> {
     return;
   }
 
-  setResults(results);
+  setSolves(solves);
 }
 
 async function getConfigFromDatabase(user: User): Promise<void> {

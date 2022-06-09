@@ -13,7 +13,7 @@ $remaining_height: 90vh;
   #left {
     @include height;
 
-    #results {
+    #solves {
       @include height;
       padding: 5px;
       border-width: 1px;
@@ -26,7 +26,7 @@ $remaining_height: 90vh;
       max-width: 25vw;
       height: fit-content;
 
-      .clear-results-button {
+      .clear-solves-button {
         margin-top: 5px;
         margin-bottom: 5px;
         margin-left: 5px;
@@ -47,8 +47,8 @@ $remaining_height: 90vh;
         }
       }
 
-      #result-popup-wrapper {
-        #result-popup {
+      #solve-popup-wrapper {
+        #solve-popup {
           padding: 5px;
           border-width: 1px;
           border-style: solid;

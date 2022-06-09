@@ -1,6 +1,6 @@
 import joi from "joi";
 
-const RESULT_SCHEMA = joi
+const SOLVE_SCHEMA = joi
   .object({
     userID: joi.string().required(),
     time: joi.number().required(),
@@ -13,4 +13,4 @@ const RESULT_SCHEMA = joi
   })
   .required();
 
-export default RESULT_SCHEMA;
+export default SOLVE_SCHEMA;

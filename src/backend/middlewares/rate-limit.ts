@@ -75,36 +75,36 @@ export const psaGet = rateLimit({
   handler: customHandler
 });
 
-// Results Routing
-export const resultsGet = rateLimit({
+// Solves Routing
+export const solvesGet = rateLimit({
   windowMs: ONE_HOUR,
   max: 60 * REQUEST_MULTIPLIER,
   keyGenerator: getAddress,
   handler: customHandler
 });
 
-export const resultsUpdate = rateLimit({
+export const solvesUpdate = rateLimit({
   windowMs: ONE_HOUR,
   max: 60 * REQUEST_MULTIPLIER,
   keyGenerator: getAddress,
   handler: customHandler
 });
 
-export const resultsAdd = rateLimit({
+export const solvesAdd = rateLimit({
   windowMs: ONE_HOUR,
   max: 500 * REQUEST_MULTIPLIER,
   keyGenerator: getAddress,
   handler: customHandler
 });
 
-export const resultsDeleteAll = rateLimit({
+export const solvesDeleteAll = rateLimit({
   windowMs: ONE_HOUR,
   max: 10 * REQUEST_MULTIPLIER,
   keyGenerator: getAddress,
   handler: customHandler
 });
 
-export const resultsDelete = rateLimit({
+export const solvesDelete = rateLimit({
   windowMs: ONE_HOUR,
   max: 100 * REQUEST_MULTIPLIER,
   keyGenerator: getAddress,

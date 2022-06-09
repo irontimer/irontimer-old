@@ -2,7 +2,7 @@ import ApiKeys from "./api-keys";
 import Configs from "./configs";
 import Presets from "./presets";
 import Psas from "./psas";
-import Results from "./results";
+import Solves from "./solves";
 import Sessions from "./sessions";
 import Users from "./users";
 
@@ -11,7 +11,7 @@ export default {
   Configs,
   Presets,
   Psas,
-  Results,
+  Solves,
   Sessions,
   Users
 };

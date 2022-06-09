@@ -28,7 +28,7 @@ export const ConfigurationSchema = new Schema<IConfiguration>({
       default: 10
     }
   },
-  enableSavingResults: {
+  enableSavingSolves: {
     enabled: {
       type: Boolean,
       default: true

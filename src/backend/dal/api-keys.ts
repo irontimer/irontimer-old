@@ -27,9 +27,9 @@ export async function countApiKeysForUser(userID: string): Promise<number> {
 }
 
 export async function addApiKey(apiKey: IApiKey): Promise<string> {
-  const insertionResult = await ApiKey.create(apiKey);
+  const newApiKey = await ApiKey.create(apiKey);
 
-  return insertionResult._id.toString();
+  return newApiKey._id.toString();
 }
 
 async function updateApiKey(

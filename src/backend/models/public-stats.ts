@@ -8,7 +8,7 @@ export const PublicStatsSchema = new Schema<IPublicStats>({
     enum: ["stats"],
     required: true
   },
-  resultCount: {
+  solveCount: {
     type: Number,
     required: true
   },

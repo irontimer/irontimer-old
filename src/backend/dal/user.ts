@@ -1,17 +1,18 @@
 import type {
   PersonalBest,
-  Result,
+  Solve,
   Saved,
   UserStats,
   Theme,
-  User as IUser
+  User as IUser,
+  DeleteResult,
+  UpdateResult
 } from "../../types";
 import { User } from "../models/user";
 import { isUsernameValid } from "../utils/validation";
 import { updateUserEmail } from "../utils/auth";
 import { checkAndUpdatePersonalBest as checkAndUpdatePersonalBest } from "../utils/personal-best";
 import IronTimerError from "../utils/error";
-import type { DeleteResult, UpdateResult } from "mongodb";
 import { actualTime } from "../utils/misc";
 
 export async function addUser(
@@ -33,7 +34,7 @@ export async function addUser(
     personalBests: [],
     canManageApiKeys: false,
     timeCubing: 0,
-    resultCount: 0,
+    solveCount: 0,
     lastNameChange: null,
     customThemes: []
   });
@@ -132,9 +133,9 @@ export async function isDiscordUserIDAvailable(
 export async function checkIfPersonalBest(
   userID: string,
   user: IUser,
-  result: Saved<Result>
+  solve: Saved<Solve>
 ): Promise<boolean> {
-  const pb = checkAndUpdatePersonalBest(user.personalBests ?? [], result);
+  const pb = checkAndUpdatePersonalBest(user.personalBests ?? [], solve);
 
   if (!pb.isPersonalBest) {
     return false;
@@ -170,7 +171,7 @@ export async function updateTypingStats(
     { _id: userID },
     {
       $inc: {
-        resultCount: 1,
+        solveCount: 1,
         timeCubing
       }
     }
@@ -197,17 +198,17 @@ export async function unlinkDiscord(userID: string): Promise<UpdateResult> {
 
 export async function incrementCubes(
   userID: string,
-  result: Saved<Result>
+  solve: Saved<Solve>
 ): Promise<UpdateResult | undefined> {
   const user = await getUser(userID, "increment cubes");
 
   const personalBest = user.personalBests
-    .filter((pb) => pb.session === result.session)
+    .filter((pb) => pb.session === solve.session)
     .sort((a, b) => b.time - a.time)[0];
 
   if (
     personalBest === undefined ||
-    actualTime(result) >= personalBest.time * 0.75
+    actualTime(solve) >= personalBest.time * 0.75
   ) {
     // Increment when no record found or wpm is within 25% of the record
     return await User.updateOne({ _id: userID }, { $inc: { cubes: 1 } });
@@ -304,7 +305,7 @@ export async function getStats(userID: string): Promise<UserStats> {
   const user = await getUser(userID, "get stats");
 
   return {
-    resultCount: user.resultCount,
+    solveCount: user.solveCount,
     timeCubing: user.timeCubing
   };
 }

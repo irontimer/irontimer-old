@@ -20,7 +20,7 @@ export type Saved<T, ID = Types.ObjectId> = AlmostSaved<T> & {
   __v: number;
 };
 
-export interface Result {
+export interface Solve {
   time: number; // float seconds for how long the solve was
   timestamp: number;
   scramble: string;
@@ -31,7 +31,7 @@ export interface Result {
   isPersonalBest?: boolean;
 }
 
-export interface ResultCreationResult {
+export interface SolveCreationResult {
   insertedID: Types.ObjectId;
   isPersonalBest: boolean;
   username: string;
@@ -62,7 +62,7 @@ export interface User {
   personalBests: PersonalBest[];
   canManageApiKeys: boolean;
   timeCubing: number;
-  resultCount: number;
+  solveCount: number;
   lastNameChange?: number;
   customThemes?: Theme[];
 }
@@ -76,7 +76,7 @@ export interface Configuration {
     apiKeyBytes: number;
     apiKeySaltRounds: number;
   };
-  enableSavingResults: {
+  enableSavingSolves: {
     enabled: boolean;
   };
 }
@@ -136,13 +136,13 @@ export interface PSA {
 
 export interface PublicStats {
   _id: Types.ObjectId;
-  resultCount: number;
+  solveCount: number;
   timeCubing: number;
   type: string;
 }
 
 export interface UserStats {
-  resultCount: number;
+  solveCount: number;
   timeCubing: number;
 }
 

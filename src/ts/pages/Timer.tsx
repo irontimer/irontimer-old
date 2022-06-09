@@ -3,14 +3,13 @@ import { Popup } from "../components/Popup";
 import { actualTimeString, calculateAverageString } from "../utils/misc";
 import {
   deleteAll,
-  deleteResult,
-  getResults,
-  getResultsDescending,
-  getResultsAscending,
-  updateResult,
-  getLastResult
-} from "../state/result";
-import { Result, Penalty, Saved } from "../../types";
+  deleteSolve,
+  getSolves,
+  getSolvesDescending,
+  updateSolve,
+  getLastSolve
+} from "../state/solve";
+import { Solve, Penalty, Saved } from "../../types";
 
 import { Button } from "../components/Button";
 import { isTiming, TimerStopwatch } from "../components/TimerStopwatch";
@@ -22,32 +21,32 @@ import { auth } from "../utils/auth";
 
 const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
 
-function getResultFromCurrentOpen(): Saved<Result> | Result | undefined {
-  return getResultsAscending()[(getCurrentOpen() ?? 0) - 1];
+function getSolveFromCurrentOpen(): Saved<Solve> | Solve | undefined {
+  return getSolves()[(getCurrentOpen() ?? 0) - 1];
 }
 
 const averages = [5, 12, 50, 100, 200, 500, 1000]; // TODO use a config setting
 
 function getAllAverages(): { averageOf: number; average: string }[] {
   return averages
-    .filter((n) => n <= getResults().length)
+    .filter((n) => n <= getSolves().length)
     .map((n) => ({
       averageOf: n,
-      average: calculateAverageString(getResultsDescending().slice(0, n))
+      average: calculateAverageString(getSolvesDescending().slice(0, n))
     }));
 }
 
 function popupButtonCallback(
-  cb: (result: Saved<Result> | Result) => void,
+  cb: (solve: Saved<Solve> | Solve) => void,
   close = false
 ): void {
-  const result = getResultFromCurrentOpen();
+  const solve = getSolveFromCurrentOpen();
 
-  if (result === undefined) {
+  if (solve === undefined) {
     return;
   }
 
-  cb(result);
+  cb(solve);
 
   if (close) {
     setCurrentOpen();
@@ -59,21 +58,21 @@ export const Timer: Component = () => {
     <div class="timer-page">
       <div id="left">
         <Show when={!isTiming()} fallback={<div></div>}>
-          <div id="results">
+          <div id="solves">
             <h1 class="unselectable">{currentSession.name}</h1>
             <Button
-              class="clear-results-button"
+              class="clear-solves-button"
               onClick={() => {
                 if (
                   window.confirm(
-                    "Are you sure you want to delete all results in this session?"
+                    "Are you sure you want to delete all solves in this session?"
                   )
                 ) {
                   deleteAll(auth.currentUser);
 
                   Notifications.add({
                     type: "success",
-                    message: "All results have been deleted",
+                    message: "All solves have been deleted",
                     duration: 5000
                   });
                 }
@@ -86,29 +85,29 @@ export const Timer: Component = () => {
                 () => getCurrentOpen() !== undefined,
                 (isOpen) => !isOpen && setCurrentOpen()
               ]}
-              id="result-popup"
-              wrapperID="result-popup-wrapper"
+              id="solve-popup"
+              wrapperID="solve-popup-wrapper"
             >
               <div class="popup-content">
-                <div class="popup-title">Result #{getCurrentOpen()}</div>
+                <div class="popup-title">Solve #{getCurrentOpen()}</div>
                 <div class="popup-buttons">
                   <i
                     class="popup-button fas fa-trash"
                     onClick={() =>
                       popupButtonCallback(
-                        (result) => deleteResult(result, auth.currentUser),
+                        (solve) => deleteSolve(solve, auth.currentUser),
                         true
                       )
                     }
                   />
                 </div>
                 <div class="popup-content">
-                  Time: {actualTimeString(getResultFromCurrentOpen())}
+                  Time: {actualTimeString(getSolveFromCurrentOpen())}
                 </div>
                 <div class="popup-content">
                   Date:{" "}
                   {new Date(
-                    getResultFromCurrentOpen()?.timestamp ?? 0
+                    getSolveFromCurrentOpen()?.timestamp ?? 0
                   ).toLocaleDateString()}
                 </div>
                 <div class="popup-content">Session: {currentSession.name}</div>
@@ -128,8 +127,8 @@ export const Timer: Component = () => {
                         return;
                       }
 
-                      popupButtonCallback((result) => {
-                        updateResult(result, { penalty }, auth.currentUser);
+                      popupButtonCallback((solve) => {
+                        updateSolve(solve, { penalty }, auth.currentUser);
                       });
                     }}
                   >
@@ -137,7 +136,7 @@ export const Timer: Component = () => {
                       {(penalty) => (
                         <option
                           selected={
-                            getResultFromCurrentOpen()?.penalty === penalty
+                            getSolveFromCurrentOpen()?.penalty === penalty
                           }
                         >
                           {penalty}
@@ -151,14 +150,14 @@ export const Timer: Component = () => {
                   <input
                     readonly
                     class="popup-content"
-                    value={getResultFromCurrentOpen()?.scramble}
+                    value={getSolveFromCurrentOpen()?.scramble}
                   />
                   <i
                     class="popup-copy-button fa-solid fa-clipboard-list"
                     onClick={() => {
                       // copy scramble to clipboard
                       navigator.clipboard.writeText(
-                        getResultFromCurrentOpen()?.scramble ?? ""
+                        getSolveFromCurrentOpen()?.scramble ?? ""
                       );
 
                       Notifications.add({
@@ -181,20 +180,20 @@ export const Timer: Component = () => {
                 </tr>
               </thead>
               <tbody>
-                <For each={getResultsDescending()}>
-                  {(result, getIndex) => {
+                <For each={getSolvesDescending()}>
+                  {(solve, getIndex) => {
                     {
                       const [ao5, ao12] = [5, 12].map((n) => {
-                        const results = getResultsDescending().slice(
+                        const solves = getSolvesDescending().slice(
                           getIndex(),
                           getIndex() + n
                         );
 
-                        if (results.length !== n) {
+                        if (solves.length !== n) {
                           return;
                         }
 
-                        return calculateAverageString(results);
+                        return calculateAverageString(solves);
                       });
 
                       return (
@@ -203,18 +202,18 @@ export const Timer: Component = () => {
                             <td
                               class="unselectable"
                               onClick={() =>
-                                setCurrentOpen(getResults().length - getIndex())
+                                setCurrentOpen(getSolves().length - getIndex())
                               }
                             >
-                              {getResults().length - getIndex()}
+                              {getSolves().length - getIndex()}
                             </td>
                             <td
                               class="unselectable"
                               onClick={() =>
-                                setCurrentOpen(getResults().length - getIndex())
+                                setCurrentOpen(getSolves().length - getIndex())
                               }
                             >
-                              {actualTimeString(result)}
+                              {actualTimeString(solve)}
                             </td>
                             <td class="unselectable">{ao5 ?? "-"}</td>
                             <td class="unselectable">{ao12 ?? "-"}</td>
@@ -262,31 +261,31 @@ export const Timer: Component = () => {
 };
 
 document.addEventListener("keydown", (e) => {
-  const lastResult = getLastResult();
+  const lastSolve = getLastSolve();
 
-  if (lastResult === undefined) {
+  if (lastSolve === undefined) {
     return;
   }
 
   if (e.ctrlKey) {
     switch (e.key) {
       case "1":
-        if (lastResult.penalty !== "OK") {
-          updateResult(lastResult, { penalty: "OK" }, auth.currentUser);
+        if (lastSolve.penalty !== "OK") {
+          updateSolve(lastSolve, { penalty: "OK" }, auth.currentUser);
         }
 
         break;
 
       case "2":
-        if (lastResult.penalty !== "+2") {
-          updateResult(lastResult, { penalty: "+2" }, auth.currentUser);
+        if (lastSolve.penalty !== "+2") {
+          updateSolve(lastSolve, { penalty: "+2" }, auth.currentUser);
         }
 
         break;
 
       case "3":
-        if (lastResult.penalty !== "DNF") {
-          updateResult(lastResult, { penalty: "DNF" }, auth.currentUser);
+        if (lastSolve.penalty !== "DNF") {
+          updateSolve(lastSolve, { penalty: "DNF" }, auth.currentUser);
         }
 
         break;

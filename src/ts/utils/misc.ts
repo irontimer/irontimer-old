@@ -1,4 +1,4 @@
-import { Result } from "../../types";
+import { Solve } from "../../types";
 
 const HOUR = 3600;
 const MINUTE = 60;
@@ -71,26 +71,26 @@ export function randomChance(percent: number): boolean {
   return randomFloat(0, 100) <= percent;
 }
 
-export function calculateAverage(results: Result[]): number {
-  const sorted = results.sort((a, b) => actualTime(a) - actualTime(b));
+export function calculateAverage(solves: Solve[]): number {
+  const sorted = solves.sort((a, b) => actualTime(a) - actualTime(b));
 
   // we trim off 10% of the solves to avoid outliers
   // if 5% of the length is not even, we take one less of the best and one more of the worst
   // otherwise we trim 5% of the best and 5% of the worst
   // at minimum we remove the best and worst solve
-  const toTrim = Math.max(results.length * 0.1, 2) / 2;
+  const toTrim = Math.max(solves.length * 0.1, 2) / 2;
   const toTrimLeft = Math.floor(toTrim);
   const toTrimRight = Math.ceil(toTrim);
 
-  // get rid of the best and worst results
-  const middle = sorted.slice(toTrimLeft, results.length - toTrimRight);
+  // get rid of the best and worst solves
+  const middle = sorted.slice(toTrimLeft, solves.length - toTrimRight);
 
-  // means the three middle results
-  return mean(middle.map((result) => actualTime(result)));
+  // means the three middle solves
+  return mean(middle.map((solve) => actualTime(solve)));
 }
 
-export function calculateAverageString(results: Result[]): string {
-  const avg = calculateAverage(results);
+export function calculateAverageString(solves: Solve[]): string {
+  const avg = calculateAverage(solves);
 
   if (avg === Infinity) {
     return "DNF";
@@ -107,34 +107,34 @@ export function sum(arr: number[]): number {
   return arr.reduce((acc, curr) => acc + curr, 0);
 }
 
-export function actualTime(result: Result | undefined): number {
-  if (result === undefined) {
+export function actualTime(solve: Solve | undefined): number {
+  if (solve === undefined) {
     return 0;
   }
 
-  switch (result.penalty) {
+  switch (solve.penalty) {
     case "OK":
-      return result.time;
+      return solve.time;
 
     case "+2":
-      return result.time + 2;
+      return solve.time + 2;
 
     case "DNF":
       return Infinity;
   }
 }
 
-export function actualTimeString(result: Result | undefined): string {
-  if (result === undefined) {
+export function actualTimeString(solve: Solve | undefined): string {
+  if (solve === undefined) {
     return "";
   }
 
-  switch (result.penalty) {
+  switch (solve.penalty) {
     case "OK":
-      return formatTime(result.time);
+      return formatTime(solve.time);
 
     case "+2":
-      return `${formatTime(actualTime(result))}+`;
+      return `${formatTime(actualTime(solve))}+`;
 
     case "DNF":
       return "DNF";

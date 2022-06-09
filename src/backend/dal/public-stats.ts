@@ -6,7 +6,7 @@ export async function updateStats(time: number): Promise<boolean> {
     { type: "stats" },
     {
       $inc: {
-        resultCount: 1,
+        solveCount: 1,
         timeCubing: roundTo2(time)
       }
     },
