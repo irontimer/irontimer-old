@@ -1,6 +1,6 @@
 import { Component, createSignal, For, Match, Show, Switch } from "solid-js";
 import { Popup } from "../components/Popup";
-import { calculateAverage, formatTime, actualTimeString } from "../utils/misc";
+import { actualTimeString, calculateAverageString } from "../utils/misc";
 import {
   deleteAll,
   deleteResult,
@@ -32,7 +32,7 @@ function getAllAverages(): { averageOf: number; average: string }[] {
     .filter((n) => n <= getResults().length)
     .map((n) => ({
       averageOf: n,
-      average: formatTime(calculateAverage(getResultsDescending().slice(0, n)))
+      average: calculateAverageString(getResultsDescending().slice(0, n))
     }));
 }
 
@@ -193,7 +193,7 @@ export const Timer: Component = () => {
                           return;
                         }
 
-                        return calculateAverage(results);
+                        return calculateAverageString(results);
                       });
 
                       return (
@@ -215,12 +215,8 @@ export const Timer: Component = () => {
                             >
                               {actualTimeString(result)}
                             </td>
-                            <td class="unselectable">
-                              {ao5 !== undefined ? formatTime(ao5) : "-"}
-                            </td>
-                            <td class="unselectable">
-                              {ao12 !== undefined ? formatTime(ao12) : "-"}
-                            </td>
+                            <td class="unselectable">{ao5 ?? "-"}</td>
+                            <td class="unselectable">{ao12 ?? "-"}</td>
                           </tr>
                         </>
                       );

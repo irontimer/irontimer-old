@@ -76,7 +76,17 @@ export function calculateAverage(results: Result[]): number {
 
   const middle = sorted.slice(1, results.length - 1); // this gets rid of the best and worst results respectively
 
-  return mean(middle.map((result) => result.time)); // means the three middle results
+  return mean(middle.map((result) => actualTime(result))); // means the three middle results
+}
+
+export function calculateAverageString(results: Result[]): string {
+  const avg = calculateAverage(results);
+
+  if (avg === Infinity) {
+    return "DNF";
+  }
+
+  return formatTime(avg);
 }
 
 export function mean(arr: number[]): number {
