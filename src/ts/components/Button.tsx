@@ -1,20 +1,10 @@
 import { Component, JSX } from "solid-js";
 
-export const Button: Component<{
-  children: JSX.Element;
-  onClick: (
-    e: MouseEvent & {
-      currentTarget: HTMLDivElement;
-      target: Element;
-    }
-  ) => void;
-  class?: string;
-}> = (props) => {
+type Props = JSX.IntrinsicElements["div"];
+
+export const Button: Component<Props> = (props) => {
   return (
-    <div
-      class={`button unselectable ${props.class ?? ""}`.trim()}
-      onClick={props.onClick}
-    >
+    <div {...props} class={`button unselectable ${props.class ?? ""}`.trim()}>
       <span>{props.children}</span>
     </div>
   );
