@@ -7,7 +7,8 @@ import {
   getSolves,
   getSolvesDescending,
   updateSolve,
-  getLastSolve
+  getLastSolve,
+  getSolvesAscending
 } from "../state/solve";
 import { Solve, Penalty, Saved } from "../../types";
 
@@ -22,7 +23,7 @@ import { auth } from "../utils/auth";
 const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
 
 function getSolveFromCurrentOpen(): Saved<Solve> | Solve | undefined {
-  return getSolves()[(getCurrentOpen() ?? 0) - 1];
+  return getSolvesAscending()[(getCurrentOpen() ?? 0) - 1];
 }
 
 const averages = [5, 12, 50, 100, 200, 500, 1000]; // TODO use a config setting
@@ -268,6 +269,10 @@ document.addEventListener("keydown", (e) => {
   }
 
   if (e.ctrlKey) {
+    if (/[0-9]/.test(e.key)) {
+      e.preventDefault();
+    }
+
     switch (e.key) {
       case "1":
         if (lastSolve.penalty !== "OK") {

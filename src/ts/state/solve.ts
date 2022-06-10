@@ -20,12 +20,16 @@ export const [getSolves, setSolves] = createSignal<(Saved<Solve> | Solve)[]>(
 export const [isSavingSolve, setIsSavingSolve] = createSignal(false);
 
 // for some reason, not using the spread operator mutates the signal
+export const getSolvesAscending = createMemo(() =>
+  [...getSolves()].sort((a, b) => a.timestamp - b.timestamp)
+);
+
 export const getSolvesDescending = createMemo(() =>
   [...getSolves()].sort((a, b) => b.timestamp - a.timestamp)
 );
 
 export function getLastSolve(): Solve | Saved<Solve> | undefined {
-  return getSolves().at(-1);
+  return getSolvesAscending().at(-1);
 }
 
 export async function addSolve(
