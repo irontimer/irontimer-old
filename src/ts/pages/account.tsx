@@ -1,6 +1,6 @@
 import { Navigate } from "solid-app-router";
 import { Component, Show } from "solid-js";
-import { Button } from "../components/Button";
+import { Button } from "../components/button";
 import { auth } from "../utils/auth";
 
 export const Account: Component = () => {

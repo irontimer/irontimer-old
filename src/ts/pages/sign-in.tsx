@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { Button } from "../components/Button";
+import { Button } from "../components/button";
 import { signIn, signUp } from "../utils/auth";
 import { createStore } from "solid-js/store";
 

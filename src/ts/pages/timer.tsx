@@ -12,7 +12,7 @@ import {
 } from "../state/solve";
 import { Solve, Penalty, Saved } from "../../types";
 
-import { Button } from "../components/Button";
+import { Button } from "../components/button";
 import { isTiming, TimerStopwatch } from "../components/TimerStopwatch";
 import { config } from "../state/config";
 import { TimerInput } from "../components/TimerInput";

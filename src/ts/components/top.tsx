@@ -2,7 +2,7 @@ import { Component, For, Match, Show, Switch } from "solid-js";
 import { Link } from "solid-app-router";
 import { getScramble, setAndGenerateScramble } from "../state/scramble";
 import { SCRAMBLE_TYPES, ScrambleType } from "../../constants/scramble-type";
-import { Button } from "./Button";
+import { Button } from "./button";
 import { isTiming } from "./TimerStopwatch";
 import { setCurrentSession } from "../state/session";
 import { isSavingSolve } from "../state/solve";
