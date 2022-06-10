@@ -17,12 +17,12 @@ import "./scss/pages/SignIn.scss";
 import "./scss/pages/Timer.scss";
 
 // tsx
-import { NotificationCenter } from "./ts/components/NotificationCenter";
-import { Top } from "./ts/components/Top";
-import { Account } from "./ts/pages/Account";
-import { Settings } from "./ts/pages/Settings";
-import { SignIn } from "./ts/pages/SignIn";
-import { Timer } from "./ts/pages/Timer";
+import { NotificationCenter } from "./ts/components/notification-center";
+import { Top } from "./ts/components/top";
+import { Account } from "./ts/pages/account";
+import { Settings } from "./ts/pages/settings";
+import { SignIn } from "./ts/pages/sign-in";
+import { Timer } from "./ts/pages/timer";
 import "./ts/state/effect";
 
 export const App: Component = () => {

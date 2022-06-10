@@ -1,5 +1,5 @@
 import { Component, createSignal, For, Match, Show, Switch } from "solid-js";
-import { Popup } from "../components/Popup";
+import { Popup } from "../components/popup";
 import { actualTimeString, calculateAverageString } from "../utils/misc";
 import {
   deleteAll,
@@ -13,9 +13,9 @@ import {
 import { Solve, Penalty, Saved } from "../../types";
 
 import { Button } from "../components/button";
-import { isTiming, TimerStopwatch } from "../components/TimerStopwatch";
+import { isTiming, TimerStopwatch } from "../components/stopwatch";
 import { config } from "../state/config";
-import { TimerInput } from "../components/TimerInput";
+import { TimerInput } from "../components/input";
 import Notifications from "../state/notifications";
 import { currentSession } from "../state/session";
 import { auth } from "../utils/auth";
