@@ -1,17 +1,16 @@
-import { Component, JSX, Show } from "solid-js";
+import { Accessor, Component, JSX, Show } from "solid-js";
 import { Button } from "./Button";
 
 export const Popup: Component<{
   children: JSX.Element;
   id: string;
-  wrapperID: string;
-  isOpen: [() => boolean, (isOpen: boolean) => void];
+  isOpen: [Accessor<boolean>, (isOpen: boolean) => void];
 }> = (props) => {
   const [getIsOpen, setIsOpen] = props.isOpen;
 
   return (
     <Show when={getIsOpen()}>
-      <div class="popup-wrapper" id={props.wrapperID}>
+      <div class="popup-wrapper" id={`${props.id}-wrapper`}>
         <div id={props.id}>
           {props.children}
 

@@ -87,7 +87,6 @@ export const Timer: Component = () => {
                 (isOpen) => !isOpen && setCurrentOpen()
               ]}
               id="solve-popup"
-              wrapperID="solve-popup-wrapper"
             >
               <div class="popup-content">
                 <div class="popup-title">Solve #{getCurrentOpen()}</div>
