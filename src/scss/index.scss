@@ -17,3 +17,9 @@ body {
   -ms-user-select: none; // IE10+/Edge
   user-select: none; // Standard
 }
+
+@import "components/timer/TimerInput.scss",
+  "components/timer/TimerStopwatch.scss", "components/timer/TimerStackmat.scss",
+  "components/Button", "components/NotificationCenter", "components/Popup",
+  "components/Text", "components/Top", "pages/Account", "pages/Settings",
+  "pages/SignIn.scss", "pages/Timer";

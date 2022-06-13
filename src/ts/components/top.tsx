@@ -3,7 +3,7 @@ import { Link } from "solid-app-router";
 import { getScramble, setAndGenerateScramble } from "../state/scramble";
 import { SCRAMBLE_TYPES, ScrambleType } from "../../constants/scramble-type";
 import { Button } from "./button";
-import { isTiming } from "./stopwatch";
+import { isTiming } from "../state/timing";
 import { setCurrentSession } from "../state/session";
 import { isSavingSolve } from "../state/solve";
 

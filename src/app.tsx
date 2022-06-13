@@ -4,17 +4,6 @@ import { Route, Routes } from "solid-app-router";
 
 // styles
 import "./scss/index.scss";
-import "./scss/components/Button.scss";
-import "./scss/components/NotificationCenter.scss";
-import "./scss/components/Popup.scss";
-import "./scss/components/Text.scss";
-import "./scss/components/TimerInput.scss";
-import "./scss/components/TimerStopwatch.scss";
-import "./scss/components/Top.scss";
-import "./scss/pages/Account.scss";
-import "./scss/pages/Settings.scss";
-import "./scss/pages/SignIn.scss";
-import "./scss/pages/Timer.scss";
 
 // tsx
 import { NotificationCenter } from "./ts/components/notification-center";

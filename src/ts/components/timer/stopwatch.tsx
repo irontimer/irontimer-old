@@ -1,8 +1,9 @@
 import { Component, createSignal } from "solid-js";
-import { formatTime } from "../utils/misc";
-import { config } from "../state/config";
-import { addSolve, getLastSolve } from "../state/solve";
-import { auth } from "../utils/auth";
+import { formatTime } from "../../utils/misc";
+import { config } from "../../state/config";
+import { addSolve, getLastSolve } from "../../state/solve";
+import { auth } from "../../utils/auth";
+import { isTiming, setIsTiming } from "../../state/timing";
 
 type ReadyState = "unready" | "almost-ready" | "ready" | "running";
 
@@ -10,7 +11,6 @@ const [getPreviousTimestamp, setPreviousTimestamp] = createSignal(0);
 const [getTimestamp, setTimestamp] = createSignal(0);
 const [getAnimationFrame, setAnimationFrame] = createSignal(0);
 const [getReadyState, setReadyState] = createSignal<ReadyState>("unready");
-export const [isTiming, setIsTiming] = createSignal(false);
 
 export const TimerStopwatch: Component = () => {
   return (

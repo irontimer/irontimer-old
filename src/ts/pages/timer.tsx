@@ -13,17 +13,14 @@ import {
 import { Solve, Penalty, Saved } from "../../types";
 
 import { Button } from "../components/button";
-import {
-  isTiming,
-  TimerStopwatch,
-  press,
-  release
-} from "../components/stopwatch";
+import { TimerStopwatch, press, release } from "../components/timer/stopwatch";
+import { isTiming } from "../state/timing";
 import { config } from "../state/config";
-import { TimerInput } from "../components/input";
+import { TimerInput } from "../components/timer/input";
 import Notifications from "../state/notifications";
 import { currentSession } from "../state/session";
 import { auth } from "../utils/auth";
+import { TimerStackmat } from "../components/timer/stackmat";
 
 document.addEventListener("keydown", press);
 document.addEventListener("keyup", release);
@@ -245,6 +242,9 @@ export const Timer: Component = () => {
           </Match>
           <Match when={config.timerType === "typing"}>
             <TimerInput />
+          </Match>
+          <Match when={config.timerType === "stackmat"}>
+            <TimerStackmat />
           </Match>
         </Switch>
         <div id="average-list">
