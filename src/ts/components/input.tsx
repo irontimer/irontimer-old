@@ -47,6 +47,10 @@ export const TimerInput: Component = () => {
             message: "Entered time is not a number"
           });
         } else {
+          if (isPlusTwo) {
+            float += 2;
+          }
+
           if (float % 1 === 0 && !val.includes(".")) {
             float /= 1000;
           }
