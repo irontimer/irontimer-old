@@ -50,12 +50,12 @@ export const TimerInput: Component = () => {
           return;
         }
 
-        if (isPlusTwo) {
-          float += 2;
-        }
-
         if (float % 1 === 0 && !val.includes(".")) {
           float /= 1000;
+        }
+
+        if (isPlusTwo) {
+          float -= 2;
         }
 
         addSolve(float, auth.currentUser, isPlusTwo);
