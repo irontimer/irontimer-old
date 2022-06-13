@@ -24,7 +24,7 @@ function getCurrentDifference(): number {
   return Date.now() - getTimestamp();
 }
 
-function press(e: KeyboardEvent | TouchEvent): void {
+export function press(e: KeyboardEvent | TouchEvent): void {
   if (config.timerType !== "timer") {
     return;
   }
@@ -72,7 +72,7 @@ function press(e: KeyboardEvent | TouchEvent): void {
   }
 }
 
-function release(e: KeyboardEvent | TouchEvent): void {
+export function release(e: KeyboardEvent | TouchEvent): void {
   if (config.timerType !== "timer") {
     return;
   }
@@ -142,8 +142,3 @@ function getCurrentTime(): string {
 function isKeyboardEvent(e: KeyboardEvent | TouchEvent): e is KeyboardEvent {
   return (e as KeyboardEvent).code !== undefined;
 }
-
-document.addEventListener("keydown", press);
-document.addEventListener("touchstart", press);
-document.addEventListener("keyup", release);
-document.addEventListener("touchend", release);

@@ -13,12 +13,20 @@ import {
 import { Solve, Penalty, Saved } from "../../types";
 
 import { Button } from "../components/button";
-import { isTiming, TimerStopwatch } from "../components/stopwatch";
+import {
+  isTiming,
+  TimerStopwatch,
+  press,
+  release
+} from "../components/stopwatch";
 import { config } from "../state/config";
 import { TimerInput } from "../components/input";
 import Notifications from "../state/notifications";
 import { currentSession } from "../state/session";
 import { auth } from "../utils/auth";
+
+document.addEventListener("keydown", press);
+document.addEventListener("keyup", release);
 
 const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
 
@@ -229,7 +237,7 @@ export const Timer: Component = () => {
         </Show>
       </div>
 
-      <div id="center">
+      <div id="center" onTouchStart={press} onTouchEnd={release}>
         <div class="spacer" />
         <Switch fallback={<TimerStopwatch />}>
           <Match when={config.timerType === "timer"}>
