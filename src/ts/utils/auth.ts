@@ -91,7 +91,7 @@ export async function signUp(
     return;
   }
 
-  const response = await API.users.create(username, email ?? "", user.uid);
+  const response = await API.users.create(user.uid, username, email);
 
   if (response.status !== 200) {
     Notifications.add({

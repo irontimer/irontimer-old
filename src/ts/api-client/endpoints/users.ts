@@ -19,13 +19,13 @@ export default class Users {
   }
 
   async create(
-    name: string,
-    email?: string,
-    uid?: string
+    uid: string,
+    username: string,
+    email: string
   ): EndpointData<undefined> {
     const payload = {
       email,
-      name,
+      username,
       uid
     };
 
