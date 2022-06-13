@@ -154,7 +154,7 @@ export function addIDToSolve(
   id: Types.ObjectId,
   user: User | null
 ): void {
-  updateSolve(solve, { _id: id }, user, false);
+  updateSolve(solve, { _id: id, userID: user?.uid }, user, false);
 }
 
 export async function deleteAll(user: User | null): Promise<void> {
