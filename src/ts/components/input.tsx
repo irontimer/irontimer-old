@@ -46,17 +46,19 @@ export const TimerInput: Component = () => {
             type: "error",
             message: "Entered time is not a number"
           });
-        } else {
-          if (isPlusTwo) {
-            float += 2;
-          }
 
-          if (float % 1 === 0 && !val.includes(".")) {
-            float /= 1000;
-          }
-
-          addSolve(float, auth.currentUser, isPlusTwo);
+          return;
         }
+
+        if (isPlusTwo) {
+          float += 2;
+        }
+
+        if (float % 1 === 0 && !val.includes(".")) {
+          float /= 1000;
+        }
+
+        addSolve(float, auth.currentUser, isPlusTwo);
 
         e.currentTarget.value = "";
       }}
