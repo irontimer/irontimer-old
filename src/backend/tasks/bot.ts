@@ -1,7 +1,7 @@
-import type { Redis } from "ioredis";
+// import type { Redis } from "ioredis";
 import { Queue /*, QueueScheduler*/ } from "bullmq";
 
-const QUEUE_NAME = "bot-tasks";
+// const QUEUE_NAME = "bot-tasks";
 
 type BotTaskArgument = string | number;
 
@@ -20,28 +20,28 @@ function buildBotTask(task: string, taskArgs: BotTaskArgument[]): BotTask {
 let jobQueue: Queue;
 // let _queueScheduler: QueueScheduler;
 
-export function initJobQueue(redisConnection: Redis | undefined): void {
-  if (jobQueue || !redisConnection) {
-    return;
-  }
+// export function initJobQueue(redisConnection: Redis | undefined): void {
+//   if (jobQueue || !redisConnection) {
+//     return;
+//   }
 
-  jobQueue = new Queue(QUEUE_NAME, {
-    connection: redisConnection,
-    defaultJobOptions: {
-      removeOnComplete: true,
-      removeOnFail: true,
-      attempts: 3,
-      backoff: {
-        type: "exponential",
-        delay: 2000
-      }
-    }
-  });
+//   jobQueue = new Queue(QUEUE_NAME, {
+//     connection: redisConnection,
+//     defaultJobOptions: {
+//       removeOnComplete: true,
+//       removeOnFail: true,
+//       attempts: 3,
+//       backoff: {
+//         type: "exponential",
+//         delay: 2000
+//       }
+//     }
+//   });
 
-  // _queueScheduler = new QueueScheduler(QUEUE_NAME, {
-  //   connection: redisConnection
-  // });
-}
+//   // _queueScheduler = new QueueScheduler(QUEUE_NAME, {
+//   //   connection: redisConnection
+//   // });
+// }
 
 async function addToQueue(taskName: string, task: BotTask): Promise<void> {
   if (!jobQueue) {

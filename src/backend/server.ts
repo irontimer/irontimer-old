@@ -8,8 +8,8 @@ import app from "./app";
 import { Server } from "http";
 import { version } from "./version";
 import { recordServerVersion } from "./utils/prometheus";
-import * as RedisClient from "./init/redis";
-import { initJobQueue } from "./tasks/bot";
+// import * as RedisClient from  "./init/redis";
+// import { initJobQueue } from "./tasks/bot";
 import Logger from "./utils/logger";
 
 config();
@@ -38,16 +38,16 @@ async function bootServer(port: number): Promise<Server> {
     await getLiveConfiguration();
     Logger.success("Live configuration fetched");
 
-    Logger.info("Connecting to redis...");
-    await RedisClient.connect();
+    // Logger.info("Connecting to redis...");
+    // await RedisClient.connect();
 
-    if (RedisClient.isConnected()) {
-      Logger.success("Connected to redis");
+    // if (RedisClient.isConnected()) {
+    //   Logger.success("Connected to redis");
 
-      Logger.info("Initializing task queues...");
-      initJobQueue(RedisClient.getConnection());
-      Logger.success("Task queues initialized");
-    }
+    //   Logger.info("Initializing task queues...");
+    //   initJobQueue(RedisClient.getConnection());
+    //   Logger.success("Task queues initialized");
+    // }
 
     Logger.info("Starting cron jobs...");
     jobs.forEach((job) => job.start());
