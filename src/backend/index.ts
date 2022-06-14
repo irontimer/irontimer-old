@@ -1,3 +1,6 @@
 import { run } from "./server";
-
-run();
+try {
+  run();
+} catch (err) {
+  console.log(err);
+}
