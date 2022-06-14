@@ -61,7 +61,7 @@ async function bootServer(port: number): Promise<Server> {
     throw error;
   }
 
-  return app.listen(PORT, () => {
+  return app.listen(port, () => {
     Logger.success(`API server listening on port ${port}`);
   });
 }
