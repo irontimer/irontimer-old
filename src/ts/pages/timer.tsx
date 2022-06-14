@@ -25,10 +25,12 @@ import { TimerStackmat } from "../components/timer/stackmat";
 document.addEventListener("keydown", press);
 document.addEventListener("keyup", release);
 
-const [getCurrentOpen, setCurrentOpen] = createSignal<number | undefined>();
+const [getCurrentOpenSolve, setCurrentOpenSolve] = createSignal<
+  number | undefined
+>();
 
 function getSolveFromCurrentOpen(): Saved<Solve> | Solve | undefined {
-  return getSolvesAscending()[(getCurrentOpen() ?? 0) - 1];
+  return getSolvesAscending()[(getCurrentOpenSolve() ?? 0) - 1];
 }
 
 const averages = [5, 12, 50, 100, 200, 500, 1000]; // TODO use a config setting
@@ -55,7 +57,7 @@ function popupButtonCallback(
   cb(solve);
 
   if (close) {
-    setCurrentOpen();
+    setCurrentOpenSolve();
   }
 }
 
@@ -88,13 +90,13 @@ export const Timer: Component = () => {
             </Button>
             <Popup
               isOpen={[
-                () => getCurrentOpen() !== undefined,
-                (isOpen) => !isOpen && setCurrentOpen()
+                () => getCurrentOpenSolve() !== undefined,
+                (isOpen) => !isOpen && setCurrentOpenSolve()
               ]}
               id="solve-popup"
             >
               <div class="popup-content">
-                <div class="popup-title">Solve #{getCurrentOpen()}</div>
+                <div class="popup-title">Solve #{getCurrentOpenSolve()}</div>
                 <div class="popup-buttons">
                   <i
                     class="popup-button fas fa-trash"
@@ -207,7 +209,9 @@ export const Timer: Component = () => {
                             <td
                               class="unselectable"
                               onClick={() =>
-                                setCurrentOpen(getSolves().length - getIndex())
+                                setCurrentOpenSolve(
+                                  getSolves().length - getIndex()
+                                )
                               }
                             >
                               {getSolves().length - getIndex()}
@@ -215,7 +219,9 @@ export const Timer: Component = () => {
                             <td
                               class="unselectable"
                               onClick={() =>
-                                setCurrentOpen(getSolves().length - getIndex())
+                                setCurrentOpenSolve(
+                                  getSolves().length - getIndex()
+                                )
                               }
                             >
                               {actualTimeString(solve)}
