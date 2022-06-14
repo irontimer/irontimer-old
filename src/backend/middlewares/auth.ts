@@ -1,6 +1,4 @@
-console.log("test");
 import { compare } from "bcrypt";
-console.log("test");
 import { getApiKey, updateLastUsedOn } from "../dal/api-keys";
 import IronTimerError from "../utils/error";
 import { verifyIDToken } from "../utils/auth";
