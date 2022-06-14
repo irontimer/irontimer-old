@@ -57,7 +57,8 @@ async function bootServer(port: number): Promise<Server> {
   } catch (error: any) {
     Logger.error("Failed to boot server");
     Logger.error(error);
-    return process.exit(1);
+    // return process.exit(1);
+    throw error;
   }
 
   return app.listen(PORT, () => {

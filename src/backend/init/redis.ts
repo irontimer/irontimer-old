@@ -39,7 +39,8 @@ export async function connect(): Promise<void> {
       Logger.error(
         "Failed to connect to redis. Exiting with exit status code 1."
       );
-      process.exit(1);
+      // process.exit(1);
+      throw error;
     }
   }
 }
