@@ -1,9 +1,10 @@
-import { Component, createSignal, Show } from "solid-js";
+import { Component, createEffect, createSignal, Show } from "solid-js";
 import { Stackmat } from "stackmat";
 import { addSolve } from "../../state/solve";
 import { auth } from "../../utils/auth";
 import { c, formatTime } from "../../utils/misc";
 import { setIsTiming } from "../../state/timing";
+import { config } from "../../state/config";
 
 type StackmatState = "unready" | "almost-ready" | "ready" | "running";
 
@@ -39,7 +40,13 @@ export const TimerStackmat: Component = () => {
   stackmat.on("timerConnected", () => setTime(0));
   stackmat.on("timerDisconnected", () => setTime());
 
-  stackmat.start();
+  createEffect(() => {
+    if (config.timerType === "stackmat") {
+      stackmat.start();
+    } else {
+      stackmat.stop();
+    }
+  });
 
   return (
     <div class={c("timer-stackmat", "unselectable", getState())}>
