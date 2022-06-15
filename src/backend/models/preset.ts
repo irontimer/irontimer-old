@@ -1,6 +1,6 @@
 import type { Preset as IPreset } from "../../types";
 import { Schema, model } from "mongoose";
-import { SCRAMBLE_TYPES } from "../../constants/scramble-type";
+import { configProps } from "./config";
 
 export const PresetSchema = new Schema<IPreset>({
   _id: Schema.Types.ObjectId,
@@ -12,18 +12,7 @@ export const PresetSchema = new Schema<IPreset>({
     type: String,
     required: true
   },
-  config: {
-    timerType: {
-      type: String,
-      enum: ["timer", "typing", "stackmat"],
-      required: true
-    },
-    scrambleType: {
-      type: String,
-      enum: SCRAMBLE_TYPES,
-      required: true
-    }
-  }
+  config: configProps
 });
 
 export const Preset = model("preset", PresetSchema);

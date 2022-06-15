@@ -158,6 +158,7 @@ export interface Session {
 export interface Config {
   timerType: TimerType;
   currentSession: string;
+  displayAverages: number[];
 }
 
 export type ConfigChanges = Partial<Saved<Config, string>>;
