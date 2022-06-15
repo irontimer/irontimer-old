@@ -1,7 +1,16 @@
-import { Accessor, Component, For, JSX, Match, Switch } from "solid-js";
+import {
+  Accessor,
+  Component,
+  createSignal,
+  For,
+  JSX,
+  Match,
+  Switch
+} from "solid-js";
 import { CONFIG_VALUES } from "../../constants/config";
 import { TimerType } from "../../types";
 import { Button } from "../components/button";
+import { Collapsible } from "../components/collapsible";
 import { config, setConfig } from "../state/config";
 import {
   currentSession,
@@ -96,10 +105,16 @@ const SettingsGroup: Component<{
   title: string;
   children: JSX.Element;
 }> = (props) => {
+  const [isClosed, setIsClosed] = createSignal(false);
+
   return (
     <div class={c("settings-group", props.class)}>
-      <h2 class="settings-group-header">{props.title}</h2>
-      <div class="settings-group-content">{props.children}</div>
+      <Collapsible
+        title={<h2 class="settings-group-header">{props.title}</h2>}
+        isClosed={[isClosed, setIsClosed]}
+      >
+        <div class="settings-group-content">{props.children}</div>
+      </Collapsible>
     </div>
   );
 };

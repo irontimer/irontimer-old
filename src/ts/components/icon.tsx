@@ -6,5 +6,5 @@ type Props = JSX.IntrinsicElements["i"] & {
 };
 
 export const Icon: Component<Props> = (props) => (
-  <i class={c(props.class, "fas", `fa-${props.icon}`)} />
+  <i {...props} class={c(props.class, "fas", `fa-${props.icon}`)} />
 );
