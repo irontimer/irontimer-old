@@ -27,13 +27,10 @@ $remaining_height: 90vh;
       height: fit-content;
 
       .clear-solves-button {
-        margin-top: 5px;
-        margin-bottom: 5px;
-        margin-left: 5px;
-        margin-right: 5px;
-        padding: 5px;
         border-width: 1px;
         border-style: solid;
+        width: 100%;
+        padding: 1px 0px;
         border-color: black;
         background-color: gray;
         color: black;
