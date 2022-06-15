@@ -27,7 +27,7 @@
     "dep-graph": "npx madge --extensions tsx,ts \"src/ts\" --image dep-graph.png"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.0.0-rc.13",
+    "@tauri-apps/cli": "1.0.0-rc.15",
     "@types/babel__core": "7.1.19",
     "@types/bcrypt": "5.0.0",
     "@types/cors": "2.8.12",
