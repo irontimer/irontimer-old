@@ -5,7 +5,7 @@ import {
   SetStoreFunction,
   StoreNode
 } from "solid-js/store";
-import { isShallowEqual } from "./misc";
+import { clone, isShallowEqual } from "./misc";
 
 export function createReactiveStore<T extends StoreNode>(
   initialValue: T
@@ -21,13 +21,13 @@ export function createReactiveStore<T extends StoreNode>(
   // eslint-disable-next-line
   // @ts-ignore
   const setValue: typeof _setValue = (...args) => {
-    const previousValue = { ...value };
+    const previousValue = clone(value);
 
     // eslint-disable-next-line
     // @ts-ignore
     _setValue(...args);
 
-    const newValue = { ...value };
+    const newValue = clone(value);
 
     if (!isShallowEqual(previousValue, newValue)) {
       setChange(!getChange());

@@ -163,3 +163,7 @@ export function isShallowEqual<T>(a: T, b: T): boolean {
 export function c(...classes: (string | undefined)[]): string {
   return classes.filter((c) => c).join(" ");
 }
+
+export function clone<T>(obj: T): T {
+  return { ...obj };
+}
