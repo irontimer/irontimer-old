@@ -1,10 +1,12 @@
 import { createEffect, untrack } from "solid-js";
-import API from "../api-client";
-import { auth } from "../utils/auth";
 import { config, getConfigChange } from "./config";
 import { getSolves } from "./solve";
 import { setAndGenerateScramble } from "./scramble";
+import { auth } from "../utils/auth";
+import API from "../api-client";
 import Notifications from "./notifications";
+import { Config, Saved } from "../../types";
+// import { currentSession, getCurrentSessionChange } from "./session";
 
 createEffect(() => {
   // Update scramble when solves list changes
@@ -20,7 +22,7 @@ createEffect(async () => {
   getConfigChange();
 
   if (auth.currentUser !== null) {
-    const response = await API.configs.save(config);
+    const response = await API.configs.save(config as Config | Saved<Config>);
 
     if (response.status !== 200) {
       Notifications.add({
@@ -34,3 +36,22 @@ createEffect(async () => {
     console.log("Saved config to database");
   }
 });
+
+// createEffect(async () => {
+//   getCurrentSessionChange();
+
+//   if (auth.currentUser !== null) {
+//     const response = await API.sessions.save(currentSession);
+
+//     if (response.status !== 200) {
+//       Notifications.add({
+//         type: "error",
+//         message: `Failed to save session\n${response.message}`
+//       });
+
+//       return;
+//     }
+
+//     console.log("Saved session to database");
+//   }
+// });

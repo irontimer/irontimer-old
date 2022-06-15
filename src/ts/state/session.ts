@@ -3,16 +3,23 @@ import { createSignal } from "solid-js";
 import { Saved, Session } from "../../types";
 import Notifications from "./notifications";
 import { ScrambleType } from "../../constants/scramble-type";
-import { createStore } from "solid-js/store";
 import { User } from "firebase/auth";
+import { createReactiveStore } from "../utils/reactive-store";
 
 export const [getSessions, setSessions] = createSignal<
   Session[] | Saved<Session>[]
 >([]);
 
-export const [currentSession, setCurrentSession] = createStore<
-  Session | Saved<Session>
->({
+export function getSessionsByNames(): string[] {
+  return getSessions().map((s) => s.name);
+}
+
+export const [
+  currentSession,
+  setCurrentSession,
+  getCurrentSessionChange,
+  _setCurrentSession
+] = createReactiveStore<Session | Saved<Session>>({
   name: "Default",
   scrambleType: "3x3x3"
 });
