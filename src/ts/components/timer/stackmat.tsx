@@ -2,7 +2,7 @@ import { Component, createSignal, Show } from "solid-js";
 import { Stackmat } from "stackmat";
 import { addSolve } from "../../state/solve";
 import { auth } from "../../utils/auth";
-import { formatTime } from "../../utils/misc";
+import { c, formatTime } from "../../utils/misc";
 import { setIsTiming } from "../../state/timing";
 
 type StackmatState = "unready" | "almost-ready" | "ready" | "running";
@@ -42,7 +42,7 @@ export const TimerStackmat: Component = () => {
   stackmat.start();
 
   return (
-    <div class={`timer-stackmat unselectable ${getState()}`}>
+    <div class={c("timer-stackmat", "unselectable", getState())}>
       <Show when={getTime() !== undefined} fallback="--:--.--">
         {formatTime(getTime() as number)}
       </Show>

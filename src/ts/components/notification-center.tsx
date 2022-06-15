@@ -2,6 +2,7 @@ import { Component, For, Show } from "solid-js";
 import Notifications, { notificationBuffer } from "../state/notifications";
 import { isTauri } from "../utils/tauri";
 import { isTiming } from "../state/timing";
+import { c } from "../utils/misc";
 
 export const NotificationCenter: Component = () => {
   return (
@@ -13,7 +14,7 @@ export const NotificationCenter: Component = () => {
 
             return (
               <div
-                class={`notification ${notification.type}`}
+                class={c("notification", notification.type)}
                 onClick={() => Notifications.delete(id)}
               >
                 <div class="notification-message unselectable">

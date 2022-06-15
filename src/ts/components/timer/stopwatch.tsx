@@ -1,5 +1,5 @@
 import { Component, createSignal } from "solid-js";
-import { formatTime } from "../../utils/misc";
+import { c, formatTime } from "../../utils/misc";
 import { config } from "../../state/config";
 import { addSolve, getLastSolve } from "../../state/solve";
 import { auth } from "../../utils/auth";
@@ -14,7 +14,7 @@ const [getReadyState, setReadyState] = createSignal<ReadyState>("unready");
 
 export const TimerStopwatch: Component = () => {
   return (
-    <div class={`timer-stopwatch unselectable ${getReadyState()}`}>
+    <div class={c("timer-stopwatch", "unselectable", getReadyState())}>
       {getCurrentTime()}
     </div>
   );

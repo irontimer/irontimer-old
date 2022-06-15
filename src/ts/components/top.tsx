@@ -6,9 +6,10 @@ import { Button } from "./button";
 import { isTiming } from "../state/timing";
 import { setCurrentSession } from "../state/session";
 import { isSavingSolve } from "../state/solve";
+import { Icon } from "./icon";
 
 const pages = ["Timer", "Account", "Settings"];
-const icons = ["fa-cube", "fa-user", "fa-cog"];
+const icons = ["cube", "user", "cog"];
 
 export const Top: Component = () => {
   return (
@@ -62,7 +63,7 @@ export const Top: Component = () => {
               href={page === "Timer" ? "/" : `/${page.toLowerCase()}`}
               class="nav-item unselectable"
             >
-              <i class={`fa-solid ${icons[getIndex()]}`}></i>
+              <Icon icon={icons[getIndex()]} />
             </Link>
           )}
         </For>

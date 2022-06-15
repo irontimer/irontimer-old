@@ -21,6 +21,7 @@ import Notifications from "../state/notifications";
 import { currentSession } from "../state/session";
 import { auth } from "../utils/auth";
 import { TimerStackmat } from "../components/timer/stackmat";
+import { Icon } from "../components/icon";
 
 document.addEventListener("keydown", press);
 document.addEventListener("keyup", release);
@@ -86,7 +87,7 @@ export const Timer: Component = () => {
                 }
               }}
             >
-              Clear
+              Clear Solves
             </Button>
             <Popup
               isOpen={[
@@ -98,8 +99,9 @@ export const Timer: Component = () => {
               <div class="popup-content">
                 <div class="popup-title">Solve #{getCurrentOpenSolve()}</div>
                 <div class="popup-buttons">
-                  <i
-                    class="popup-button fas fa-trash"
+                  <Icon
+                    class="popup-button"
+                    icon="trash"
                     onClick={() =>
                       popupButtonCallback(
                         (solve) => deleteSolve(solve, auth.currentUser),
@@ -159,13 +161,24 @@ export const Timer: Component = () => {
                     class="popup-content"
                     value={getSolveFromCurrentOpen()?.scramble}
                   />
-                  <i
-                    class="popup-copy-button fa-solid fa-clipboard-list"
+                  <Icon
+                    icon="clipboard-list"
+                    class="popup-copy-button"
                     onClick={() => {
                       // copy scramble to clipboard
-                      navigator.clipboard.writeText(
-                        getSolveFromCurrentOpen()?.scramble ?? ""
-                      );
+                      const scramble = getSolveFromCurrentOpen()?.scramble;
+
+                      if (scramble === undefined || scramble === "") {
+                        Notifications.add({
+                          type: "error",
+                          message: "Unable to copy scramble",
+                          duration: 5000
+                        });
+
+                        return;
+                      }
+
+                      navigator.clipboard.writeText(scramble);
 
                       Notifications.add({
                         type: "success",
@@ -173,7 +186,7 @@ export const Timer: Component = () => {
                         duration: 5000
                       });
                     }}
-                  ></i>
+                  />
                 </div>
               </div>
             </Popup>
