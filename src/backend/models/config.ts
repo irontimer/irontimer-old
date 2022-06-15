@@ -1,10 +1,11 @@
 import type { Config as IConfig, Saved } from "../../types";
 import { Schema, model } from "mongoose";
+import { CONFIG_VALUES } from "../../constants/config";
 
 export const configProps = {
   timerType: {
     type: String,
-    enum: ["timer", "typing", "stackmat"],
+    enum: CONFIG_VALUES.timerType,
     required: true
   },
   currentSession: {

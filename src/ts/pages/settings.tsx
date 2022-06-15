@@ -1,4 +1,5 @@
 import { Accessor, Component, For, JSX, Match, Switch } from "solid-js";
+import { CONFIG_VALUES } from "../../constants/config";
 import { TimerType } from "../../types";
 import { Button } from "../components/button";
 import { config, setConfig } from "../state/config";
@@ -115,7 +116,7 @@ export const Settings: Component = () => {
             header="Timer Type"
             description="The type of timer to use when solving."
             type="buttons"
-            values={["timer", "typing", "stackmat"]}
+            values={CONFIG_VALUES.timerType}
             onValueChange={(value: TimerType) => setConfig("timerType", value)}
             currentValue={() => config.timerType}
           />
@@ -154,11 +155,7 @@ export const Settings: Component = () => {
             header="Display Averages"
             description="What averages to display on the average list."
             type="select"
-            values={[
-              [5, 12, 50, 100],
-              [5, 12, 50, 100, 200, 500],
-              [5, 12, 50, 100, 200, 500, 1000]
-            ]}
+            values={CONFIG_VALUES.displayAverages}
             onValueChange={(value: number[]) =>
               setConfig("displayAverages", value)
             }

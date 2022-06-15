@@ -1,5 +1,6 @@
 import { Solve as ISolve, Saved } from "../../types";
 import { Schema, model } from "mongoose";
+import { CONFIG_VALUES } from "../../constants/config";
 
 export const SolveSchema = new Schema<Saved<ISolve>>({
   _id: Schema.Types.ObjectId,
@@ -26,7 +27,7 @@ export const SolveSchema = new Schema<Saved<ISolve>>({
   },
   enteredBy: {
     type: String,
-    enum: ["timer", "typing", "stackmat"],
+    enum: CONFIG_VALUES.timerType,
     required: true
   },
   scramble: {

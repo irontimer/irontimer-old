@@ -1,4 +1,4 @@
-import { DEFAULT_CONFIG } from "../../constants/default-config";
+import { DEFAULT_CONFIG } from "../../constants/config";
 import { Config, Saved } from "../../types";
 import { createReactiveStore } from "../utils/reactive-store";
 

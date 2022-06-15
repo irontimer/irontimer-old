@@ -9,7 +9,7 @@ import {
 import API from "../api-client";
 import { setIsSavingSolve, setSolves } from "../state/solve";
 import { config, setConfig, _setConfig } from "../state/config";
-import { DEFAULT_CONFIG } from "../../constants/default-config";
+import { DEFAULT_CONFIG } from "../../constants/config";
 import Notifications from "../state/notifications";
 import { setCurrentSession, setSessions } from "../state/session";
 
