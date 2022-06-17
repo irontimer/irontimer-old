@@ -55,7 +55,7 @@
   "dependencies": {
     "axios": "0.21.4",
     "bcrypt": "5.0.1",
-    "bullmq": "1.83.2",
+    "bullmq": "1.86.2",
     "chalk": "4.1.2",
     "cors": "2.8.5",
     "cron": "2.0.0",
