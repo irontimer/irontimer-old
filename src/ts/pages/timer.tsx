@@ -34,10 +34,8 @@ function getSolveFromCurrentOpen(): Saved<Solve> | Solve | undefined {
   return getSolvesAscending()[(getCurrentOpenSolve() ?? 0) - 1];
 }
 
-const averages = [5, 12, 50, 100, 200, 500, 1000]; // TODO use a config setting
-
 function getAllAverages(): { averageOf: number; average: string }[] {
-  return averages
+  return config.displayAverages
     .filter((n) => n <= getSolves().length)
     .map((n) => ({
       averageOf: n,
