@@ -7,9 +7,13 @@ import { isTiming } from "../state/timing";
 import { setCurrentSession } from "../state/session";
 import { isSavingSolve } from "../state/solve";
 import { Icon } from "./icon";
+import type { IconName } from "@fortawesome/fontawesome-common-types";
 
-const pages = ["Timer", "Account", "Settings"];
-const icons = ["cube", "user", "cog"];
+const pages: Record<string, IconName> = {
+  Timer: "cube",
+  Account: "user",
+  Settings: "cog"
+};
 
 export const Top: Component = () => {
   const generateScrambleButton = (
@@ -59,14 +63,14 @@ export const Top: Component = () => {
       </div>
 
       <div id="nav">
-        <For each={pages}>
+        <For each={Object.keys(pages)}>
           {(page, getIndex) => (
             <Link
               href={page === "Timer" ? "/" : `/${page.toLowerCase()}`}
               class="nav-item unselectable"
               aria-label={`Go to ${page}`}
             >
-              <Icon icon={icons[getIndex()]} />
+              <Icon icon={pages[getIndex()]} />
             </Link>
           )}
         </For>
