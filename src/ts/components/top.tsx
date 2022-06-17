@@ -12,6 +12,15 @@ const pages = ["Timer", "Account", "Settings"];
 const icons = ["cube", "user", "cog"];
 
 export const Top: Component = () => {
+  const generateScrambleButton = (
+    <Button
+      class="generate-scramble-button unselectable"
+      onClick={() => setAndGenerateScramble()}
+    >
+      Generate Scramble
+    </Button>
+  );
+
   return (
     <div class="top">
       <div class="logo">
@@ -24,24 +33,17 @@ export const Top: Component = () => {
       </div>
 
       <div class="unselectable" id="scramble">
-        <Switch fallback="">
+        <Switch fallback={generateScrambleButton}>
           <Match when={isSavingSolve()}>Loading...</Match>
           <Match when={isTiming()}>{""}</Match>
-          <Match when={getScramble() === ""}>
-            <Button
-              class="generate-scramble-button unselectable"
-              onClick={() => setAndGenerateScramble()}
-            >
-              Generate Scramble
-            </Button>
-          </Match>
+          <Match when={getScramble() === ""}>{generateScrambleButton}</Match>
           <Match when={getScramble() !== ""}>{getScramble()}</Match>
         </Switch>
       </div>
       <div id="scramble-type">
         <Show when={!isTiming()}>
           <select
-            id="scramble-type"
+            id="scramble-type-select"
             class="unselectable"
             onChange={(e) => {
               const val = e.currentTarget.value as ScrambleType;
@@ -62,6 +64,7 @@ export const Top: Component = () => {
             <Link
               href={page === "Timer" ? "/" : `/${page.toLowerCase()}`}
               class="nav-item unselectable"
+              aria-label={`Go to ${page}`}
             >
               <Icon icon={icons[getIndex()]} />
             </Link>

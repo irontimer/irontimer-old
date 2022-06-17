@@ -73,10 +73,12 @@ $text-color: #fafafa;
 
   // TODO: replace with settings page
   #scramble-type {
-    font-size: 1rem;
-    width: 100%;
-    background-color: white;
-    border-radius: 10px;
+    #scramble-type-select {
+      font-size: 1rem;
+      width: 100%;
+      background-color: white;
+      border-radius: 10px;
+    }
   }
 
   #nav {
