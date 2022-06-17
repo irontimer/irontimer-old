@@ -1,4 +1,4 @@
-import { createEffect, untrack } from "solid-js";
+import { createEffect, on } from "solid-js";
 import { config, getConfigChange } from "./config";
 import { getSolves } from "./solve";
 import { setAndGenerateScramble } from "./scramble";
@@ -8,20 +8,16 @@ import Notifications from "./notifications";
 import { Config, Saved } from "../../types";
 // import { currentSession, getCurrentSessionChange } from "./session";
 
-createEffect(() => {
-  // Update scramble when solves list changes
-  // Basically, calling a signal is like a dependency array in React
-  getSolves();
-  getConfigChange();
+// This also updates a scramble when the scramble type changes
 
-  // This also updates a scramble when the scramble type changes
-  untrack(() => setAndGenerateScramble());
-});
+createEffect(on([getSolves, getConfigChange], () => setAndGenerateScramble()));
 
-createEffect(async () => {
-  getConfigChange();
+createEffect(
+  on(getConfigChange, async () => {
+    if (auth.currentUser === null) {
+      return;
+    }
 
-  if (auth.currentUser !== null) {
     const response = await API.configs.save(config as Config | Saved<Config>);
 
     if (response.status !== 200) {
@@ -34,8 +30,8 @@ createEffect(async () => {
     }
 
     console.log("Saved config to database");
-  }
-});
+  })
+);
 
 // createEffect(async () => {
 //   getCurrentSessionChange();
