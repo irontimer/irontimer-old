@@ -64,13 +64,13 @@ export const Top: Component = () => {
 
       <div id="nav">
         <For each={Object.keys(pages)}>
-          {(page, getIndex) => (
+          {(page) => (
             <Link
               href={page === "Timer" ? "/" : `/${page.toLowerCase()}`}
               class="nav-item unselectable"
               aria-label={`Go to ${page}`}
             >
-              <Icon icon={pages[getIndex()]} />
+              <Icon icon={pages[page]} />
             </Link>
           )}
         </For>
