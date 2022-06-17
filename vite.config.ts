@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [solidPlugin(), visualizer()],
   build: {
     target: "ESNext",
-    polyfillDynamicImport: false
+    polyfillDynamicImport: false,
+    sourcemap: true
   }
 });
