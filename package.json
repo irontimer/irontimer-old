@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@firebase/app-compat": "0.1.27",
-    "@tauri-apps/cli": "1.0.0-rc.15",
+    "@tauri-apps/cli": "1.0.0",
     "@types/babel__core": "7.1.19",
     "@types/bcrypt": "5.0.0",
     "@types/cors": "2.8.12",
