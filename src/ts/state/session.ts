@@ -3,7 +3,7 @@ import { createSignal } from "solid-js";
 import { Saved, Session } from "../../types";
 import Notifications from "./notifications";
 import { ScrambleType } from "../../constants/scramble-type";
-import { User } from "firebase/auth";
+import type { User } from "firebase/auth";
 import { createReactiveStore } from "../utils/reactive-store";
 
 export const [getSessions, setSessions] = createSignal<
