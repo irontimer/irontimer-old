@@ -3,9 +3,9 @@ import { firebaseConfig } from "../../config/firebase-config";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  User,
   signInWithEmailAndPassword
 } from "firebase/auth";
+import type { User } from "firebase/auth";
 import API from "../api-client";
 import { setIsSavingSolve, setSolves } from "../state/solve";
 import { config, setConfig, _setConfig } from "../state/config";
