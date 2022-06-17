@@ -68,7 +68,7 @@
     "ioredis": "5.0.5",
     "joi": "17.6.0",
     "lodash": "4.17.21",
-    "mongodb": "4.6.0",
+    "mongodb": "4.7.0",
     "mongoose": "6.3.3",
     "node-fetch": "2.6.7",
     "prom-client": "14.0.1",
