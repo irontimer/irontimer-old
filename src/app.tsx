@@ -13,6 +13,7 @@ import { Settings } from "./ts/pages/settings";
 import { SignIn } from "./ts/pages/sign-in";
 import { Timer } from "./ts/pages/timer";
 import "./ts/state/effect";
+import "./ts/utils/idle";
 
 export const App: Component = () => {
   return (

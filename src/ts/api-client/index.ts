@@ -14,6 +14,7 @@ const httpClient = buildHttpClient(API_URL, 15000);
 // API Endpoints
 const API = {
   users: new endpoints.Users(httpClient),
+  utils: new endpoints.Utils(httpClient),
   configs: new endpoints.Configs(httpClient),
   solves: new endpoints.Solves(httpClient),
   psas: new endpoints.Psas(httpClient),

@@ -5,6 +5,7 @@ import Psas from "./psas";
 import Solves from "./solves";
 import Sessions from "./sessions";
 import Users from "./users";
+import Utils from "./utils";
 
 export default {
   ApiKeys,
@@ -13,5 +14,6 @@ export default {
   Psas,
   Solves,
   Sessions,
-  Users
+  Users,
+  Utils
 };
