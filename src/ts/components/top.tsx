@@ -1,10 +1,8 @@
-import { Component, For, Match, Show, Switch } from "solid-js";
+import { Component, For, Match, Switch } from "solid-js";
 import { Link } from "solid-app-router";
 import { getScramble, setAndGenerateScramble } from "../state/scramble";
-import { SCRAMBLE_TYPES, ScrambleType } from "../../constants/scramble-type";
 import { Button } from "./button";
 import { isTiming } from "../state/timing";
-import { setCurrentSession } from "../state/session";
 import { isSavingSolve } from "../state/solve";
 import { Icon } from "./icon";
 import type { IconName } from "@fortawesome/fontawesome-common-types";
@@ -43,23 +41,6 @@ export const Top: Component = () => {
           <Match when={getScramble() === ""}>{generateScrambleButton}</Match>
           <Match when={getScramble() !== ""}>{getScramble()}</Match>
         </Switch>
-      </div>
-      <div id="scramble-type">
-        <Show when={!isTiming()}>
-          <select
-            id="scramble-type-select"
-            class="unselectable"
-            onChange={(e) => {
-              const val = e.currentTarget.value as ScrambleType;
-
-              setCurrentSession("scrambleType", val);
-            }}
-          >
-            <For each={SCRAMBLE_TYPES}>
-              {(type) => <option value={type}>{type}</option>}
-            </For>
-          </select>
-        </Show>
       </div>
 
       <div id="nav">
