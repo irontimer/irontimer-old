@@ -10,10 +10,8 @@ export const Collapsible: Component<{
 
   return (
     <>
-      <div class="collapsible">
-        <div class="collapsible-title" onClick={() => setIsClosed(!isClosed())}>
-          {props.title}
-        </div>
+      <div class="collapsible" onClick={() => setIsClosed(!isClosed())}>
+        <div class="collapsible-title">{props.title}</div>
         <Icon
           icon="chevron-down"
           class="collapsible-icon"
