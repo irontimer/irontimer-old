@@ -1,0 +1,38 @@
+.section {
+  display: grid;
+  grid-template-areas:
+    "title"
+    "description options";
+  grid-template-columns: 2fr 1fr;
+  column-gap: 2rem;
+
+  .section-text {
+    .section-header {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    .section-description {
+      font-size: 1rem;
+    }
+  }
+
+  .section-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .section-select,
+    .section-input,
+    .section-buttons {
+      text-align: center;
+      width: 100%;
+      height: fit-content;
+
+      .active {
+        background-color: #f5f5f5;
+      }
+    }
+  }
+}

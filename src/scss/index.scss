@@ -18,8 +18,10 @@ body {
   user-select: none; // Standard
 }
 
-@import "components/timer/input.scss", "components/timer/stopwatch.scss",
-  "components/timer/stackmat.scss", "components/button",
-  "components/collapsible", "components/icon", "components/notification-center",
-  "components/popup", "components/text", "components/top", "pages/account",
-  "pages/settings", "pages/sign-in.scss", "pages/timer";
+@import "components/settings/section.scss",
+  "components/settings/settings-group.scss", "components/timer/input.scss",
+  "components/timer/stopwatch.scss", "components/timer/stackmat.scss",
+  "components/button", "components/collapsible", "components/icon",
+  "components/notification-center", "components/popup", "components/text",
+  "components/top", "pages/account", "pages/settings", "pages/sign-in.scss",
+  "pages/timer";

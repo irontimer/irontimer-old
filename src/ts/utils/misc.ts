@@ -160,7 +160,7 @@ export function isShallowEqual<T>(a: T, b: T): boolean {
 /**
  * @description Constructs a class name from a list of classes
  */
-export function c(...classes: (string | undefined)[]): string {
+export function c(...classes: (string | false | null | undefined)[]): string {
   return classes.filter((c) => c).join(" ");
 }
 
