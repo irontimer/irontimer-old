@@ -73,7 +73,7 @@
     "joi": "17.6.0",
     "lodash": "4.17.21",
     "mongodb": "4.7.0",
-    "mongoose": "6.3.3",
+    "mongoose": "6.4.0",
     "node-fetch": "2.6.7",
     "prom-client": "14.0.1",
     "sass": "1.51.0",
