@@ -1,0 +1,5 @@
+.env
+src/server.version
+src/credentials/serviceAccountKey.json
+dist/
+logs/

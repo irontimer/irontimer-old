@@ -1,29 +1,11 @@
 # In case anyone uses npm install by accident
 package-lock.json
 
-.env
 .DS_Store
-build
-dist
 node_modules
 
-# Firebase
-.firebaserc
-.firebase/
-src/config/firebase-config.ts
-src/backend/credentials/serviceAccountKey.json
-
-# Backend
-server.version
+# Yarn
+.yarn/cache
+.yarn/install-state.gz
 yarn-error.log
-logs/
-
-# Tauri
-src-tauri/target/
-src-tauri/WixTools
-
-# Rollup Visualizer
-stats.html
-
-# Madge
-dep-graph.png
+.pnp.*

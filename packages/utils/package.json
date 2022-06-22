@@ -1,0 +1,26 @@
+{
+  "name": "@irontimer/utils",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Utils (types and constants) for IronTimer",
+  "exports": {
+    "import": "./dist/esm/index.js",
+    "default": "./dist/cjs/index.js",
+    "require": "./dist/cjs/index.js"
+  },
+  "types": "types",
+  "author": "Evan <evanrayweigel@outlook.com>",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "build": "yarn build-esm && yarn build-cjs",
+    "build-esm": "tsc --project \"tsconfig.esm.json\"",
+    "build-cjs": "tsc --project \"tsconfig.cjs.json\"",
+    "pretty": "prettier \"src/**/*.ts\"",
+    "pretty-fix": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src/**/*.ts",
+    "lint-fix": "eslint --fix src/**/*.ts"
+  },
+  "dependencies": {
+    "mongodb": "4.7.0"
+  }
+}
