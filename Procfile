@@ -1,1 +1,1 @@
-web: node build/backend/index.js
+web: yarn workspace @irontimer/backend start

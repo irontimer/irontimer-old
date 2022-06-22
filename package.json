@@ -19,7 +19,6 @@
     "lint": "yarn workspaces foreach -v run lint",
     "lint-fix": "yarn workspaces foreach -v run lint-fix",
     "preinstall": "yarn workspace @irontimer/utils build",
-    "postinstall": "yarn workspace @irontimer/backend build",
     "start": "yarn workspace @irontimer/backend start"
   },
   "devDependencies": {
