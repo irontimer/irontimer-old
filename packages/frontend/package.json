@@ -23,7 +23,7 @@
     "@irontimer/utils": "0.0.0",
     "axios": "0.21.4",
     "firebase": "9.8.3",
-    "sass": "1.52.3",
+    "sass": "1.53.0",
     "solid-app-router": "0.4.1",
     "solid-js": "1.4.4",
     "stackmat": "1.1.0"
