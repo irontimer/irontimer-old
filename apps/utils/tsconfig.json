@@ -2,8 +2,6 @@
   "compilerOptions": {
     "strict": true,
     "target": "ESNext",
-    "declaration": true,
-    "declarationDir": "./types",
     "moduleResolution": "node",
     "skipDefaultLibCheck": true
   },

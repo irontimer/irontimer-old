@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "nodemon",
     "start": "yarn build && node dist",
-    "build": "yarn dlx --package typescript tsc",
+    "build": "yarn tsc",
     "pretty": "prettier \"src/**/*.ts\"",
     "pretty-fix": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\"",
-    "lint-fix": "eslint --fix \"src/**/*.ts\""
+    "lint-fix": "eslint --fix \"src/**/*.ts\"",
+    "tsc": "yarn dlx --package typescript tsc"
   },
   "author": "Evan <evanrayweigel@outlook.com>",
   "license": "AGPL-3.0",
