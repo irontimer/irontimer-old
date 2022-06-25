@@ -11,6 +11,7 @@ import { recordServerVersion } from "./utils/prometheus";
 // import * as RedisClient from  "./init/redis";
 // import { initJobQueue } from "./tasks/bot";
 import Logger from "./utils/logger";
+import { resolve } from "path";
 
 config();
 
@@ -25,7 +26,9 @@ async function bootServer(port: number): Promise<Server> {
     const serviceAccount: ServiceAccount = JSON.parse(
       (process.env.FIREBASE_SERVICE_ACCOUNT !== undefined
         ? Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT, "base64")
-        : readFileSync("./src/backend/credentials/serviceAccountKey.json")
+        : readFileSync(
+            resolve(__dirname, "credentials", "serviceAccountKey.json")
+          )
       ).toString()
     );
 
