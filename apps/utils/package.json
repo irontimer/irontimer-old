@@ -18,7 +18,8 @@
     "pretty": "prettier \"src/**/*.ts\"",
     "pretty-fix": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*.ts",
-    "lint-fix": "eslint --fix src/**/*.ts"
+    "lint-fix": "eslint --fix src/**/*.ts",
+    "preinstall": "yarn workspace @irontimer/utils build"
   },
   "dependencies": {
     "mongodb": "4.7.0"
