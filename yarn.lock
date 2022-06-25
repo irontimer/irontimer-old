@@ -487,19 +487,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@firebase/app-compat@npm:0.1.27":
-  version: 0.1.27
-  resolution: "@firebase/app-compat@npm:0.1.27"
-  dependencies:
-    "@firebase/app": 0.7.26
-    "@firebase/component": 0.5.15
-    "@firebase/logger": 0.3.3
-    "@firebase/util": 1.6.1
-    tslib: ^2.1.0
-  checksum: 1f42743659fa0b48d0fa61e8d079773df502f012a9513fa9b6817bcbf27d79de8dd215f643605a3fdc6d352a9beb0f082290a760219e52bb6ca5d38163e50d67
-  languageName: node
-  linkType: hard
-
 "@firebase/app-compat@npm:0.1.28":
   version: 0.1.28
   resolution: "@firebase/app-compat@npm:0.1.28"
@@ -517,19 +504,6 @@ __metadata:
   version: 0.7.0
   resolution: "@firebase/app-types@npm:0.7.0"
   checksum: 9b46512659061751e81d32e95420e206f0fe97d3f597267b1c1a520e10bba0792952535e1f22b031b894fb63c1c6f5815aaa71fae27913fdfaba281e99f5fbfc
-  languageName: node
-  linkType: hard
-
-"@firebase/app@npm:0.7.26":
-  version: 0.7.26
-  resolution: "@firebase/app@npm:0.7.26"
-  dependencies:
-    "@firebase/component": 0.5.15
-    "@firebase/logger": 0.3.3
-    "@firebase/util": 1.6.1
-    idb: 7.0.1
-    tslib: ^2.1.0
-  checksum: db7eae9eb20dfc5ac630185272634e54c9893ed1bb12b8ff9a1a0c4cae203f59186f1a28940517cbcace6175262589e749776b2f5ad0e130be3ff0dd9d161006
   languageName: node
   linkType: hard
 
@@ -596,16 +570,6 @@ __metadata:
   peerDependencies:
     "@firebase/app": 0.x
   checksum: 30bd449130c86eaf2cdb37973a9678804869deeb459a1f2340793411895101ba15160362ca13abcbedc7e2613fa95c6c01ee0b8b0408c79e3ce4adbce673dcd2
-  languageName: node
-  linkType: hard
-
-"@firebase/component@npm:0.5.15":
-  version: 0.5.15
-  resolution: "@firebase/component@npm:0.5.15"
-  dependencies:
-    "@firebase/util": 1.6.1
-    tslib: ^2.1.0
-  checksum: 4aef89b7ae039e14569044b8ec96c8bca7b43ddf72c3232043c967f9da1fe71347e8775fc9eca22d40d5f6394cdb331dede895c3670b576e46ff29c6fa5f7353
   languageName: node
   linkType: hard
 
@@ -1145,7 +1109,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@irontimer/frontend@workspace:apps/frontend"
   dependencies:
-    "@firebase/app-compat": 0.1.27
+    "@firebase/app-compat": 0.1.28
     "@fortawesome/fontawesome-common-types": 6.1.1
     "@irontimer/utils": 0.0.0
     "@tauri-apps/cli": 1.0.0
