@@ -868,55 +868,55 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tauri-apps/cli-darwin-arm64@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-darwin-arm64/-/cli-darwin-arm64-1.0.0.tgz#9ab439898b4d05a6e43df4451a42fa21e9d5eaa1"
+"@tauri-apps/cli-darwin-arm64@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-darwin-arm64/-/cli-darwin-arm64-1.0.1.tgz#e7edecb70a052e46786274e37d544eebc8149221"
 
-"@tauri-apps/cli-darwin-x64@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-darwin-x64/-/cli-darwin-x64-1.0.0.tgz#5ffc8d444c7dc1cab14c8c743a929e448f1b1e93"
+"@tauri-apps/cli-darwin-x64@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-darwin-x64/-/cli-darwin-x64-1.0.1.tgz#3dc1161d7b834dec7587680c0d0ff1d12a2abc21"
 
-"@tauri-apps/cli-linux-arm-gnueabihf@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm-gnueabihf/-/cli-linux-arm-gnueabihf-1.0.0.tgz#c24d63b4637a0c20b9671f0284968b164482f6ee"
+"@tauri-apps/cli-linux-arm-gnueabihf@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm-gnueabihf/-/cli-linux-arm-gnueabihf-1.0.1.tgz#be091e4a2c31d2716c1072345df20233c41adf18"
 
-"@tauri-apps/cli-linux-arm64-gnu@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm64-gnu/-/cli-linux-arm64-gnu-1.0.0.tgz#dfb107a3d5f56dc0356126135f941261ffad10a3"
+"@tauri-apps/cli-linux-arm64-gnu@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm64-gnu/-/cli-linux-arm64-gnu-1.0.1.tgz#c7b6bff7920559b4e3437d6a27bd98e15395cd9d"
 
-"@tauri-apps/cli-linux-arm64-musl@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm64-musl/-/cli-linux-arm64-musl-1.0.0.tgz#72ebfc5066c6fac82b513c20fbec6ab841b3ee05"
+"@tauri-apps/cli-linux-arm64-musl@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-arm64-musl/-/cli-linux-arm64-musl-1.0.1.tgz#40ed7cbf32c47168baf0b7bc59ef881facc60166"
 
-"@tauri-apps/cli-linux-x64-gnu@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-x64-gnu/-/cli-linux-x64-gnu-1.0.0.tgz#76f791378468a9ca2678885f0d14e05f4fd0d0c8"
+"@tauri-apps/cli-linux-x64-gnu@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-x64-gnu/-/cli-linux-x64-gnu-1.0.1.tgz#6e806956fab6cec1ef53adca1818fb860ec8b023"
 
-"@tauri-apps/cli-linux-x64-musl@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-x64-musl/-/cli-linux-x64-musl-1.0.0.tgz#12ccc0747c88e9c2cbdf21834b94718c8da689ca"
+"@tauri-apps/cli-linux-x64-musl@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-linux-x64-musl/-/cli-linux-x64-musl-1.0.1.tgz#c429c6d8bab2f7c31ff414c033940af13d653129"
 
-"@tauri-apps/cli-win32-ia32-msvc@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-win32-ia32-msvc/-/cli-win32-ia32-msvc-1.0.0.tgz#5d56df6dbb62c11cae28b826619fbbad9a158399"
+"@tauri-apps/cli-win32-ia32-msvc@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-win32-ia32-msvc/-/cli-win32-ia32-msvc-1.0.1.tgz#6101b1053afd3773f9ae8f31502799cb7b2d784b"
 
-"@tauri-apps/cli-win32-x64-msvc@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-win32-x64-msvc/-/cli-win32-x64-msvc-1.0.0.tgz#6227331d177118323cff13bc6bfb04894130c83f"
+"@tauri-apps/cli-win32-x64-msvc@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli-win32-x64-msvc/-/cli-win32-x64-msvc-1.0.1.tgz#534cd0873db4f4005bb9401fbccacb47a64f637f"
 
-"@tauri-apps/cli@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/cli/-/cli-1.0.0.tgz#28f021a2db4c2087b569845d42b4fe7978ccee19"
+"@tauri-apps/cli@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/cli/-/cli-1.0.1.tgz#ec516be3d07c73d405532c127a4866a56f9004f1"
   optionalDependencies:
-    "@tauri-apps/cli-darwin-arm64" "1.0.0"
-    "@tauri-apps/cli-darwin-x64" "1.0.0"
-    "@tauri-apps/cli-linux-arm-gnueabihf" "1.0.0"
-    "@tauri-apps/cli-linux-arm64-gnu" "1.0.0"
-    "@tauri-apps/cli-linux-arm64-musl" "1.0.0"
-    "@tauri-apps/cli-linux-x64-gnu" "1.0.0"
-    "@tauri-apps/cli-linux-x64-musl" "1.0.0"
-    "@tauri-apps/cli-win32-ia32-msvc" "1.0.0"
-    "@tauri-apps/cli-win32-x64-msvc" "1.0.0"
+    "@tauri-apps/cli-darwin-arm64" "1.0.1"
+    "@tauri-apps/cli-darwin-x64" "1.0.1"
+    "@tauri-apps/cli-linux-arm-gnueabihf" "1.0.1"
+    "@tauri-apps/cli-linux-arm64-gnu" "1.0.1"
+    "@tauri-apps/cli-linux-arm64-musl" "1.0.1"
+    "@tauri-apps/cli-linux-x64-gnu" "1.0.1"
+    "@tauri-apps/cli-linux-x64-musl" "1.0.1"
+    "@tauri-apps/cli-win32-ia32-msvc" "1.0.1"
+    "@tauri-apps/cli-win32-x64-msvc" "1.0.1"
 
 "@tootallnate/once@2":
   version "2.0.0"
@@ -1393,9 +1393,9 @@ buffer@^5.6.0:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
-bullmq@1.86.2:
-  version "1.86.2"
-  resolved "https://registry.yarnpkg.com/bullmq/-/bullmq-1.86.2.tgz#aa496be77efd5e976b685dfcb36207438988887a"
+bullmq@1.86.3:
+  version "1.86.3"
+  resolved "https://registry.yarnpkg.com/bullmq/-/bullmq-1.86.3.tgz#05b15199527a94404b6451f3396981d1dfec4dae"
   dependencies:
     cron-parser "^4.2.1"
     get-port "^5.1.1"
@@ -3113,9 +3113,9 @@ mongodb@4.7.0:
   optionalDependencies:
     saslprep "^1.0.3"
 
-mongoose@6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.4.0.tgz#22d6ab436bdf444b833e92faaa53e47b734c15c6"
+mongoose@6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.4.1.tgz#e50e1a92ccf7764f2cc57b5a801a52918c7c3e72"
   dependencies:
     bson "^4.6.2"
     kareem "2.4.1"
@@ -4113,18 +4113,7 @@ vite-plugin-solid@2.2.6:
     solid-refresh "^0.4.0"
     vite "^2.8.0"
 
-vite@2.9.12:
-  version "2.9.12"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.12.tgz#b1d636b0a8ac636afe9d83e3792d4895509a941b"
-  dependencies:
-    esbuild "^0.14.27"
-    postcss "^8.4.13"
-    resolve "^1.22.0"
-    rollup "^2.59.0"
-  optionalDependencies:
-    fsevents "~2.3.2"
-
-vite@^2.8.0:
+vite@2.9.13, vite@^2.8.0:
   version "2.9.13"
   resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.13.tgz#859cb5d4c316c0d8c6ec9866045c0f7858ca6abc"
   dependencies:
