@@ -23,6 +23,6 @@
     "tsc": "yarn dlx --package typescript tsc"
   },
   "dependencies": {
-    "mongodb": "4.7.0"
+    "mongodb": "4.8.0"
   }
 }
