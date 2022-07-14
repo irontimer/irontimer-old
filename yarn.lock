@@ -1393,9 +1393,9 @@ buffer@^5.6.0:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
-bullmq@1.86.2:
-  version "1.86.2"
-  resolved "https://registry.yarnpkg.com/bullmq/-/bullmq-1.86.2.tgz#aa496be77efd5e976b685dfcb36207438988887a"
+bullmq@1.86.3:
+  version "1.86.3"
+  resolved "https://registry.yarnpkg.com/bullmq/-/bullmq-1.86.3.tgz#05b15199527a94404b6451f3396981d1dfec4dae"
   dependencies:
     cron-parser "^4.2.1"
     get-port "^5.1.1"
@@ -3113,9 +3113,9 @@ mongodb@4.7.0:
   optionalDependencies:
     saslprep "^1.0.3"
 
-mongoose@6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.4.0.tgz#22d6ab436bdf444b833e92faaa53e47b734c15c6"
+mongoose@6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.4.1.tgz#e50e1a92ccf7764f2cc57b5a801a52918c7c3e72"
   dependencies:
     bson "^4.6.2"
     kareem "2.4.1"
@@ -3166,7 +3166,7 @@ msgpackr@^1.4.6:
   optionalDependencies:
     msgpackr-extract "^2.0.2"
 
-nanoid@^3.1.32, nanoid@^3.3.4:
+nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
 
@@ -3600,14 +3600,14 @@ rimraf@^3.0.0, rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-rollup-plugin-visualizer@5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.6.0.tgz#06aa7cf3fd504a29d404335700f2a3f28ebb33f3"
+rollup-plugin-visualizer@5.7.0:
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.7.0.tgz#fcd8cdbd1ba872c876dde73baf3cb938bb9fa016"
   dependencies:
-    nanoid "^3.1.32"
+    nanoid "^3.3.4"
     open "^8.4.0"
     source-map "^0.7.3"
-    yargs "^17.3.1"
+    yargs "^17.5.1"
 
 rollup@2.75.7, rollup@^2.59.0:
   version "2.75.7"
@@ -4113,18 +4113,7 @@ vite-plugin-solid@2.2.6:
     solid-refresh "^0.4.0"
     vite "^2.8.0"
 
-vite@2.9.12:
-  version "2.9.12"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.12.tgz#b1d636b0a8ac636afe9d83e3792d4895509a941b"
-  dependencies:
-    esbuild "^0.14.27"
-    postcss "^8.4.13"
-    resolve "^1.22.0"
-    rollup "^2.59.0"
-  optionalDependencies:
-    fsevents "~2.3.2"
-
-vite@^2.8.0:
+vite@2.9.13, vite@^2.8.0:
   version "2.9.13"
   resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.13.tgz#859cb5d4c316c0d8c6ec9866045c0f7858ca6abc"
   dependencies:
@@ -4279,7 +4268,7 @@ yargs@^16.2.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-yargs@^17.3.1:
+yargs@^17.5.1:
   version "17.5.1"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.5.1.tgz#e109900cab6fcb7fd44b1d8249166feb0b36e58e"
   dependencies:
