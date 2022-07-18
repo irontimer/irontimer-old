@@ -1610,9 +1610,9 @@ cron-parser@^4.2.1:
   dependencies:
     luxon "^1.28.0"
 
-cron@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/cron/-/cron-2.0.0.tgz#15c6bf37c1cebf6da1d7a688b9ba1c68338bfe6b"
+cron@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/cron/-/cron-2.1.0.tgz#f69fe77f1164d0bccbc24300938bbb3bea6ed95e"
   dependencies:
     luxon "^1.23.x"
 
