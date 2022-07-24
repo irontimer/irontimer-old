@@ -34,7 +34,7 @@
     "@tauri-apps/cli": "1.0.4",
     "@types/babel__core": "7.1.19",
     "rollup": "2.75.7",
-    "rollup-plugin-visualizer": "5.6.0",
+    "rollup-plugin-visualizer": "5.7.1",
     "vite": "3.0.2",
     "vite-plugin-solid": "2.2.6"
   }
