@@ -3,7 +3,11 @@
     "strict": true,
     "target": "ESNext",
     "moduleResolution": "node",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "./dist"
   },
   "include": ["./src/**/*.ts"]
 }
