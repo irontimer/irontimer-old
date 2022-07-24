@@ -5,13 +5,12 @@
   "description": "Backend for IronTimer",
   "scripts": {
     "dev": "nodemon",
-    "start": "yarn build && node dist",
-    "build": "yarn tsc",
+    "start": "yarn workspace @irontimer/backend build && node dist",
+    "build": "npx tsc",
     "pretty": "prettier \"src/**/*.ts\"",
     "pretty-fix": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\"",
-    "lint-fix": "eslint --fix \"src/**/*.ts\"",
-    "tsc": "yarn dlx --package typescript tsc"
+    "lint-fix": "eslint --fix \"src/**/*.ts\""
   },
   "author": "Evan <evanrayweigel@outlook.com>",
   "license": "AGPL-3.0",

@@ -13,12 +13,11 @@
   },
   "scripts": {
     "dev": "yarn workspaces foreach -pvi run dev",
-    "build-all": "yarn workspaces foreach -v run build",
     "pretty": "yarn workspaces foreach -v run pretty",
     "pretty-fix": "yarn workspaces foreach -v run pretty-fix",
     "lint": "yarn workspaces foreach -v run lint",
     "lint-fix": "yarn workspaces foreach -v run lint-fix",
-    "build": "yarn workspace @irontimer/backend build",
+    "build": "yarn workspaces foreach -pvi run build",
     "start": "yarn workspace @irontimer/backend start"
   },
   "devDependencies": {

@@ -8,16 +8,15 @@
   "scripts": {
     "dev": "vite",
     "dev-tauri": "tauri dev",
-    "build": "yarn tsc --noEmit && vite build",
+    "build": "npx tsc --noEmit && vite build",
     "build-tauri": "tauri build",
     "serve": "vite preview",
-    "deploy": "yarn build && firebase deploy --only hosting",
+    "deploy": "yarn workspace @irontimer/frontend build && firebase deploy --only hosting",
     "pretty": "prettier \"src/**/*.{ts,tsx,scss}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,tsx,scss}\"",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint-fix": "eslint --fix \"src/**/*.{ts,tsx}\"",
-    "madge": "madge --extensions tsx,ts \"src/ts\" --image madge.png",
-    "tsc": "yarn dlx --package typescript tsc"
+    "madge": "madge --extensions tsx,ts \"src/ts\" --image madge.png"
   },
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "6.1.1",

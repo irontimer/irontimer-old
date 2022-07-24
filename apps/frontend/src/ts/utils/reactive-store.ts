@@ -1,16 +1,11 @@
 import { Accessor, createSignal } from "solid-js";
-import {
-  createStore,
-  DeepReadonly,
-  SetStoreFunction,
-  StoreNode
-} from "solid-js/store";
+import { createStore, SetStoreFunction, StoreNode } from "solid-js/store";
 import { clone, isShallowEqual } from "./misc";
 
 export function createReactiveStore<T extends StoreNode>(
   initialValue: T
 ): [
-  get: DeepReadonly<T>,
+  get: T,
   set: SetStoreFunction<T>,
   getChange: Accessor<boolean>,
   _set: SetStoreFunction<T>

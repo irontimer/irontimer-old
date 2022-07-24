@@ -84,7 +84,7 @@ function transformClientMethod(
         return {
           status: typedError.response?.status ?? 500,
           message: typedError.message,
-          ...typedError.response?.data
+          ...(typedError.response?.data as object)
         };
       }
     }

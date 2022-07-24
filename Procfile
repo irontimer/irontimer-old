@@ -1,1 +1,1 @@
-web: yarn workspace @irontimer/backend start
+web: yarn start
