@@ -36,5 +36,6 @@
     "rollup-plugin-visualizer": "5.7.1",
     "vite": "3.0.2",
     "vite-plugin-solid": "2.3.0"
-  }
+  },
+  "packageManager": "yarn@3.2.2"
 }
