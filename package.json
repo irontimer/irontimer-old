@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "packages/*"
   ],
   "description": "A modern and customizable Rubik's Cube timer with inspiration from Monkeytype.",
   "author": "Evan <evanrayweigel@outlook.com>",
