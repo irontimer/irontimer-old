@@ -6,4 +6,3 @@ src-tauri/target/
 src-tauri/WixTools
 src/config/firebase-config.ts
 src/config/firebase-config-live.ts
-dist/

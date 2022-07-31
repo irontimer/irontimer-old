@@ -3,6 +3,10 @@ package-lock.json
 
 .DS_Store
 node_modules
+.env
+dist
+types
+logs
 
 # Yarn
 .yarn/cache
