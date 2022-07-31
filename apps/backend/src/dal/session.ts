@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import type { Session as ISession, Saved, AlmostSaved } from "@irontimer/utils";
+import type { Session as ISession, Saved, AlmostSaved } from "utils";
 import { Session } from "../models/session";
 
 export async function getSessions(userID: string): Promise<Saved<ISession>[]> {

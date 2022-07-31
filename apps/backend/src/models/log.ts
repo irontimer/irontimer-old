@@ -1,4 +1,4 @@
-import { Log as ILog } from "@irontimer/utils";
+import { Log as ILog } from "utils";
 import { Schema, model } from "mongoose";
 
 export const LogSchema = new Schema<ILog>({

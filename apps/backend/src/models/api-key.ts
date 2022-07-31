@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { ApiKey as IApiKey } from "@irontimer/utils";
+import { ApiKey as IApiKey } from "utils";
 
 export const ApiKeySchema = new Schema<IApiKey>({
   _id: {

@@ -1,4 +1,4 @@
-import { Session as ISession, Saved, SCRAMBLE_TYPES } from "@irontimer/utils";
+import { Session as ISession, Saved, SCRAMBLE_TYPES } from "utils";
 import { Schema, model } from "mongoose";
 
 export const SessionSchema = new Schema<Saved<ISession>>({

@@ -4,7 +4,7 @@ import {
   Saved,
   Session,
   MINIMUM_NECESSARY_TIME
-} from "@irontimer/utils";
+} from "utils";
 import profanities from "../constants/profanities";
 
 export function inRange(value: number, min: number, max: number): boolean {

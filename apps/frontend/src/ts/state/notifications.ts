@@ -1,5 +1,5 @@
 import { createStore } from "solid-js/store";
-import type { Notification, NotificationOptions } from "@irontimer/utils";
+import type { Notification, NotificationOptions } from "utils";
 import { isTauri } from "../utils/tauri";
 
 export const [notificationBuffer, setNotificationBuffer] = createStore<

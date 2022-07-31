@@ -5,7 +5,7 @@ import {
   Saved,
   SolveCreationResult,
   UpdateResult
-} from "@irontimer/utils";
+} from "utils";
 import { strip } from "../strip";
 
 const BASE_PATH = "/solves";

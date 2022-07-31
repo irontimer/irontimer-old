@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
 import rateLimit, { Options } from "express-rate-limit";
 import IronTimerError from "../utils/error";
-import { Request } from "@irontimer/utils";
+import { Request } from "utils";
 
 const REQUEST_MULTIPLIER = process.env.MODE === "dev" ? 100 : 1;
 

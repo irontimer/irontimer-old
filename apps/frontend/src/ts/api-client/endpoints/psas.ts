@@ -1,4 +1,4 @@
-import { HttpClient, EndpointData, PSA } from "@irontimer/utils";
+import { HttpClient, EndpointData, PSA } from "utils";
 import { CLIENT_VERSION } from "../../version";
 
 const BASE_PATH = "/psas";

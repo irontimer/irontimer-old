@@ -20,7 +20,7 @@ import {
   SolveCreationResult,
   Saved,
   DEFAULT_SCRAMBLE_TYPE
-} from "@irontimer/utils";
+} from "utils";
 import { Types } from "mongoose";
 import _ from "lodash";
 import { actualTime } from "../../utils/misc";

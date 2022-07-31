@@ -1,4 +1,4 @@
-import { HttpClient, EndpointData } from "@irontimer/utils";
+import { HttpClient, EndpointData } from "utils";
 
 const BASE_PATH = "/";
 

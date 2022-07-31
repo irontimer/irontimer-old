@@ -1,5 +1,5 @@
 {
-  "name": "@irontimer/frontend",
+  "name": "frontend",
   "version": "0.0.0",
   "private": true,
   "description": "Frontend for IronTimer",
@@ -11,7 +11,7 @@
     "build": "npx tsc --noEmit && vite build",
     "build-tauri": "tauri build",
     "serve": "vite preview",
-    "deploy": "yarn workspace @irontimer/frontend build && firebase deploy --only hosting",
+    "deploy": "yarn workspace frontend build && firebase deploy --only hosting",
     "pretty": "prettier \"src/**/*.{ts,tsx,scss}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,tsx,scss}\"",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
@@ -20,13 +20,13 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "6.1.1",
-    "@irontimer/utils": "0.0.0",
     "axios": "0.27.2",
     "firebase": "9.9.0",
     "sass": "1.53.0",
     "solid-app-router": "0.4.1",
     "solid-js": "1.4.8",
-    "stackmat": "1.1.0"
+    "stackmat": "1.1.0",
+    "utils": "workspace:^"
   },
   "devDependencies": {
     "@firebase/app-compat": "0.1.28",

@@ -5,7 +5,7 @@ import {
   User,
   PersonalBest,
   UserStats
-} from "@irontimer/utils";
+} from "utils";
 
 const BASE_PATH = "/users";
 

@@ -3,7 +3,7 @@ import {
   ScrambleType,
   SCRAMBLE_FACES,
   TURN_COUNT_PER_CYCLE
-} from "@irontimer/utils";
+} from "utils";
 import { randomBoolean, randomInteger } from "../utils/misc";
 import { isRedundant } from "./redudancy-check";
 

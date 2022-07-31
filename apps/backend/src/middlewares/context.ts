@@ -1,6 +1,6 @@
 import { getCachedConfiguration } from "../init/configuration";
 import { Response, NextFunction } from "express";
-import { Request } from "@irontimer/utils";
+import { Request } from "utils";
 
 async function contextMiddleware(
   req: Request,

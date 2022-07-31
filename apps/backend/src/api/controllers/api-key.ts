@@ -10,7 +10,7 @@ import {
   ApiKey as IApiKey,
   GenerateApiKeyResponse,
   Request
-} from "@irontimer/utils";
+} from "utils";
 import { ApiKey } from "../../models/api-key";
 
 function cleanApiKey(apiKey: IApiKey): Partial<IApiKey> {

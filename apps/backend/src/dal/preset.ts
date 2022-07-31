@@ -2,7 +2,7 @@ import IronTimerError from "../utils/error";
 import { Types } from "mongoose";
 import { FilterQuery } from "mongoose";
 import { Preset } from "../models/preset";
-import { Config, Saved, Preset as IPreset } from "@irontimer/utils";
+import { Config, Saved, Preset as IPreset } from "utils";
 
 const MAX_PRESETS = 10;
 

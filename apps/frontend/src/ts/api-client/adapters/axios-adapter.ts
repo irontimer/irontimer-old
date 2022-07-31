@@ -8,7 +8,7 @@ import {
   EndpointData,
   ApiResponse,
   HttpClient
-} from "@irontimer/utils";
+} from "utils";
 
 type AxiosClientMethod = (
   endpoint: string,

@@ -1,4 +1,4 @@
-import { User as IUser, SCRAMBLE_TYPES } from "@irontimer/utils";
+import { User as IUser, SCRAMBLE_TYPES } from "utils";
 import { Schema, model } from "mongoose";
 
 export const UserSchema = new Schema<IUser>({

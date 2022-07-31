@@ -1,4 +1,4 @@
-import { AlmostSaved, Request, Session } from "@irontimer/utils";
+import { AlmostSaved, Request, Session } from "utils";
 import * as SessionDAL from "../../dal/session";
 import IronTimerError from "../../utils/error";
 import { IronTimerResponse } from "../../utils/irontimer-response";

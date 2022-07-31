@@ -9,7 +9,7 @@ import type { User } from "firebase/auth";
 import API from "../api-client";
 import { setIsSavingSolve, setSolves } from "../state/solve";
 import { config, setConfig, _setConfig } from "../state/config";
-import { DEFAULT_CONFIG } from "@irontimer/utils";
+import { DEFAULT_CONFIG } from "utils";
 import Notifications from "../state/notifications";
 import { setCurrentSession, setSessions } from "../state/session";
 

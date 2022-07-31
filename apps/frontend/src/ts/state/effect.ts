@@ -5,7 +5,7 @@ import { setAndGenerateScramble } from "./scramble";
 import { auth } from "../utils/auth";
 import API from "../api-client";
 import Notifications from "./notifications";
-import { Config, Saved } from "@irontimer/utils";
+import { Config, Saved } from "utils";
 // import { currentSession, getCurrentSessionChange } from "./session";
 
 // This also updates a scramble when the scramble type changes

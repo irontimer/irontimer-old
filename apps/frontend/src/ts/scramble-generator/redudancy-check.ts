@@ -1,4 +1,4 @@
-import { FaceOf, FacesOf, ScrambleType } from "@irontimer/utils";
+import { FaceOf, FacesOf, ScrambleType } from "utils";
 
 /**
  * @description A face is considered redundant if (in comparison to it's previous faces) it is a repetition of the same face without any of its pieces moving out of that layer after it was previously moved.

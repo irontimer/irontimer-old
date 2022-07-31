@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { Request } from "@irontimer/utils";
+import { Request } from "utils";
 import rateLimit, { Options } from "express-rate-limit";
 import IronTimerError from "../utils/error";
 

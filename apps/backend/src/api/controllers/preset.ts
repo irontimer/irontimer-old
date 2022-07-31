@@ -1,6 +1,6 @@
 import * as PresetDAL from "../../dal/preset";
 import { IronTimerResponse } from "../../utils/irontimer-response";
-import { Request } from "@irontimer/utils";
+import { Request } from "utils";
 
 export async function getPresets(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;

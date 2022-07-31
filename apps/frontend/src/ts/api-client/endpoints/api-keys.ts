@@ -3,7 +3,7 @@ import {
   EndpointData,
   ApiKey,
   GenerateApiKeyResponse
-} from "@irontimer/utils";
+} from "utils";
 
 const BASE_PATH = "/api-keys";
 

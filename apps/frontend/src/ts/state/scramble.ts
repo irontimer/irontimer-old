@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { DEFAULT_SCRAMBLE_TYPE } from "@irontimer/utils";
+import { DEFAULT_SCRAMBLE_TYPE } from "utils";
 import { generateScramble } from "../scramble-generator";
 import { currentSession, setCurrentSession } from "./session";
 

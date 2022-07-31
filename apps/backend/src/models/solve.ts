@@ -1,4 +1,4 @@
-import { Solve as ISolve, Saved, CONFIG_VALUES } from "@irontimer/utils";
+import { Solve as ISolve, Saved, CONFIG_VALUES } from "utils";
 import { Schema, model } from "mongoose";
 
 export const SolveSchema = new Schema<Saved<ISolve>>({

@@ -1,4 +1,4 @@
-import { ScrambleType, DEFAULT_SCRAMBLE_LENGTH } from "@irontimer/utils";
+import { ScrambleType, DEFAULT_SCRAMBLE_LENGTH } from "utils";
 import { randomMoveGenerator } from "./random-move-generator";
 
 export function generateScramble(

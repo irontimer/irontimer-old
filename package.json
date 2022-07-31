@@ -18,7 +18,7 @@
     "lint": "yarn workspaces foreach -v run lint",
     "lint-fix": "yarn workspaces foreach -v run lint-fix",
     "build": "yarn workspaces foreach -pvi run build",
-    "start": "yarn workspace @irontimer/backend start"
+    "start": "yarn workspace backend start"
   },
   "devDependencies": {
     "@types/express": "4.17.13",

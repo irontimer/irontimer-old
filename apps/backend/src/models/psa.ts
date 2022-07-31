@@ -1,4 +1,4 @@
-import { PSA as IPSA } from "@irontimer/utils";
+import { PSA as IPSA } from "utils";
 import { Schema, model } from "mongoose";
 
 export const PSASchema = new Schema<IPSA>({

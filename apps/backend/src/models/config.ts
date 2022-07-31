@@ -1,4 +1,4 @@
-import { Config as IConfig, Saved, CONFIG_VALUES } from "@irontimer/utils";
+import { Config as IConfig, Saved, CONFIG_VALUES } from "utils";
 import { Schema, model } from "mongoose";
 
 export const configProps = {

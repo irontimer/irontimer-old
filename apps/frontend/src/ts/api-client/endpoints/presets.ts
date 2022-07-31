@@ -3,7 +3,7 @@ import {
   EndpointData,
   ConfigChanges,
   Preset
-} from "@irontimer/utils";
+} from "utils";
 
 const BASE_PATH = "/presets";
 

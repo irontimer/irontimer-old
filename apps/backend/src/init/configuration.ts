@@ -2,7 +2,7 @@ import _ from "lodash";
 import Logger from "../utils/logger";
 import { identity } from "../utils/misc";
 import BASE_CONFIGURATION from "../constants/base-configuration";
-import { Configuration as IConfiguration } from "@irontimer/utils";
+import { Configuration as IConfiguration } from "utils";
 import { Configuration } from "../models/configuration";
 
 const CONFIG_UPDATE_INTERVAL = 10 * 60 * 1000; // 10 Minutes

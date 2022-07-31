@@ -11,7 +11,7 @@ import { asyncHandler } from "../../middlewares/api-utils";
 import { IronTimerResponse } from "../../utils/irontimer-response";
 import { recordClientVersion } from "../../utils/prometheus";
 import { Application, NextFunction, Response, Router } from "express";
-import type { Request } from "@irontimer/utils";
+import type { Request } from "utils";
 
 const pathOverride = process.env.API_PATH_OVERRIDE;
 const BASE_ROUTE = pathOverride ? `/${pathOverride}` : "";

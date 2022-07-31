@@ -1,5 +1,5 @@
 {
-  "name": "@irontimer/utils",
+  "name": "utils",
   "version": "0.0.0",
   "private": true,
   "description": "Utils (types and constants) for IronTimer",

@@ -1,6 +1,6 @@
 import _ from "lodash";
 import IronTimerError from "../utils/error";
-import { ApiKey as IApiKey, MatchKeysAndValues } from "@irontimer/utils";
+import { ApiKey as IApiKey, MatchKeysAndValues } from "utils";
 import { ApiKey } from "../models/api-key";
 import { FilterQuery, Types } from "mongoose";
 

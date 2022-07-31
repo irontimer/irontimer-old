@@ -5,7 +5,7 @@ import { IronTimerResponse } from "../../utils/irontimer-response";
 import { linkAccount } from "../../utils/discord";
 import { buildAgentLog } from "../../utils/misc";
 import * as Bot from "../../tasks/bot";
-import type { Request, ScrambleType } from "@irontimer/utils";
+import type { Request, ScrambleType } from "utils";
 import admin from "firebase-admin";
 import { isUsernameValid } from "../../utils/validation";
 

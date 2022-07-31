@@ -1,6 +1,6 @@
 import _ from "lodash";
 import uaparser from "ua-parser-js";
-import { Request, Solve } from "@irontimer/utils";
+import { Request, Solve } from "utils";
 
 export function roundTo2(num: number): number {
   return _.round(num, 2);

@@ -1,6 +1,6 @@
 import API from "../api-client";
 import { createSignal } from "solid-js";
-import { Saved, Session, ScrambleType } from "@irontimer/utils";
+import { Saved, Session, ScrambleType } from "utils";
 import Notifications from "./notifications";
 import type { User } from "firebase/auth";
 import { createReactiveStore } from "../utils/reactive-store";

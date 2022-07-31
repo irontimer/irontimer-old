@@ -1,5 +1,5 @@
 import { Config } from "../models/config";
-import type { Config as IConfig, Saved, UpdateResult } from "@irontimer/utils";
+import type { Config as IConfig, Saved, UpdateResult } from "utils";
 
 export async function addConfig(
   userID: string,

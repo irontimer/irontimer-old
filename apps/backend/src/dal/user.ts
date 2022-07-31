@@ -7,7 +7,7 @@ import type {
   User as IUser,
   DeleteResult,
   UpdateResult
-} from "@irontimer/utils";
+} from "utils";
 import { User } from "../models/user";
 import { isUsernameValid } from "../utils/validation";
 import { updateUserEmail } from "../utils/auth";

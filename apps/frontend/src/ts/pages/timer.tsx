@@ -10,7 +10,7 @@ import {
   getLastSolve,
   getSolvesAscending
 } from "../state/solve";
-import { Solve, Penalty, Saved } from "@irontimer/utils";
+import { Solve, Penalty, Saved } from "utils";
 
 import { Button } from "../components/button";
 import { TimerStopwatch, press, release } from "../components/timer/stopwatch";

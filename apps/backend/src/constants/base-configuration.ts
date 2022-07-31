@@ -1,4 +1,4 @@
-import { Configuration } from "@irontimer/utils";
+import { Configuration } from "utils";
 
 /**
  * This is the base schema for the configuration of the API backend.

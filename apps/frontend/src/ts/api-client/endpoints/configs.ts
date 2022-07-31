@@ -1,4 +1,4 @@
-import { HttpClient, EndpointData, Saved, Config } from "@irontimer/utils";
+import { HttpClient, EndpointData, Saved, Config } from "utils";
 import { strip } from "../strip";
 
 const BASE_PATH = "/configs";

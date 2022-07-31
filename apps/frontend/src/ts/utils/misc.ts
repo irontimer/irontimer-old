@@ -1,4 +1,4 @@
-import { Solve } from "@irontimer/utils";
+import { Solve } from "utils";
 
 const HOUR = 3600;
 const MINUTE = 60;

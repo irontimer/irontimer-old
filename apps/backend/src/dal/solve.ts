@@ -5,7 +5,7 @@ import type {
   User,
   UpdateResult,
   DeleteResult
-} from "@irontimer/utils";
+} from "utils";
 import { Solve } from "../models/solve";
 import { Types } from "mongoose";
 import IronTimerError from "../utils/error";

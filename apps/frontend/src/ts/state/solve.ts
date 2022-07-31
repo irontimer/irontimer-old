@@ -1,5 +1,5 @@
 import { createMemo, createSignal } from "solid-js";
-import type { Solve, Saved, AlmostSaved } from "@irontimer/utils";
+import type { Solve, Saved, AlmostSaved } from "utils";
 import API from "../api-client/index";
 import {
   setAndGenerateScramble,

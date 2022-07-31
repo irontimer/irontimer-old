@@ -1,4 +1,4 @@
-import { PublicStats as IPublicStats } from "@irontimer/utils";
+import { PublicStats as IPublicStats } from "utils";
 import { Schema, model } from "mongoose";
 
 export const PublicStatsSchema = new Schema<IPublicStats>({
