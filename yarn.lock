@@ -2264,9 +2264,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bot@workspace:apps/bot":
+"bot@workspace:packages/bot":
   version: 0.0.0-use.local
-  resolution: "bot@workspace:apps/bot"
+  resolution: "bot@workspace:packages/bot"
   dependencies:
     utils: "workspace:^"
   languageName: unknown
@@ -2486,9 +2486,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"client@workspace:apps/client":
+"client@workspace:packages/client":
   version: 0.0.0-use.local
-  resolution: "client@workspace:apps/client"
+  resolution: "client@workspace:packages/client"
   dependencies:
     "@firebase/app-compat": 0.1.28
     "@fortawesome/fontawesome-common-types": 6.1.1
@@ -6176,9 +6176,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"server@workspace:apps/server":
+"server@workspace:packages/server":
   version: 0.0.0-use.local
-  resolution: "server@workspace:apps/server"
+  resolution: "server@workspace:packages/server"
   dependencies:
     "@types/bcrypt": 5.0.0
     "@types/cors": 2.8.12
@@ -6937,9 +6937,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"utils@workspace:^, utils@workspace:apps/utils":
+"utils@workspace:^, utils@workspace:packages/utils":
   version: 0.0.0-use.local
-  resolution: "utils@workspace:apps/utils"
+  resolution: "utils@workspace:packages/utils"
   dependencies:
     mongodb: 4.8.0
   languageName: unknown
