@@ -32,7 +32,7 @@
     "@firebase/app-compat": "0.1.28",
     "@tauri-apps/cli": "1.0.4",
     "@types/babel__core": "7.1.19",
-    "rollup": "2.75.7",
+    "rollup": "2.77.2",
     "rollup-plugin-visualizer": "5.7.1",
     "vite": "3.0.2",
     "vite-plugin-solid": "2.3.0"
