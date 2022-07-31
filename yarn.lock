@@ -2199,43 +2199,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"backend@workspace:apps/backend":
-  version: 0.0.0-use.local
-  resolution: "backend@workspace:apps/backend"
-  dependencies:
-    "@types/bcrypt": 5.0.0
-    "@types/cors": 2.8.12
-    "@types/cron": 2.0.0
-    "@types/express-serve-static-core": 4.17.29
-    "@types/lodash": 4.14.182
-    "@types/node-fetch": 2.6.1
-    "@types/ua-parser-js": 0.7.36
-    "@types/uuid": 8.3.4
-    bcrypt: 5.0.1
-    bullmq: 1.86.3
-    chalk: 4.1.2
-    cors: 2.8.5
-    cron: 2.1.0
-    dotenv: 16.0.1
-    express: 4.18.1
-    express-rate-limit: 6.4.0
-    firebase-admin: 11.0.0
-    helmet: 5.1.0
-    ioredis: 5.1.0
-    joi: 17.6.0
-    lodash: 4.17.21
-    mongoose: 6.4.1
-    node-fetch: 2.6.7
-    nodemon: 2.0.19
-    prom-client: 14.0.1
-    ts-node: 10.9.1
-    ua-parser-js: 1.0.2
-    utils: "workspace:^"
-    uuid: 8.3.2
-    winston: 3.8.1
-  languageName: unknown
-  linkType: soft
-
 "balanced-match@npm:^1.0.0":
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
@@ -2514,6 +2477,28 @@ __metadata:
   checksum: 2ac8cd2b2f5ec986a3c743935ec85b07bc174d5421a5efc8017e1f146a1cf5f781ae962618f416352103b32c9cd7e203276e8c28241bbe946160cab16149fb68
   languageName: node
   linkType: hard
+
+"client@workspace:apps/frontend":
+  version: 0.0.0-use.local
+  resolution: "client@workspace:apps/frontend"
+  dependencies:
+    "@firebase/app-compat": 0.1.28
+    "@fortawesome/fontawesome-common-types": 6.1.1
+    "@tauri-apps/cli": 1.0.4
+    "@types/babel__core": 7.1.19
+    axios: 0.27.2
+    firebase: 9.9.0
+    rollup: 2.75.7
+    rollup-plugin-visualizer: 5.7.1
+    sass: 1.53.0
+    solid-app-router: 0.4.1
+    solid-js: 1.4.8
+    stackmat: 1.1.0
+    utils: "workspace:^"
+    vite: 3.0.2
+    vite-plugin-solid: 2.3.0
+  languageName: unknown
+  linkType: soft
 
 "cliui@npm:^7.0.2":
   version: 7.0.4
@@ -3693,28 +3678,6 @@ __metadata:
   checksum: 13ea8b08f91e669a64e3ba3a20eb79d7ca5379a81f1ff7f4310d54e2320645503cc0c78daedc93dfb6191287295f6479544a649c64d8e41a1c0fb0c221552346
   languageName: node
   linkType: hard
-
-"frontend@workspace:apps/frontend":
-  version: 0.0.0-use.local
-  resolution: "frontend@workspace:apps/frontend"
-  dependencies:
-    "@firebase/app-compat": 0.1.28
-    "@fortawesome/fontawesome-common-types": 6.1.1
-    "@tauri-apps/cli": 1.0.4
-    "@types/babel__core": 7.1.19
-    axios: 0.27.2
-    firebase: 9.9.0
-    rollup: 2.75.7
-    rollup-plugin-visualizer: 5.7.1
-    sass: 1.53.0
-    solid-app-router: 0.4.1
-    solid-js: 1.4.8
-    stackmat: 1.1.0
-    utils: "workspace:^"
-    vite: 3.0.2
-    vite-plugin-solid: 2.3.0
-  languageName: unknown
-  linkType: soft
 
 "fs-minipass@npm:^2.0.0, fs-minipass@npm:^2.1.0":
   version: 2.1.0
@@ -6204,6 +6167,43 @@ __metadata:
   checksum: af57fc13be40d90a12562e98c0b7855cf6e8bd4c107fe9a45c212bf023058d54a1871b1c89511c3958f70626fff47faeb795f5d83f8cf88514dbaeb2b724464d
   languageName: node
   linkType: hard
+
+"server@workspace:apps/backend":
+  version: 0.0.0-use.local
+  resolution: "server@workspace:apps/backend"
+  dependencies:
+    "@types/bcrypt": 5.0.0
+    "@types/cors": 2.8.12
+    "@types/cron": 2.0.0
+    "@types/express-serve-static-core": 4.17.29
+    "@types/lodash": 4.14.182
+    "@types/node-fetch": 2.6.1
+    "@types/ua-parser-js": 0.7.36
+    "@types/uuid": 8.3.4
+    bcrypt: 5.0.1
+    bullmq: 1.86.3
+    chalk: 4.1.2
+    cors: 2.8.5
+    cron: 2.1.0
+    dotenv: 16.0.1
+    express: 4.18.1
+    express-rate-limit: 6.4.0
+    firebase-admin: 11.0.0
+    helmet: 5.1.0
+    ioredis: 5.1.0
+    joi: 17.6.0
+    lodash: 4.17.21
+    mongoose: 6.4.1
+    node-fetch: 2.6.7
+    nodemon: 2.0.19
+    prom-client: 14.0.1
+    ts-node: 10.9.1
+    ua-parser-js: 1.0.2
+    utils: "workspace:^"
+    uuid: 8.3.2
+    winston: 3.8.1
+  languageName: unknown
+  linkType: soft
 
 "set-blocking@npm:^2.0.0":
   version: 2.0.0

@@ -1,8 +1,8 @@
 {
-  "name": "frontend",
+  "name": "client",
   "version": "0.0.0",
   "private": true,
-  "description": "Frontend for IronTimer",
+  "description": "Client for IronTimer",
   "author": "Evan <evanrayweigel@outlook.com>",
   "license": "AGPL-3.0",
   "scripts": {
@@ -11,7 +11,7 @@
     "build": "npx tsc --noEmit && vite build",
     "build-tauri": "tauri build",
     "serve": "vite preview",
-    "deploy": "yarn workspace frontend build && firebase deploy --only hosting",
+    "deploy": "yarn workspace client build && firebase deploy --only hosting",
     "pretty": "prettier \"src/**/*.{ts,tsx,scss}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,tsx,scss}\"",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",

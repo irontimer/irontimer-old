@@ -1,11 +1,11 @@
 {
-  "name": "backend",
+  "name": "server",
   "version": "0.0.0",
   "private": true,
-  "description": "Backend for IronTimer",
+  "description": "Server for IronTimer",
   "scripts": {
     "dev": "nodemon",
-    "start": "yarn workspace backend build && node dist",
+    "start": "yarn workspace server build && node dist",
     "build": "npx tsc",
     "pretty": "prettier \"src/**/*.ts\"",
     "pretty-fix": "prettier --write \"src/**/*.ts\"",
