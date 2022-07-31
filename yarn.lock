@@ -2264,6 +2264,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bot@workspace:apps/bot":
+  version: 0.0.0-use.local
+  resolution: "bot@workspace:apps/bot"
+  dependencies:
+    utils: "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
   resolution: "brace-expansion@npm:1.1.11"
@@ -2478,9 +2486,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"client@workspace:apps/frontend":
+"client@workspace:apps/client":
   version: 0.0.0-use.local
-  resolution: "client@workspace:apps/frontend"
+  resolution: "client@workspace:apps/client"
   dependencies:
     "@firebase/app-compat": 0.1.28
     "@fortawesome/fontawesome-common-types": 6.1.1
@@ -6168,9 +6176,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"server@workspace:apps/backend":
+"server@workspace:apps/server":
   version: 0.0.0-use.local
-  resolution: "server@workspace:apps/backend"
+  resolution: "server@workspace:apps/server"
   dependencies:
     "@types/bcrypt": 5.0.0
     "@types/cors": 2.8.12
