@@ -1,5 +1,11 @@
 {
   "name": "bot",
+  "scripts": {
+    "pretty": "prettier \"src/**/*.ts\"",
+    "pretty-fix": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint-fix": "eslint --fix \"src/**/*.ts\""
+  },
   "dependencies": {
     "utils": "workspace:^"
   },
