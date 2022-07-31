@@ -9,7 +9,7 @@
   },
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "npx tsup && npx tsc",
+    "build": "npx tsup",
     "pretty": "prettier \"src/**/*.{ts,json}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,json}\"",
     "lint": "eslint src/**/*.ts",

@@ -1,6 +1,9 @@
 {
   "name": "bot",
   "scripts": {
+    "dev": "npx ts-node-dev \"./src\" --enable-source-maps --project \"tsconfig.json\" --ext \"ts,json\"",
+    "start": "yarn workspace server build && node dist",
+    "build": "npx tsc",
     "pretty": "prettier \"src/**/*.{ts,json}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,json}\"",
     "lint": "eslint \"src/**/*.{ts,json}\"",

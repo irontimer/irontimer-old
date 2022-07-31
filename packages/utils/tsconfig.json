@@ -3,11 +3,12 @@
     "strict": true,
     "target": "ESNext",
     "moduleResolution": "node",
-    "skipLibCheck": true,
-    "emitDeclarationOnly": true,
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "./dist"
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "newLine": "lf",
+    "skipLibCheck": true
   },
-  "include": ["./src/**/*.ts"]
+  "exclude": ["node_modules"]
 }
