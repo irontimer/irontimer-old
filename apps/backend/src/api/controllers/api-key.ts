@@ -6,11 +6,7 @@ import IronTimerError from "../../utils/error";
 import { IronTimerResponse } from "../../utils/irontimer-response";
 import { base64UrlEncode } from "../../utils/misc";
 
-import {
-  ApiKey as IApiKey,
-  GenerateApiKeyResponse,
-  Request
-} from "utils";
+import { ApiKey as IApiKey, GenerateApiKeyResponse, Request } from "utils";
 import { ApiKey } from "../../models/api-key";
 
 function cleanApiKey(apiKey: IApiKey): Partial<IApiKey> {
