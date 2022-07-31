@@ -1,8 +1,5 @@
 {
   "name": "server",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Server for IronTimer",
   "scripts": {
     "dev": "nodemon",
     "start": "yarn workspace server build && node dist",
@@ -12,8 +9,6 @@
     "lint": "eslint \"src/**/*.ts\"",
     "lint-fix": "eslint --fix \"src/**/*.ts\""
   },
-  "author": "Evan <evanrayweigel@outlook.com>",
-  "license": "AGPL-3.0",
   "dependencies": {
     "bcrypt": "5.0.1",
     "bullmq": "1.86.3",

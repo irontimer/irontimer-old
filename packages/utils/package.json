@@ -1,8 +1,5 @@
 {
   "name": "utils",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Utils (types and constants) for IronTimer",
   "exports": {
     ".": {
       "require": "./dist/index.js",
@@ -11,8 +8,6 @@
     }
   },
   "types": "./dist/index.d.ts",
-  "author": "Evan <evanrayweigel@outlook.com>",
-  "license": "AGPL-3.0",
   "scripts": {
     "build": "npx tsup && npx tsc",
     "pretty": "prettier \"src/**/*.ts\"",
