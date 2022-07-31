@@ -1,10 +1,10 @@
 {
   "name": "bot",
   "scripts": {
-    "pretty": "prettier \"src/**/*.ts\"",
-    "pretty-fix": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint \"src/**/*.ts\"",
-    "lint-fix": "eslint --fix \"src/**/*.ts\""
+    "pretty": "prettier \"src/**/*.{ts,json}\"",
+    "pretty-fix": "prettier --write \"src/**/*.{ts,json}\"",
+    "lint": "eslint \"src/**/*.{ts,json}\"",
+    "lint-fix": "eslint --fix \"src/**/*.{ts,json}\""
   },
   "dependencies": {
     "utils": "workspace:^"

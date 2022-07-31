@@ -10,8 +10,8 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "npx tsup && npx tsc",
-    "pretty": "prettier \"src/**/*.ts\"",
-    "pretty-fix": "prettier --write \"src/**/*.ts\"",
+    "pretty": "prettier \"src/**/*.{ts,json}\"",
+    "pretty-fix": "prettier --write \"src/**/*.{ts,json}\"",
     "lint": "eslint src/**/*.ts",
     "lint-fix": "eslint --fix src/**/*.ts",
     "install": "yarn build"
