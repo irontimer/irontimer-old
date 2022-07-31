@@ -4,9 +4,11 @@
   "private": true,
   "description": "Utils (types and constants) for IronTimer",
   "exports": {
-    "default": "./dist/index.js",
-    "require": "./dist/index.js",
-    "import": "./dist/index.mjs"
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
   },
   "types": "./dist/index.d.ts",
   "author": "Evan <evanrayweigel@outlook.com>",
