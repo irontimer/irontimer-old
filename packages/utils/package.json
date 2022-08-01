@@ -14,10 +14,14 @@
     "pretty-fix": "prettier --write \"src/**/*.{ts,json}\"",
     "lint": "eslint src/**/*.ts",
     "lint-fix": "eslint --fix src/**/*.ts",
-    "install": "yarn build"
+    "install": "yarn build",
+    "prisma": "prisma"
   },
   "dependencies": {
     "mongodb": "4.8.0"
+  },
+  "devDependencies": {
+    "prisma": "4.1.1"
   },
   "packageManager": "yarn@3.2.2"
 }
