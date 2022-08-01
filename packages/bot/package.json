@@ -1,8 +1,8 @@
 {
   "name": "bot",
   "scripts": {
-    "dev": "npx ts-node-dev \"./src\" --enable-source-maps --project \"tsconfig.json\" --ext \"ts,json\"",
-    "start": "yarn workspace server build && node dist",
+    "dev": "npx ts-node-dev \"./src\" --enable-source-maps --project \"tsconfig.json\" --extensions \"ts,json\"",
+    "start": "yarn workspace bot build && node dist",
     "build": "npx tsc",
     "pretty": "prettier \"src/**/*.{ts,json}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,json}\"",
@@ -10,6 +10,7 @@
     "lint-fix": "eslint --fix \"src/**/*.{ts,json}\""
   },
   "dependencies": {
+    "fero-dc": "dev",
     "utils": "workspace:^"
   },
   "packageManager": "yarn@3.2.2"

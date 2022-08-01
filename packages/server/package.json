@@ -1,7 +1,7 @@
 {
   "name": "server",
   "scripts": {
-    "dev": "npx ts-node-dev \"./src\" --enable-source-maps --project \"tsconfig.json\" --ext \"ts,json\"",
+    "dev": "npx ts-node-dev \"./src\" --enable-source-maps --project \"tsconfig.json\" --extensions \"ts,json\"",
     "start": "yarn workspace server build && node dist",
     "build": "npx tsc",
     "pretty": "prettier \"src/**/*.{ts,json}\"",
@@ -15,7 +15,6 @@
     "chalk": "4.1.2",
     "cors": "2.8.5",
     "cron": "2.1.0",
-    "dotenv": "16.0.1",
     "express": "4.18.1",
     "express-rate-limit": "6.4.0",
     "firebase-admin": "11.0.0",
