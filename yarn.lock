@@ -1730,18 +1730,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express-serve-static-core@npm:4.17.29":
-  version: 4.17.29
-  resolution: "@types/express-serve-static-core@npm:4.17.29"
-  dependencies:
-    "@types/node": "*"
-    "@types/qs": "*"
-    "@types/range-parser": "*"
-  checksum: ec4194dc59276ec6dd906887fc377be0cadf4aaa4d535d9052ab9624937ef2b984a8d9da2c11c96979e21f3d9f78f1da93e767dbcec637f7f13d2e3003151145
-  languageName: node
-  linkType: hard
-
-"@types/express-serve-static-core@npm:^4.17.18":
+"@types/express-serve-static-core@npm:4.17.30, @types/express-serve-static-core@npm:^4.17.18":
   version: 4.17.30
   resolution: "@types/express-serve-static-core@npm:4.17.30"
   dependencies:
@@ -6372,7 +6361,7 @@ __metadata:
     "@types/bcrypt": 5.0.0
     "@types/cors": 2.8.12
     "@types/cron": 2.0.0
-    "@types/express-serve-static-core": 4.17.29
+    "@types/express-serve-static-core": 4.17.30
     "@types/lodash": 4.14.182
     "@types/node-fetch": 2.6.1
     "@types/ua-parser-js": 0.7.36
