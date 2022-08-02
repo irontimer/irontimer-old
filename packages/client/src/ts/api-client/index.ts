@@ -2,7 +2,7 @@ import { buildHttpClient } from "./adapters/axios-adapter";
 import endpoints from "./endpoints";
 
 const DEV_SERVER_HOST = "http://localhost:3005";
-const PROD_SERVER_HOST = "https://api.irontimer.com:3005";
+const PROD_SERVER_HOST = "https://api.irontimer.com";
 
 const API_PATH = "";
 const BASE_URL =
