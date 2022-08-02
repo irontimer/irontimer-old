@@ -1,7 +1,7 @@
 {
   "name": "bot",
   "scripts": {
-    "dev": "npx ts-node-dev \"./src\" --enable-source-maps --project \"tsconfig.json\" --watch \"src/**/*.{ts,json}\"",
+    "dev": "npx ts-node-dev --enable-source-maps -P \"tsconfig.json\" --watch \"src/**/*.{ts,json}\" \"./src\"",
     "start": "yarn workspace bot build && node dist",
     "build": "npx tsc",
     "pretty": "prettier \"src/**/*.{ts,json}\"",
