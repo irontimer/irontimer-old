@@ -2,22 +2,9 @@ import { Client, ClientOptions } from "fero-dc";
 
 import { config } from "dotenv";
 
-import * as fs from "fs";
-import * as path from "path";
-
-const configPath = path.resolve(`${__dirname}/config/config.json`);
-
-if (!fs.existsSync(configPath)) {
-  throw new Error("config.json not found");
-}
-
-const clientOptions: ClientOptions = JSON.parse(
-  fs.readFileSync(configPath).toString() ?? "null"
-);
-
-if (clientOptions === null) {
-  throw new Error("config.json is empty");
-}
+// eslint-disable-next-line
+// @ts-ignore
+import clientOptions from "./config/config.json";
 
 config();
 

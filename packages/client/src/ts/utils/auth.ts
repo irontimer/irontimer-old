@@ -1,17 +1,19 @@
 import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../../config/firebase-config";
+import type { User } from "firebase/auth";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
+  getAuth,
   signInWithEmailAndPassword
 } from "firebase/auth";
-import type { User } from "firebase/auth";
-import API from "../api-client";
-import { setIsSavingSolve, setSolves } from "../state/solve";
-import { config, setConfig, _setConfig } from "../state/config";
 import { DEFAULT_CONFIG } from "utils";
+// eslint-disable-next-line
+// @ts-ignore
+import { firebaseConfig } from "../../config/firebase-config";
+import API from "../api-client";
+import { config, setConfig, _setConfig } from "../state/config";
 import Notifications from "../state/notifications";
 import { setCurrentSession, setSessions } from "../state/session";
+import { setIsSavingSolve, setSolves } from "../state/solve";
 
 const firebaseApp = initializeApp(firebaseConfig);
 
