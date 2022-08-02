@@ -14,7 +14,6 @@
     "pretty-fix": "prettier --write \"src/**/*.{ts,json}\"",
     "lint": "eslint src/**/*.ts",
     "lint-fix": "eslint --fix src/**/*.ts",
-    "install": "yarn build",
     "prisma": "prisma"
   },
   "dependencies": {
