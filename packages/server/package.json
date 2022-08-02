@@ -2,7 +2,7 @@
   "name": "server",
   "scripts": {
     "dev": "npx ts-node-dev --enable-source-maps -P \"tsconfig.json\" --watch \"src/**/*.{ts,json}\" \"./src\"",
-    "start": "yarn workspace server build && node dist",
+    "start": "node dist",
     "build": "npx tsc",
     "pretty": "prettier \"src/**/*.{ts,json}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,json}\"",
