@@ -6,8 +6,6 @@ import {
   signInWithEmailAndPassword
 } from "firebase/auth";
 import { DEFAULT_CONFIG } from "utils";
-// eslint-disable-next-line
-// @ts-ignore
 import { firebaseConfig } from "../../config/firebase-config";
 import API from "../api-client";
 import { config, setConfig, _setConfig } from "../state/config";
