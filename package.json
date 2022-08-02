@@ -12,14 +12,13 @@
     "node": "16.13.2"
   },
   "scripts": {
+    "start": "yarn workspaces foreach -pvi run start",
     "dev": "yarn workspaces foreach -pvi run dev",
-    "build-all": "yarn workspaces foreach -tv run build",
+    "build": "yarn workspaces foreach -tv run build",
     "pretty": "yarn workspaces foreach -v run pretty",
     "pretty-fix": "yarn workspaces foreach -v run pretty-fix",
     "lint": "yarn workspaces foreach -v run lint",
-    "lint-fix": "yarn workspaces foreach -v run lint-fix",
-    "start": "yarn workspace server start",
-    "build": "yarn workspaces foreach -tv --from \"{utils,server}\" run build"
+    "lint-fix": "yarn workspaces foreach -v run lint-fix"
   },
   "dependencies": {
     "@prisma/client": "4.1.1"
