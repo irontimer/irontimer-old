@@ -4,6 +4,7 @@
   "singleQuote": false,
   "jsxSingleQuote": false,
   "semi": true,
+  "endOfLine": "lf",
   "bracketSpacing": true,
   "arrowParens": "always",
   "quoteProps": "as-needed",
