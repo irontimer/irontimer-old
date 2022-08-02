@@ -16,7 +16,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "6.1.1",
     "axios": "0.27.2",
-    "firebase": "9.9.0",
+    "firebase": "9.9.1",
     "sass": "1.53.0",
     "solid-app-router": "0.4.1",
     "solid-js": "1.4.8",
