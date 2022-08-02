@@ -1,0 +1,31 @@
+{
+  "version": "0.2.11",
+  "setup": {
+    "pkgs": [
+      {
+        "name": "nodejs-16_x"
+      },
+      {
+        "name": "yarn-1_x"
+      }
+    ],
+    "libraries": [],
+    "apt_pkgs": [],
+    "baseImage": "ghcr.io/railwayapp/nixpacks:debian-1657820962"
+  },
+  "install": {
+    "cmds": [
+      "yarn set version berry && yarn install --check-cache"
+    ]
+  },
+  "build": {
+    "cmds": [
+      "yarn workspaces foreach -tv --from \"{utils,server}\" run build"
+    ]
+  },
+  "start": {
+    "cmd": "yarn workspace server start"
+  },
+  "variables": {},
+  "static_assets": {}
+}
