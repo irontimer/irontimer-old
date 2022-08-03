@@ -1,10 +1,10 @@
 import { Component, createEffect, createSignal, Show } from "solid-js";
 import { Stackmat } from "stackmat";
+import { config } from "../../state/config";
 import { addSolve } from "../../state/solve";
+import { setIsTiming } from "../../state/timing";
 import { auth } from "../../utils/auth";
 import { c, formatTime } from "../../utils/misc";
-import { setIsTiming } from "../../state/timing";
-import { config } from "../../state/config";
 
 type StackmatState = "unready" | "almost-ready" | "ready" | "running";
 
@@ -22,7 +22,7 @@ export const TimerStackmat: Component = () => {
 
     setIsTiming(false);
 
-    if (getTime() !== undefined && getTime() !== 0) {
+    if (getTime()) {
       addSolve(getTime() as number, auth.currentUser);
     }
   });
