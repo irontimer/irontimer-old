@@ -1,10 +1,7 @@
 {
   "dev": true,
   "devGuildId": "your server id",
-  "intents": [
-    "Guilds",
-    "GuildMessages"
-  ],
+  "intents": ["Guilds", "GuildMessages"],
   "commandsPath": "./commands",
   "eventsPath": "./events",
   "commandLoadedMessage": true,
