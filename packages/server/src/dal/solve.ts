@@ -1,13 +1,13 @@
 import _ from "lodash";
-import { Types } from "mongoose";
 import type {
-  DeleteResult,
-  Saved,
   Solve as ISolve,
+  Saved,
+  User,
   UpdateResult,
-  User
+  DeleteResult
 } from "utils";
 import { Solve } from "../models/solve";
+import { Types } from "mongoose";
 import IronTimerError from "../utils/error";
 
 import { getUser } from "./user";
@@ -94,12 +94,12 @@ export async function getSolveByTimestamp(
 export async function getSolves(
   userID: string,
   start = 0,
-  _end = 1000
+  end = 1000
 ): Promise<Saved<ISolve>[]> {
   const solves = await Solve.find({ userID })
     .sort({ timestamp: -1 })
-    .skip(start);
-  // .limit(end); // TODO: implement pagination
+    .skip(start)
+    .limit(end); // this needs to be changed to later take patreon into consideration
 
   if (!solves) {
     throw new IronTimerError(404, "Solves not found");
