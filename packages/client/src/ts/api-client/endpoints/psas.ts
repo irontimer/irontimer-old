@@ -1,4 +1,4 @@
-import { HttpClient, EndpointData, PSA } from "utils";
+import { EndpointData, HttpClient, PSA } from "utils";
 import { CLIENT_VERSION } from "../../version";
 
 const BASE_PATH = "/psas";

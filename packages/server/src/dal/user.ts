@@ -1,19 +1,19 @@
 import type {
-  PersonalBest,
-  Solve,
-  Saved,
-  UserStats,
-  Theme,
-  User as IUser,
   DeleteResult,
-  UpdateResult
+  PersonalBest,
+  Saved,
+  Solve,
+  Theme,
+  UpdateResult,
+  User as IUser,
+  UserStats
 } from "utils";
 import { User } from "../models/user";
-import { isUsernameValid } from "../utils/validation";
 import { updateUserEmail } from "../utils/auth";
-import { checkAndUpdatePersonalBest as checkAndUpdatePersonalBest } from "../utils/personal-best";
 import IronTimerError from "../utils/error";
 import { actualTime } from "../utils/misc";
+import { checkAndUpdatePersonalBest } from "../utils/personal-best";
+import { isUsernameValid } from "../utils/validation";
 
 export async function addUser(
   username: string,

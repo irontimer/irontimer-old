@@ -1,5 +1,5 @@
-import { Config } from "../models/config";
 import type { Config as IConfig, Saved, UpdateResult } from "utils";
+import { Config } from "../models/config";
 
 export async function addConfig(
   userID: string,

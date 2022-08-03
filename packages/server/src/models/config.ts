@@ -1,5 +1,5 @@
-import { Config as IConfig, Saved, CONFIG_VALUES } from "utils";
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose";
+import { Config as IConfig, CONFIG_VALUES, Saved } from "utils";
 
 export const configProps = {
   timerType: {

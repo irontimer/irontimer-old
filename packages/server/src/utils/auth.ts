@@ -1,6 +1,6 @@
 import admin from "firebase-admin";
-import { UserRecord } from "firebase-admin/lib/auth/user-record";
 import { DecodedIdToken } from "firebase-admin/lib/auth/token-verifier";
+import { UserRecord } from "firebase-admin/lib/auth/user-record";
 
 export async function verifyIDToken(idToken: string): Promise<DecodedIdToken> {
   return await admin.auth().verifyIdToken(idToken, true);

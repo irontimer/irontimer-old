@@ -1,5 +1,5 @@
+import { model, Schema } from "mongoose";
 import { Log as ILog } from "utils";
-import { Schema, model } from "mongoose";
 
 export const LogSchema = new Schema<ILog>({
   timestamp: {

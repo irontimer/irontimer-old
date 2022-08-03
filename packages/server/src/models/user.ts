@@ -1,5 +1,5 @@
-import { User as IUser, SCRAMBLE_TYPES } from "utils";
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose";
+import { SCRAMBLE_TYPES, User as IUser } from "utils";
 
 export const UserSchema = new Schema<IUser>({
   // since the userID is unique to each user we can use it as the _id

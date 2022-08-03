@@ -1,5 +1,5 @@
+import { model, Schema } from "mongoose";
 import { PSA as IPSA } from "utils";
-import { Schema, model } from "mongoose";
 
 export const PSASchema = new Schema<IPSA>({
   _id: Schema.Types.ObjectId,

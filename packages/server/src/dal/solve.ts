@@ -1,13 +1,13 @@
 import _ from "lodash";
+import { Types } from "mongoose";
 import type {
-  Solve as ISolve,
+  DeleteResult,
   Saved,
-  User,
+  Solve as ISolve,
   UpdateResult,
-  DeleteResult
+  User
 } from "utils";
 import { Solve } from "../models/solve";
-import { Types } from "mongoose";
 import IronTimerError from "../utils/error";
 
 import { getUser } from "./user";

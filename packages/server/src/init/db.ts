@@ -1,4 +1,4 @@
-import { ConnectOptions, connect as mongooseConnect } from "mongoose";
+import { connect as mongooseConnect, ConnectOptions } from "mongoose";
 import Logger from "../utils/logger";
 
 export async function connect(): Promise<void> {

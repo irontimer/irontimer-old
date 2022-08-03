@@ -1,5 +1,5 @@
-import { Session as ISession, Saved, SCRAMBLE_TYPES } from "utils";
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose";
+import { Saved, SCRAMBLE_TYPES, Session as ISession } from "utils";
 
 export const SessionSchema = new Schema<Saved<ISession>>({
   _id: Schema.Types.ObjectId,

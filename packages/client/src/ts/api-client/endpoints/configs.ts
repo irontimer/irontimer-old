@@ -1,4 +1,4 @@
-import { HttpClient, EndpointData, Saved, Config } from "utils";
+import { Config, EndpointData, HttpClient, Saved } from "utils";
 import { strip } from "../strip";
 
 const BASE_PATH = "/configs";

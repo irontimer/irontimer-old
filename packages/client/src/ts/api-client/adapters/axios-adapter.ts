@@ -1,14 +1,14 @@
-import { auth } from "../../utils/auth";
-import { getIdToken } from "firebase/auth";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { getIdToken } from "firebase/auth";
 import {
-  RequestOptions,
-  HttpMethodTypes,
-  HttpClientMethod,
-  EndpointData,
   ApiResponse,
-  HttpClient
+  EndpointData,
+  HttpClient,
+  HttpClientMethod,
+  HttpMethodTypes,
+  RequestOptions
 } from "utils";
+import { auth } from "../../utils/auth";
 
 type AxiosClientMethod = (
   endpoint: string,

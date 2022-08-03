@@ -1,4 +1,4 @@
-import { Config, Saved, DEFAULT_CONFIG } from "utils";
+import { Config, DEFAULT_CONFIG, Saved } from "utils";
 import { createReactiveStore } from "../utils/reactive-store";
 
 export const [config, setConfig, getConfigChange, _setConfig] =

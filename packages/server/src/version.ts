@@ -1,6 +1,6 @@
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { padNumbers } from "./utils/misc";
-import { readFileSync, writeFileSync, existsSync } from "fs";
 
 const SERVER_VERSION_FILE_PATH = join(__dirname, "./server.version");
 

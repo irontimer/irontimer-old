@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Solve, Saved, Session, MINIMUM_NECESSARY_TIME } from "utils";
+import { MINIMUM_NECESSARY_TIME, Saved, Session, Solve } from "utils";
 import profanities from "../constants/profanities";
 
 export function inRange(value: number, min: number, max: number): boolean {

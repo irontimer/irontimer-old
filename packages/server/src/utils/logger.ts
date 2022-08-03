@@ -1,8 +1,8 @@
 import chalk from "chalk";
-import winston, { format } from "winston";
-import { resolve } from "path";
-import { Log } from "../models/log";
 import { Types } from "mongoose";
+import { resolve } from "path";
+import winston, { format } from "winston";
+import { Log } from "../models/log";
 
 const errorColor = chalk.red.bold;
 const warningColor = chalk.yellow.bold;

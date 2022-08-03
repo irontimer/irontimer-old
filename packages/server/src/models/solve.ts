@@ -1,5 +1,5 @@
-import { Solve as ISolve, Saved, CONFIG_VALUES } from "utils";
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose";
+import { CONFIG_VALUES, Saved, Solve as ISolve } from "utils";
 
 export const SolveSchema = new Schema<Saved<ISolve>>({
   _id: Schema.Types.ObjectId,

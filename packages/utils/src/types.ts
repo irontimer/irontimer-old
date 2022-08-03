@@ -1,6 +1,6 @@
-export type { UpdateResult, DeleteResult, MatchKeysAndValues } from "mongodb";
-import type { Types } from "mongoose";
+export type { DeleteResult, MatchKeysAndValues, UpdateResult } from "mongodb";
 import type { Request as ExpressRequest } from "express";
+import type { Types } from "mongoose";
 import type { ScrambleType } from "./constants/scramble-type";
 
 declare global {

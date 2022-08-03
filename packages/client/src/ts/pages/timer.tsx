@@ -1,27 +1,27 @@
 import { Component, createSignal, For, Match, Show, Switch } from "solid-js";
+import { Penalty, Saved, Solve } from "utils";
 import { Popup } from "../components/popup";
-import { actualTimeString, calculateAverageString } from "../utils/misc";
 import {
   deleteAll,
   deleteSolve,
-  getSolves,
-  getSolvesDescending,
-  updateSolve,
   getLastSolve,
-  getSolvesAscending
+  getSolves,
+  getSolvesAscending,
+  getSolvesDescending,
+  updateSolve
 } from "../state/solve";
-import { Solve, Penalty, Saved } from "utils";
+import { actualTimeString, calculateAverageString } from "../utils/misc";
 
 import { Button } from "../components/button";
-import { TimerStopwatch, press, release } from "../components/timer/stopwatch";
-import { isTiming } from "../state/timing";
-import { config } from "../state/config";
+import { Icon } from "../components/icon";
 import { TimerInput } from "../components/timer/input";
+import { TimerStackmat } from "../components/timer/stackmat";
+import { press, release, TimerStopwatch } from "../components/timer/stopwatch";
+import { config } from "../state/config";
 import Notifications from "../state/notifications";
 import { currentSession } from "../state/session";
+import { isTiming } from "../state/timing";
 import { auth } from "../utils/auth";
-import { TimerStackmat } from "../components/timer/stackmat";
-import { Icon } from "../components/icon";
 
 document.addEventListener("keydown", press);
 document.addEventListener("keyup", release);

@@ -1,7 +1,7 @@
-import { Response, NextFunction } from "express";
+import { NextFunction, Response } from "express";
 import rateLimit, { Options } from "express-rate-limit";
-import IronTimerError from "../utils/error";
 import { Request } from "utils";
+import IronTimerError from "../utils/error";
 
 const REQUEST_MULTIPLIER = process.env.MODE === "dev" ? 100 : 1;
 

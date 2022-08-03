@@ -1,6 +1,6 @@
-import { getCachedConfiguration } from "../init/configuration";
-import { Response, NextFunction } from "express";
+import { NextFunction, Response } from "express";
 import { Request } from "utils";
+import { getCachedConfiguration } from "../init/configuration";
 
 async function contextMiddleware(
   req: Request,

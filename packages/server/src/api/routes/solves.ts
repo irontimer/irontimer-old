@@ -1,15 +1,15 @@
-import * as SolveController from "../controllers/solve";
-import solveSchema from "../schemas/solve-schema";
+import { Router } from "express";
 import joi from "joi";
+import apiRateLimit from "../../middlewares/api-rate-limit";
 import {
   asyncHandler,
-  validateRequest,
-  validateConfiguration
+  validateConfiguration,
+  validateRequest
 } from "../../middlewares/api-utils";
-import * as RateLimit from "../../middlewares/rate-limit";
-import { Router } from "express";
 import { authenticateRequest } from "../../middlewares/auth";
-import apiRateLimit from "../../middlewares/api-rate-limit";
+import * as RateLimit from "../../middlewares/rate-limit";
+import * as SolveController from "../controllers/solve";
+import solveSchema from "../schemas/solve-schema";
 
 const router = Router();
 

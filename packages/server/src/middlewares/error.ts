@@ -1,13 +1,13 @@
-import { v4 as uuidv4 } from "uuid";
-import Logger from "../utils/logger";
-import IronTimerError from "../utils/error";
-import {
-  IronTimerResponse,
-  handleIronTimerResponse
-} from "../utils/irontimer-response";
 import { NextFunction, Response } from "express";
 import { Request } from "utils";
+import { v4 as uuidv4 } from "uuid";
 import { Error } from "../models/error";
+import IronTimerError from "../utils/error";
+import {
+  handleIronTimerResponse,
+  IronTimerResponse
+} from "../utils/irontimer-response";
+import Logger from "../utils/logger";
 
 async function errorHandlingMiddleware(
   error: Error,

@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { TimerType, CONFIG_VALUES } from "utils";
+import { CONFIG_VALUES, TimerType } from "utils";
 import { Section } from "../components/settings/section";
 import { SettingsGroup } from "../components/settings/settings-group";
 import { config, setConfig } from "../state/config";

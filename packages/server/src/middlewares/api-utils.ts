@@ -1,13 +1,13 @@
-import _ from "lodash";
+import { NextFunction, RequestHandler, Response } from "express";
 import joi from "joi";
-import IronTimerError from "../utils/error";
-import { Response, NextFunction, RequestHandler } from "express";
+import _ from "lodash";
 import { Configuration, Request, User } from "utils";
+import { getUser } from "../dal/user";
+import IronTimerError from "../utils/error";
 import {
   handleIronTimerResponse,
   IronTimerResponse
 } from "../utils/irontimer-response";
-import { getUser } from "../dal/user";
 
 interface ValidationOptions<T> {
   criteria: (data: T) => boolean;

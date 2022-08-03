@@ -1,17 +1,17 @@
+import { Application, NextFunction, Response, Router } from "express";
 import _ from "lodash";
-import psas from "./psas";
-import users from "./users";
-import configs from "./configs";
-import solves from "./solves";
-import presets from "./presets";
-import apiKeys from "./api-keys";
-import sessions from "./sessions";
-import { version } from "../../version";
+import type { Request } from "utils";
 import { asyncHandler } from "../../middlewares/api-utils";
 import { IronTimerResponse } from "../../utils/irontimer-response";
 import { recordClientVersion } from "../../utils/prometheus";
-import { Application, NextFunction, Response, Router } from "express";
-import type { Request } from "utils";
+import { version } from "../../version";
+import apiKeys from "./api-keys";
+import configs from "./configs";
+import presets from "./presets";
+import psas from "./psas";
+import sessions from "./sessions";
+import solves from "./solves";
+import users from "./users";
 
 const pathOverride = process.env.API_PATH_OVERRIDE;
 const BASE_ROUTE = pathOverride ? `/${pathOverride}` : "";

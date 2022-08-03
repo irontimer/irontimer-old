@@ -1,8 +1,8 @@
 import _ from "lodash";
-import IronTimerError from "../utils/error";
+import { FilterQuery, Types } from "mongoose";
 import { ApiKey as IApiKey, MatchKeysAndValues } from "utils";
 import { ApiKey } from "../models/api-key";
-import { FilterQuery, Types } from "mongoose";
+import IronTimerError from "../utils/error";
 
 function getApiKeyFilter(userID: string, keyID: string): FilterQuery<IApiKey> {
   return {

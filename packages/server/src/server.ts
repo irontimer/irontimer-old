@@ -1,17 +1,17 @@
 import { config } from "dotenv";
 import admin, { ServiceAccount } from "firebase-admin";
 import { readFileSync } from "fs";
+import { Server } from "http";
+import app from "./app";
+import { getLiveConfiguration } from "./init/configuration";
 import * as db from "./init/db";
 import jobs from "./jobs";
-import { getLiveConfiguration } from "./init/configuration";
-import app from "./app";
-import { Server } from "http";
-import { version } from "./version";
 import { recordServerVersion } from "./utils/prometheus";
+import { version } from "./version";
 // import * as RedisClient from  "./init/redis";
 // import { initJobQueue } from "./tasks/bot";
-import Logger from "./utils/logger";
 import { resolve } from "path";
+import Logger from "./utils/logger";
 
 config();
 

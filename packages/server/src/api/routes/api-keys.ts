@@ -1,5 +1,5 @@
-import joi from "joi";
 import { Router } from "express";
+import joi from "joi";
 import {
   asyncHandler,
   checkUserPermissions,
@@ -7,8 +7,8 @@ import {
   validateRequest
 } from "../../middlewares/api-utils";
 import { authenticateRequest } from "../../middlewares/auth";
-import * as ApiKeyController from "../controllers/api-key";
 import * as RateLimit from "../../middlewares/rate-limit";
+import * as ApiKeyController from "../controllers/api-key";
 
 const apiKeyNameSchema = joi
   .string()

@@ -1,4 +1,4 @@
-import { HttpClient, EndpointData, ConfigChanges, Preset } from "utils";
+import { ConfigChanges, EndpointData, HttpClient, Preset } from "utils";
 
 const BASE_PATH = "/presets";
 

@@ -1,4 +1,4 @@
-import { HttpClient, EndpointData } from "utils";
+import { EndpointData, HttpClient } from "utils";
 
 const BASE_PATH = "/";
 

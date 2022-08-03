@@ -1,17 +1,17 @@
-import { createMemo, createSignal } from "solid-js";
-import type { Solve, Saved, AlmostSaved } from "utils";
-import API from "../api-client/index";
-import {
-  setAndGenerateScramble,
-  getScramble,
-  revertScramble
-} from "./scramble";
-import { roundToMilliseconds } from "../utils/misc";
-import Notifications from "./notifications";
-import { config } from "./config";
-import { currentSession } from "./session";
-import type { Types } from "mongoose";
 import { User } from "firebase/auth";
+import type { Types } from "mongoose";
+import { createMemo, createSignal } from "solid-js";
+import type { AlmostSaved, Saved, Solve } from "utils";
+import API from "../api-client/index";
+import { roundToMilliseconds } from "../utils/misc";
+import { config } from "./config";
+import Notifications from "./notifications";
+import {
+  getScramble,
+  revertScramble,
+  setAndGenerateScramble
+} from "./scramble";
+import { currentSession } from "./session";
 
 export const [getSolves, setSolves] = createSignal<(Saved<Solve> | Solve)[]>(
   []

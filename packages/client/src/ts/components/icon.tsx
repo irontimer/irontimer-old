@@ -1,5 +1,5 @@
-import type { Component, JSX } from "solid-js";
 import type { IconName } from "@fortawesome/fontawesome-common-types";
+import type { Component, JSX } from "solid-js";
 import { c } from "../utils/misc";
 
 type Props = JSX.IntrinsicElements["i"] & {

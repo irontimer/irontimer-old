@@ -1,5 +1,5 @@
 import { Counter, Histogram } from "prom-client";
-import { Solve, Saved } from "utils";
+import { Saved, Solve } from "utils";
 
 const auth = new Counter({
   name: "api_request_auth_total",

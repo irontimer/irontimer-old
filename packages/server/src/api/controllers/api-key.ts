@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { randomBytes } from "crypto";
 import { hash } from "bcrypt";
+import { randomBytes } from "crypto";
+import _ from "lodash";
 import * as ApiKeysDAL from "../../dal/api-keys";
 import IronTimerError from "../../utils/error";
 import { IronTimerResponse } from "../../utils/irontimer-response";

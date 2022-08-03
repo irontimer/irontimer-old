@@ -1,11 +1,11 @@
-import { Component, For, Match, Switch } from "solid-js";
-import { Link } from "solid-app-router";
-import { getScramble, setAndGenerateScramble } from "../state/scramble";
-import { Button } from "./button";
-import { isTiming } from "../state/timing";
-import { isSavingSolve } from "../state/solve";
-import { Icon } from "./icon";
 import type { IconName } from "@fortawesome/fontawesome-common-types";
+import { Link } from "solid-app-router";
+import { Component, For, Match, Switch } from "solid-js";
+import { getScramble, setAndGenerateScramble } from "../state/scramble";
+import { isSavingSolve } from "../state/solve";
+import { isTiming } from "../state/timing";
+import { Button } from "./button";
+import { Icon } from "./icon";
 
 const pages: Record<string, IconName> = {
   Timer: "cube",

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { PersonalBest, Solve, Saved } from "utils";
+import { PersonalBest, Saved, Solve } from "utils";
 import { actualTime } from "./misc";
 
 export function checkAndUpdatePersonalBest(

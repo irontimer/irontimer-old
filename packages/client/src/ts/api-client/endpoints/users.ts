@@ -1,9 +1,9 @@
 import {
-  HttpClient,
   EndpointData,
+  HttpClient,
+  PersonalBest,
   Theme,
   User,
-  PersonalBest,
   UserStats
 } from "utils";
 

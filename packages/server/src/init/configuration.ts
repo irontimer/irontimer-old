@@ -1,9 +1,9 @@
 import _ from "lodash";
+import { Configuration as IConfiguration } from "utils";
+import BASE_CONFIGURATION from "../constants/base-configuration";
+import { Configuration } from "../models/configuration";
 import Logger from "../utils/logger";
 import { identity } from "../utils/misc";
-import BASE_CONFIGURATION from "../constants/base-configuration";
-import { Configuration as IConfiguration } from "utils";
-import { Configuration } from "../models/configuration";
 
 const CONFIG_UPDATE_INTERVAL = 10 * 60 * 1000; // 10 Minutes
 

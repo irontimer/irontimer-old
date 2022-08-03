@@ -1,4 +1,4 @@
-import { Component, Accessor, Match, Switch, For } from "solid-js";
+import { Accessor, Component, For, Match, Switch } from "solid-js";
 import { c } from "../../utils/misc";
 import { Button } from "../button";
 

@@ -1,11 +1,11 @@
-import joi from "joi";
-import { authenticateRequest } from "../../middlewares/auth";
 import { Router } from "express";
-import * as UserController from "../controllers/user";
-import { asyncHandler, validateRequest } from "../../middlewares/api-utils";
-import * as RateLimit from "../../middlewares/rate-limit";
+import joi from "joi";
 import apiRateLimit from "../../middlewares/api-rate-limit";
+import { asyncHandler, validateRequest } from "../../middlewares/api-utils";
+import { authenticateRequest } from "../../middlewares/auth";
+import * as RateLimit from "../../middlewares/rate-limit";
 import { isUsernameValid } from "../../utils/validation";
+import * as UserController from "../controllers/user";
 
 const router = Router();
 

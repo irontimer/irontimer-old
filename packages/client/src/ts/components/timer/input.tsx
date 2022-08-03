@@ -1,8 +1,8 @@
 import { Component } from "solid-js";
-import { parseTimeString } from "../../utils/misc";
 import Notifications from "../../state/notifications";
 import { addSolve } from "../../state/solve";
 import { auth } from "../../utils/auth";
+import { parseTimeString } from "../../utils/misc";
 
 const inputRegex = /^([0-9]{0,2}):?([0-9]{0,2}):?([0-9]*)\.?([0-9]{1,3})?\+?$/;
 const finalInputRegex = /^(([0-9]{1,2}:){0,2})([0-9]+)(\.[0-9]{1,3})?\+?$/;

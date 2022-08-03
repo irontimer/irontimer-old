@@ -1,13 +1,13 @@
 import { compare } from "bcrypt";
-import { getApiKey, updateLastUsedOn } from "../dal/api-keys";
-import IronTimerError from "../utils/error";
-import { verifyIDToken } from "../utils/auth";
-import { base64UrlDecode } from "../utils/misc";
-import { NextFunction, Response, Handler } from "express";
-import statuses from "../constants/irontimer-status-codes";
-import { incrementAuth } from "../utils/prometheus";
-import Logger from "../utils/logger";
+import { Handler, NextFunction, Response } from "express";
 import { Configuration, DecodedToken, Request } from "utils";
+import statuses from "../constants/irontimer-status-codes";
+import { getApiKey, updateLastUsedOn } from "../dal/api-keys";
+import { verifyIDToken } from "../utils/auth";
+import IronTimerError from "../utils/error";
+import Logger from "../utils/logger";
+import { base64UrlDecode } from "../utils/misc";
+import { incrementAuth } from "../utils/prometheus";
 
 interface RequestAuthenticationOptions {
   isPublic?: boolean;

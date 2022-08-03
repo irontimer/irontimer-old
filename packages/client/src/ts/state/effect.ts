@@ -1,11 +1,11 @@
 import { createEffect, on } from "solid-js";
-import { config, getConfigChange } from "./config";
-import { getSolves } from "./solve";
-import { setAndGenerateScramble } from "./scramble";
-import { auth } from "../utils/auth";
-import API from "../api-client";
-import Notifications from "./notifications";
 import { Config, Saved } from "utils";
+import API from "../api-client";
+import { auth } from "../utils/auth";
+import { config, getConfigChange } from "./config";
+import Notifications from "./notifications";
+import { setAndGenerateScramble } from "./scramble";
+import { getSolves } from "./solve";
 // import { currentSession, getCurrentSessionChange } from "./session";
 
 // This also updates a scramble when the scramble type changes

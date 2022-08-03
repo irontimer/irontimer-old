@@ -1,9 +1,9 @@
 import { Component, createSignal } from "solid-js";
-import { c, formatTime } from "../../utils/misc";
 import { config } from "../../state/config";
 import { addSolve, getLastSolve } from "../../state/solve";
-import { auth } from "../../utils/auth";
 import { isTiming, setIsTiming } from "../../state/timing";
+import { auth } from "../../utils/auth";
+import { c, formatTime } from "../../utils/misc";
 
 type ReadyState = "unready" | "almost-ready" | "ready" | "running";
 

@@ -1,8 +1,8 @@
 import {
-  HttpClient,
-  EndpointData,
   ApiKey,
-  GenerateApiKeyResponse
+  EndpointData,
+  GenerateApiKeyResponse,
+  HttpClient
 } from "utils";
 
 const BASE_PATH = "/api-keys";

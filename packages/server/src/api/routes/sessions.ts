@@ -1,9 +1,9 @@
-import joi from "joi";
-import { authenticateRequest } from "../../middlewares/auth";
-import * as SessionController from "../controllers/session";
-import * as RateLimit from "../../middlewares/rate-limit";
-import { asyncHandler, validateRequest } from "../../middlewares/api-utils";
 import { Router } from "express";
+import joi from "joi";
+import { asyncHandler, validateRequest } from "../../middlewares/api-utils";
+import { authenticateRequest } from "../../middlewares/auth";
+import * as RateLimit from "../../middlewares/rate-limit";
+import * as SessionController from "../controllers/session";
 
 const router = Router();
 

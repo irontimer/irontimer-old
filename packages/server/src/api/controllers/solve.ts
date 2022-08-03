@@ -1,29 +1,29 @@
-import * as SolveDAL from "../../dal/solve";
-import * as SessionDAL from "../../dal/session";
+import _ from "lodash";
+import { Types } from "mongoose";
 import {
-  getUser,
+  DEFAULT_SCRAMBLE_TYPE,
+  Request,
+  Saved,
+  Solve,
+  SolveCreationResult
+} from "utils";
+import IronTimerStatusCodes from "../../constants/irontimer-status-codes";
+import * as PublicStatsDAL from "../../dal/public-stats";
+import * as SessionDAL from "../../dal/session";
+import * as SolveDAL from "../../dal/solve";
+import {
   checkIfPersonalBest,
+  getUser,
   incrementCubes,
   updateTypingStats
 } from "../../dal/user";
-import * as PublicStatsDAL from "../../dal/public-stats";
-import Logger from "../../utils/logger";
-import { IronTimerResponse } from "../../utils/irontimer-response";
-import IronTimerError from "../../utils/error";
-import { isSolveTooFast } from "../../utils/validation";
-import IronTimerStatusCodes from "../../constants/irontimer-status-codes";
-import { incrementSolve } from "../../utils/prometheus";
 import * as Bot from "../../tasks/bot";
-import {
-  Request,
-  Solve,
-  SolveCreationResult,
-  Saved,
-  DEFAULT_SCRAMBLE_TYPE
-} from "utils";
-import { Types } from "mongoose";
-import _ from "lodash";
+import IronTimerError from "../../utils/error";
+import { IronTimerResponse } from "../../utils/irontimer-response";
+import Logger from "../../utils/logger";
 import { actualTime } from "../../utils/misc";
+import { incrementSolve } from "../../utils/prometheus";
+import { isSolveTooFast } from "../../utils/validation";
 
 export async function getSolves(req: Request): Promise<IronTimerResponse> {
   const { userID } = req.ctx.decodedToken;

@@ -1,7 +1,7 @@
 import { Component } from "solid-js";
+import { createStore } from "solid-js/store";
 import { Button } from "../components/button";
 import { signIn, signUp } from "../utils/auth";
-import { createStore } from "solid-js/store";
 
 export const SignIn: Component = () => {
   const [info, setInfo] = createStore({

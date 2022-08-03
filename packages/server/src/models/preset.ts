@@ -1,5 +1,5 @@
+import { model, Schema } from "mongoose";
 import type { Preset as IPreset } from "utils";
-import { Schema, model } from "mongoose";
 import { configProps } from "./config";
 
 export const PresetSchema = new Schema<IPreset>({

@@ -1,8 +1,8 @@
 import { Component, For, Show } from "solid-js";
 import Notifications, { notificationBuffer } from "../state/notifications";
-import { isTauri } from "../utils/tauri";
 import { isTiming } from "../state/timing";
 import { c } from "../utils/misc";
+import { isTauri } from "../utils/tauri";
 
 export const NotificationCenter: Component = () => {
   return (

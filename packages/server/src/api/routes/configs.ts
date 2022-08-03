@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { authenticateRequest } from "../../middlewares/auth";
 import { asyncHandler, validateRequest } from "../../middlewares/api-utils";
-import configSchema from "../schemas/config-schema";
-import * as ConfigController from "../controllers/config";
+import { authenticateRequest } from "../../middlewares/auth";
 import * as RateLimit from "../../middlewares/rate-limit";
+import * as ConfigController from "../controllers/config";
+import configSchema from "../schemas/config-schema";
 
 const router = Router();
 

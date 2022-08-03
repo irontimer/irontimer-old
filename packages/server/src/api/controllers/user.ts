@@ -1,12 +1,12 @@
-import * as UserDAL from "../../dal/user";
-import IronTimerError from "../../utils/error";
-import Logger from "../../utils/logger";
-import { IronTimerResponse } from "../../utils/irontimer-response";
-import { linkAccount } from "../../utils/discord";
-import { buildAgentLog } from "../../utils/misc";
-import * as Bot from "../../tasks/bot";
-import type { Request, ScrambleType } from "utils";
 import admin from "firebase-admin";
+import type { Request, ScrambleType } from "utils";
+import * as UserDAL from "../../dal/user";
+import * as Bot from "../../tasks/bot";
+import { linkAccount } from "../../utils/discord";
+import IronTimerError from "../../utils/error";
+import { IronTimerResponse } from "../../utils/irontimer-response";
+import Logger from "../../utils/logger";
+import { buildAgentLog } from "../../utils/misc";
 import { isUsernameValid } from "../../utils/validation";
 
 export async function getUser(req: Request): Promise<IronTimerResponse> {

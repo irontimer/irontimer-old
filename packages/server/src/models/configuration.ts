@@ -1,5 +1,5 @@
+import { model, Schema } from "mongoose";
 import { Configuration as IConfiguration } from "utils";
-import { Schema, model } from "mongoose";
 
 export const ConfigurationSchema = new Schema<IConfiguration>({
   maintenance: {

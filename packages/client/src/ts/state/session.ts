@@ -1,9 +1,9 @@
-import API from "../api-client";
-import { createSignal } from "solid-js";
-import { Saved, Session, ScrambleType } from "utils";
-import Notifications from "./notifications";
 import type { User } from "firebase/auth";
+import { createSignal } from "solid-js";
+import { Saved, ScrambleType, Session } from "utils";
+import API from "../api-client";
 import { createReactiveStore } from "../utils/reactive-store";
+import Notifications from "./notifications";
 
 export const [getSessions, setSessions] = createSignal<
   Session[] | Saved<Session>[]

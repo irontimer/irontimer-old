@@ -1,5 +1,5 @@
+import { model, Schema } from "mongoose";
 import { PublicStats as IPublicStats } from "utils";
-import { Schema, model } from "mongoose";
 
 export const PublicStatsSchema = new Schema<IPublicStats>({
   _id: Schema.Types.ObjectId,

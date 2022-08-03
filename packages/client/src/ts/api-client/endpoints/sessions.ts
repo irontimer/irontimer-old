@@ -1,4 +1,4 @@
-import { HttpClient, EndpointData, Session, Saved } from "utils";
+import { EndpointData, HttpClient, Saved, Session } from "utils";
 
 const BASE_PATH = "/sessions";
 
