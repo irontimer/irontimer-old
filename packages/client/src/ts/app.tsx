@@ -13,7 +13,6 @@ import { Settings } from "./pages/settings";
 import { SignIn } from "./pages/sign-in";
 import { Timer } from "./pages/timer";
 import "./state/effect";
-import "./utils/idle";
 
 export const App: Component = () => {
   return (
