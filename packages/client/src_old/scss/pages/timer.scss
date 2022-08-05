@@ -1,0 +1,155 @@
+$remaining_height: 90vh;
+
+@mixin height {
+  height: $remaining_height;
+  max-height: $remaining_height;
+}
+
+.timer-page {
+  display: grid;
+  grid-template-columns: 1.5fr 5fr 1.5fr;
+  @include height;
+
+  #left {
+    @include height;
+
+    #solves {
+      @include height;
+      padding: 5px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: black;
+      background-color: lightgray;
+      overflow-x: auto;
+      overflow-y: auto;
+      width: fit-content;
+      max-width: 25vw;
+      height: fit-content;
+
+      .clear-solves-button {
+        border-width: 1px;
+        border-style: solid;
+        width: 100%;
+        padding: 1px 0px;
+        border-color: black;
+        background-color: gray;
+        color: black;
+        font-size: 1.5em;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #fafafa;
+          color: black;
+        }
+      }
+
+      #solve-popup-wrapper {
+        #solve-popup {
+          padding: 5px;
+          border-width: 1px;
+          border-style: solid;
+          border-color: black;
+          border-radius: 2rem;
+          background-color: lightgray;
+          overflow-x: auto;
+          overflow-y: auto;
+          width: 25vw;
+          height: 35vh;
+
+          .popup-content {
+            text-align: center;
+            font-size: 1.25rem;
+          }
+
+          .popup-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+          }
+
+          .popup-buttons {
+            .popup-button {
+              margin: 0rem 0.5rem;
+
+              &:hover {
+                color: white;
+              }
+            }
+          }
+
+          .popup-copy-button {
+            display: inline;
+            margin-left: 0.5rem;
+            &:hover {
+              color: white;
+            }
+          }
+        }
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+
+      table {
+        thead,
+        tbody {
+          tr {
+            align-items: center;
+
+            td {
+              border-width: thin;
+              border-style: solid;
+              border-color: black;
+              background-color: white;
+              text-align: center;
+              padding: 5px;
+            }
+          }
+        }
+
+        tbody tr td:hover {
+          background-color: lightgray;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  #center {
+    @include height;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    .timer-stopwatch,
+    .timer-input {
+      text-align: center;
+    }
+
+    #average-list {
+      align-items: center;
+      vertical-align: bottom;
+
+      .average-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        .average-label,
+        .average-value {
+          text-align: center;
+          font-size: 1.5rem;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+  #right {
+    @include height;
+    // TODO fill in with tools
+  }
+}

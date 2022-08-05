@@ -1,11 +1,12 @@
 {
   "name": "client",
+  "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "solid-start dev",
     "dev-tauri": "tauri dev",
-    "build": "vite build",
+    "build": "solid-start build",
     "build-tauri": "tauri build",
-    "serve": "vite preview",
+    "start": "solid-start start",
     "deploy": "yarn workspace client build && firebase deploy --only hosting",
     "pretty": "prettier \"src/**/*.{ts,tsx,scss}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,tsx,scss}\"",
@@ -15,11 +16,14 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "6.1.1",
+    "@solidjs/meta": "0.28.0",
+    "@solidjs/router": "0.4.2",
     "axios": "0.27.2",
     "firebase": "9.9.0",
     "sass": "1.53.0",
     "solid-app-router": "0.4.1",
     "solid-js": "1.4.8",
+    "solid-start": "0.1.0-alpha.99",
     "stackmat": "1.1.0",
     "utils": "workspace:^"
   },
@@ -29,8 +33,9 @@
     "@types/babel__core": "7.1.19",
     "rollup": "2.75.7",
     "rollup-plugin-visualizer": "5.7.1",
-    "vite": "3.0.2",
-    "vite-plugin-solid": "2.3.0"
+    "solid-start-node": "0.1.0-alpha.99",
+    "undici": "5.8.0",
+    "vite": "3.0.4"
   },
   "packageManager": "yarn@3.2.2"
 }

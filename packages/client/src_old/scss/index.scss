@@ -1,0 +1,27 @@
+@font-face {
+  font-family: "Cascadia Code";
+  src: url("/fonts/CascadiaCode.ttf");
+}
+
+body {
+  margin: 0;
+  background-color: gray;
+  font-family: Cascadia Code;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.unselectable {
+  -webkit-user-select: none; // Safari
+  -moz-user-select: none; // Firefox
+  -ms-user-select: none; // IE10+/Edge
+  user-select: none; // Standard
+}
+
+@import "components/settings/section.scss",
+  "components/settings/settings-group.scss", "components/timer/input.scss",
+  "components/timer/stopwatch.scss", "components/timer/stackmat.scss",
+  "components/button", "components/collapsible", "components/icon",
+  "components/notification-center", "components/popup", "components/text",
+  "components/top", "pages/account", "pages/settings", "pages/sign-in.scss",
+  "pages/timer";
