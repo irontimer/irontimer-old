@@ -62,37 +62,37 @@ async function addToQueue(taskName: string, task: BotTask): Promise<void> {
 // }
 
 export async function updateDiscordRole(
-  discordUserID: string,
+  discordUserId: string,
   time: number
 ): Promise<void> {
   const task = "updateRole";
-  const updateDiscordRoleTask = buildBotTask(task, [discordUserID, time]);
+  const updateDiscordRoleTask = buildBotTask(task, [discordUserId, time]);
   await addToQueue(task, updateDiscordRoleTask);
 }
 
 export async function linkDiscord(
-  discordUserID: string,
-  userID: string
+  discordUserId: string,
+  uid: string
 ): Promise<void> {
   const task = "linkDiscord";
-  const linkDiscordTask = buildBotTask(task, [discordUserID, userID]);
+  const linkDiscordTask = buildBotTask(task, [discordUserId, uid]);
   await addToQueue(task, linkDiscordTask);
 }
 
 export async function unlinkDiscord(
-  discordUserID: string,
-  userID: string
+  discordUserId: string,
+  uid: string
 ): Promise<void> {
   const task = "unlinkDiscord";
-  const unlinkDiscordTask = buildBotTask(task, [discordUserID, userID]);
+  const unlinkDiscordTask = buildBotTask(task, [discordUserId, uid]);
   await addToQueue(task, unlinkDiscordTask);
 }
 
 export async function awardChallenge(
-  discordUserID: string,
+  discordUserId: string,
   challengeName: string
 ): Promise<void> {
   const task = "awardChallenge";
-  const awardChallengeTask = buildBotTask(task, [discordUserID, challengeName]);
+  const awardChallengeTask = buildBotTask(task, [discordUserId, challengeName]);
   await addToQueue(task, awardChallengeTask);
 }

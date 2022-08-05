@@ -1,39 +1,48 @@
-import type { Config as IConfig, Saved, UpdateResult } from "utils";
-import { Config } from "../models/config";
+import type { Config, Unsaved } from "utils";
+import prisma from "../init/db";
 
 export async function addConfig(
-  userID: string,
-  config: IConfig
-): Promise<{ insertedID: string }> {
-  await Config.create({
-    ...config,
-    _id: userID
+  uid: string,
+  config: Config | Unsaved<Config>
+): Promise<string> {
+  await prisma.config.create({
+    data: {
+      ...config,
+      id: uid
+    }
   });
 
-  return {
-    insertedID: userID
-  };
+  return uid;
 }
 
 export async function saveConfig(
-  userID: string,
-  config: Saved<IConfig> | IConfig
-): Promise<UpdateResult> {
-  const existingConfig = await Config.findById(userID);
+  uid: string,
+  config: Config | Unsaved<Config>
+): Promise<Config> {
+  const existingConfig = await prisma.config.findUnique({
+    where: {
+      id: uid
+    }
+  });
 
   if (existingConfig === null) {
-    await addConfig(userID, config);
+    await addConfig(uid, config);
   }
 
-  return await Config.updateOne(
-    { _id: userID },
-    { $set: config },
-    { upsert: true }
-  );
+  return await prisma.config.update({
+    where: {
+      id: uid
+    },
+    data: config
+  });
 }
 
-export async function getConfig(
-  userID: string
-): Promise<Saved<IConfig> | undefined> {
-  return (await Config.findById(userID)) ?? undefined;
+export async function getConfig(uid: string): Promise<Config | undefined> {
+  return (
+    (await prisma.config.findUnique({
+      where: {
+        id: uid
+      }
+    })) ?? undefined
+  );
 }

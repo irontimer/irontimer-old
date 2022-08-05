@@ -1,8 +1,7 @@
 import chalk from "chalk";
-import { Types } from "mongoose";
 import { resolve } from "path";
 import winston, { format } from "winston";
-import { Log } from "../models/log";
+import prisma from "../init/db";
 
 const errorColor = chalk.red.bold;
 const warningColor = chalk.yellow.bold;
@@ -11,14 +10,6 @@ const infoColor = chalk.white;
 
 const logFolderPath = process.env.LOG_FOLDER_PATH ?? "./logs";
 const maxLogSize = parseInt(process.env.LOG_FILE_MAX_SIZE ?? "10485760");
-
-interface Log {
-  type?: string;
-  timestamp: number;
-  userID: string;
-  event: string;
-  message: string;
-}
 
 const customLevels = {
   error: 0,
@@ -90,15 +81,16 @@ const logger = winston.createLogger({
 const logToDb = async (
   event: string,
   message: any,
-  userID?: string
+  uid?: string
 ): Promise<void> => {
-  logger.info(`${event}\t${userID}\t${JSON.stringify(message)}`);
-  Log.create({
-    _id: new Types.ObjectId(),
-    timestamp: Date.now(),
-    userID: userID ?? "",
-    event,
-    message
+  logger.info(`${event}\t${uid}\t${JSON.stringify(message)}`);
+
+  prisma.log.create({
+    data: {
+      uid,
+      event,
+      message
+    }
   });
 };
 

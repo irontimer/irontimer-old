@@ -13,7 +13,7 @@ async function contextMiddleware(
     configuration,
     decodedToken: {
       type: "None",
-      userID: "",
+      uid: "",
       email: ""
     }
   };

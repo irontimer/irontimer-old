@@ -6,3 +6,186 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+type ThemeColors {
+  main String
+  sub  String
+  text String
+}
+
+type Theme {
+  name   String
+  colors ThemeColors
+}
+
+type ApiKeyConfiguration {
+  endpointsEnabled Boolean @default(true)
+  acceptKeys       Boolean @default(true)
+  maxKeysPerUser   Int     @default(5)
+  apiKeyBytes      Int     @default(32)
+  apiKeySaltRounds Int     @default(10)
+}
+
+type PersonalBest {
+  time      Float
+  scramble  String
+  solution  String?
+  sessionId String   @db.ObjectId
+  createdAt DateTime @default(now())
+}
+
+enum TimerType {
+  timer
+  typing
+  stackmat
+}
+
+enum ScrambleType {
+  cube3
+  cube2
+}
+
+enum PublicStatsType {
+  stats
+}
+
+model ApiKey {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  uid        String
+  enabled    Boolean   @default(true)
+  hash       String
+  lastUsedAt DateTime?
+  useCount   Int       @default(0)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@map("api-keys")
+}
+
+model Config {
+  id               String    @id @map("_id")
+  timerType        TimerType @default(timer)
+  currentSession   Session   @relation(fields: [currentSessionId], references: [id])
+  currentSessionId String    @db.ObjectId
+  displayAverages  Int[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  users            User[]
+
+  @@map("configs")
+}
+
+model Configuration {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  maintenance       Boolean             @default(false)
+  apiKeys           ApiKeyConfiguration
+  allowSavingSolves Boolean             @default(true)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  @@map("configurations")
+}
+
+model Error {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  status    Int
+  uid       String
+  message   String
+  stack     String?
+  endpoint  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("errors")
+}
+
+model Log {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  event     String
+  uid       String?
+  message   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("logs")
+}
+
+model Psa {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  message   String
+  sticky    Boolean  @default(false)
+  level     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("psas")
+}
+
+model PublicStats {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  solveCount  Int
+  timeSolving Float
+  type        PublicStatsType @unique
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@map("publics")
+}
+
+model Session {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  scrambleType ScrambleType @default(cube3)
+  uid          String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  configs      Config[]
+  solves       Solve[]
+
+  @@map("sessions")
+}
+
+enum Penalty {
+  OK
+  PLUS2
+  DNF
+}
+
+model Solve {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  uid            String
+  time           Float
+  session        Session   @relation(fields: [sessionId], references: [id])
+  sessionId      String    @db.ObjectId
+  scramble       String
+  solution       String?
+  isPersonalBest Boolean   @default(false)
+  penalty        Penalty
+  enteredBy      TimerType
+  user           User?     @relation(fields: [uid], references: [id])
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@map("solves")
+}
+
+model User {
+  id               String         @id @map("_id")
+  email            String
+  username         String         @unique
+  discordUserId    String?        @unique
+  personalBests    PersonalBest[]
+  customThemes     Theme[]
+  canManageApiKeys Boolean        @default(false)
+  timeSolving      Float          @default(0)
+  solveCount       Int            @default(0)
+  lastNameChange   DateTime       @default(now())
+  cubes            Int            @default(0)
+  solves           Solve[]
+  config           Config         @relation(fields: [id], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@map("users")
+}

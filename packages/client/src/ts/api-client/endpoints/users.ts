@@ -72,11 +72,11 @@ export default class Users {
   }
 
   async editCustomTheme(
-    themeID: string,
+    themeId: string,
     newTheme: Partial<Theme>
   ): EndpointData<undefined> {
     const payload = {
-      themeID: themeID,
+      themeId: themeId,
       theme: {
         name: newTheme.name,
         colors: newTheme.colors
@@ -88,9 +88,9 @@ export default class Users {
     });
   }
 
-  async deleteCustomTheme(themeID: string): EndpointData<undefined> {
+  async deleteCustomTheme(themeId: string): EndpointData<undefined> {
     const payload = {
-      themeID: themeID
+      themeId: themeId
     };
 
     return await this.httpClient.delete(`${BASE_PATH}/customThemes`, {

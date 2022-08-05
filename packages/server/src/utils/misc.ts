@@ -91,7 +91,7 @@ export function actualTime(solve: Solve | undefined): number {
     case "OK":
       return solve.time;
 
-    case "+2":
+    case "PLUS2":
       return solve.time + 2;
 
     case "DNF":

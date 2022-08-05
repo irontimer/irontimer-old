@@ -1,16 +1,16 @@
 import { createStore } from "solid-js/store";
-import type { Notification, NotificationOptions } from "utils";
+import type { Notification, Unsaved } from "utils";
 import { isTauri } from "../utils/tauri";
 
 export const [notificationBuffer, setNotificationBuffer] = createStore<
   Record<string, Notification>
 >({});
 
-function addWeb(notification: NotificationOptions): void {
-  let id = generateNotificationID();
+function addWeb(notification: Unsaved<Notification>): void {
+  let id = generateNotificationId();
 
   while (notificationBuffer[id] !== undefined) {
-    id = generateNotificationID();
+    id = generateNotificationId();
   }
 
   setNotificationBuffer((buffer) => ({
@@ -28,7 +28,7 @@ function addWeb(notification: NotificationOptions): void {
   }
 }
 
-function addTauri(notification: NotificationOptions): void {
+function addTauri(notification: Unsaved<Notification>): void {
   window.__TAURI__?.notification.sendNotification(notification.message);
 }
 
@@ -41,7 +41,7 @@ function deleteNotification(id: string): void {
   });
 }
 
-function generateNotificationID(): string {
+function generateNotificationId(): string {
   return Math.random().toString(36).substring(2, 15);
 }
 

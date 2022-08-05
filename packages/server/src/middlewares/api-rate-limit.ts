@@ -6,7 +6,7 @@ import IronTimerError from "../utils/error";
 const REQUEST_MULTIPLIER = process.env.MODE === "dev" ? 100 : 1;
 
 const getKey = (req: Request /*, _res: Response*/): string => {
-  return req?.ctx?.decodedToken?.userID;
+  return req?.ctx?.decodedToken?.uid;
 };
 
 const customHandler = (

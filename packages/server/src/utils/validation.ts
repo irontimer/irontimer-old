@@ -1,6 +1,12 @@
+import { ScrambleType } from "@prisma/client";
 import _ from "lodash";
-import { MINIMUM_NECESSARY_TIME, Saved, Session, Solve } from "utils";
+import { Session, Solve } from "utils";
 import profanities from "../constants/profanities";
+
+const MINIMUM_NECESSARY_TIME: Record<ScrambleType, number> = {
+  [ScrambleType.cube3]: 2,
+  [ScrambleType.cube2]: 0.35
+};
 
 export function inRange(value: number, min: number, max: number): boolean {
   return value >= min && value <= max;
@@ -39,8 +45,8 @@ export function isPresetNameValid(name: string): boolean {
 }
 
 export function isSolveTooFast(
-  solve: Saved<Solve>,
-  session: Saved<Session> | Session
+  solve: Solve,
+  session: Session | Session
 ): boolean {
   return solve.time < MINIMUM_NECESSARY_TIME[session.scrambleType];
 }

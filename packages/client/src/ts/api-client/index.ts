@@ -18,7 +18,6 @@ const API = {
   configs: new endpoints.Configs(httpClient),
   solves: new endpoints.Solves(httpClient),
   psas: new endpoints.Psas(httpClient),
-  presets: new endpoints.Presets(httpClient),
   sessions: new endpoints.Sessions(httpClient),
   apiKeys: new endpoints.ApiKeys(httpClient)
 };

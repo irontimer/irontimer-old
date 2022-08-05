@@ -1,10 +1,10 @@
 import _ from "lodash";
-import { PersonalBest, Saved, Solve } from "utils";
+import { PersonalBest, Solve } from "utils";
 import { actualTime } from "./misc";
 
 export function checkAndUpdatePersonalBest(
   userPersonalBests: PersonalBest[],
-  solve: Saved<Solve>
+  solve: Solve
 ): {
   isPersonalBest: boolean;
   personalBests: PersonalBest[];
@@ -36,24 +36,24 @@ export function checkAndUpdatePersonalBest(
 
 export function findMatchingPersonalBest(
   personalBests: PersonalBest[],
-  solve: Saved<Solve>
+  solve: Solve
 ): PersonalBest | undefined {
   return personalBests.find((pb) => matchesPersonalBest(solve, pb));
 }
 
 function matchesPersonalBest(
-  solve: Saved<Solve>,
+  solve: Solve,
   personalBest: PersonalBest
 ): boolean {
   return _.isEqual(buildPersonalBest(solve), personalBest);
 }
 
-function buildPersonalBest(solve: Saved<Solve>): PersonalBest {
+function buildPersonalBest(solve: Solve): PersonalBest {
   return {
     time: actualTime(solve),
-    timestamp: solve.timestamp,
     scramble: solve.scramble,
-    session: solve.session,
-    solution: solve.solution
+    sessionId: solve.sessionId,
+    solution: solve.solution,
+    createdAt: solve.createdAt
   };
 }

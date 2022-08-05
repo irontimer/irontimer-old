@@ -1,4 +1,4 @@
-import { EndpointData, HttpClient, PSA } from "utils";
+import { EndpointData, HttpClient, Psa } from "utils";
 import { CLIENT_VERSION } from "../../version";
 
 const BASE_PATH = "/psas";
@@ -8,7 +8,7 @@ export default class Psas {
     this.httpClient = httpClient;
   }
 
-  async get(): EndpointData<PSA[]> {
+  async get(): EndpointData<Psa[]> {
     return await this.httpClient.get(BASE_PATH, {
       headers: {
         "Client-Version": CLIENT_VERSION

@@ -50,9 +50,9 @@ function checkUserPermissions(
 
   return async (req: Request, _res: Response, next: NextFunction) => {
     try {
-      const { userID } = req.ctx.decodedToken;
+      const { uid } = req.ctx.decodedToken;
 
-      const userData = await getUser(userID, "check user permissions");
+      const userData = await getUser(uid, "check user permissions");
       const hasPermission = criteria(userData);
 
       if (!hasPermission) {
@@ -103,7 +103,7 @@ function validateRequest(validationSchema: ValidationSchema): RequestHandler {
    */
   if (process.env.MODE === "dev") {
     validationSchema.body = {
-      userID: joi.any(),
+      uid: joi.any(),
       ...(validationSchema.body ?? {})
     };
   }

@@ -1,15 +1,15 @@
 import _ from "lodash";
-import { Configuration as IConfiguration } from "utils";
+import { Configuration } from "utils";
 import BASE_CONFIGURATION from "../constants/base-configuration";
-import { Configuration } from "../models/configuration";
 import Logger from "../utils/logger";
 import { identity } from "../utils/misc";
+import prisma from "./db";
 
 const CONFIG_UPDATE_INTERVAL = 10 * 60 * 1000; // 10 Minutes
 
 function mergeConfigurations(
-  baseConfiguration: IConfiguration,
-  liveConfiguration: IConfiguration
+  baseConfiguration: Configuration,
+  liveConfiguration: Configuration
 ): void {
   if (
     !_.isPlainObject(baseConfiguration) ||
@@ -45,7 +45,7 @@ let serverConfigurationUpdated = false;
 
 export async function getCachedConfiguration(
   attemptCacheUpdate = false
-): Promise<IConfiguration> {
+): Promise<Configuration> {
   if (
     attemptCacheUpdate &&
     lastFetchTime < Date.now() - CONFIG_UPDATE_INTERVAL
@@ -57,26 +57,26 @@ export async function getCachedConfiguration(
   return configuration;
 }
 
-export async function getLiveConfiguration(): Promise<IConfiguration> {
+export async function getLiveConfiguration(): Promise<Configuration> {
   lastFetchTime = Date.now();
 
   try {
-    const liveConfiguration = await Configuration.findOne();
+    const liveConfiguration = await prisma.configuration.findFirst();
 
     if (liveConfiguration) {
       const baseConfiguration = _.cloneDeep(BASE_CONFIGURATION);
 
-      const liveConfigurationWithoutID = _.omit(
+      const liveConfigurationWithoutId = _.omit(
         liveConfiguration,
         "_id"
-      ) as IConfiguration;
-      mergeConfigurations(baseConfiguration, liveConfigurationWithoutID);
+      ) as Configuration;
+      mergeConfigurations(baseConfiguration, liveConfigurationWithoutId);
 
       pushConfiguration(baseConfiguration);
       configuration = baseConfiguration;
     } else {
-      await Configuration.create({
-        ...BASE_CONFIGURATION
+      await prisma.configuration.create({
+        data: BASE_CONFIGURATION
       }); // Seed the base configuration.
     }
   } catch (error: any) {
@@ -89,13 +89,14 @@ export async function getLiveConfiguration(): Promise<IConfiguration> {
   return configuration;
 }
 
-async function pushConfiguration(configuration: IConfiguration): Promise<void> {
+async function pushConfiguration(configuration: Configuration): Promise<void> {
   if (serverConfigurationUpdated) {
     return;
   }
 
   try {
-    await Configuration.replaceOne({}, configuration);
+    await prisma.configuration.updateMany({ data: configuration });
+
     serverConfigurationUpdated = true;
   } catch (error: any) {
     Logger.logToDb(

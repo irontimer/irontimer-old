@@ -1,10 +1,12 @@
 import { config } from "dotenv";
+
+config();
+
 import admin, { ServiceAccount } from "firebase-admin";
 import { readFileSync } from "fs";
 import { Server } from "http";
 import app from "./app";
 import { getLiveConfiguration } from "./init/configuration";
-import * as db from "./init/db";
 import jobs from "./jobs";
 import { recordServerVersion } from "./utils/prometheus";
 import { version } from "./version";
@@ -13,14 +15,8 @@ import { version } from "./version";
 import { resolve } from "path";
 import Logger from "./utils/logger";
 
-config();
-
 async function bootServer(port: number): Promise<Server> {
   try {
-    Logger.info(`Connecting to database ${process.env.DATABASE_NAME}...`);
-    await db.connect();
-    Logger.success("Connected to database");
-
     Logger.info("Initializing Firebase app instance...");
 
     const serviceAccount: ServiceAccount = JSON.parse(

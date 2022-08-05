@@ -1,5 +1,5 @@
 import { Component, createSignal, For, Match, Show, Switch } from "solid-js";
-import { Penalty, Saved, Solve } from "utils";
+import { Penalty, Solve } from "utils";
 import { Popup } from "../components/popup";
 import {
   deleteAll,
@@ -30,7 +30,7 @@ const [getCurrentOpenSolve, setCurrentOpenSolve] = createSignal<
   number | undefined
 >();
 
-function getSolveFromCurrentOpen(): Saved<Solve> | Solve | undefined {
+function getSolveFromCurrentOpen(): Solve | undefined {
   return getSolvesAscending()[(getCurrentOpenSolve() ?? 0) - 1];
 }
 
@@ -43,10 +43,7 @@ function getAllAverages(): { averageOf: number; average: string }[] {
     }));
 }
 
-function popupButtonCallback(
-  cb: (solve: Saved<Solve> | Solve) => void,
-  close = false
-): void {
+function popupButtonCallback(cb: (solve: Solve) => void, close = false): void {
   const solve = getSolveFromCurrentOpen();
 
   if (solve === undefined) {
@@ -113,9 +110,7 @@ export const Timer: Component = () => {
                 </div>
                 <div class="popup-content">
                   Date:{" "}
-                  {new Date(
-                    getSolveFromCurrentOpen()?.timestamp ?? 0
-                  ).toLocaleDateString()}
+                  {getSolveFromCurrentOpen()?.createdAt.toLocaleDateString()}
                 </div>
                 <div class="popup-content">Session: {currentSession.name}</div>
                 <div class="popup-content">

@@ -1,22 +1,20 @@
 import { hash } from "bcrypt";
 import { randomBytes } from "crypto";
 import _ from "lodash";
+import { ApiKey, GenerateApiKeyResponse, Request } from "utils";
 import * as ApiKeysDAL from "../../dal/api-keys";
 import IronTimerError from "../../utils/error";
 import { IronTimerResponse } from "../../utils/irontimer-response";
 import { base64UrlEncode } from "../../utils/misc";
 
-import { ApiKey as IApiKey, GenerateApiKeyResponse, Request } from "utils";
-import { ApiKey } from "../../models/api-key";
-
-function cleanApiKey(apiKey: IApiKey): Partial<IApiKey> {
-  return _.omit(apiKey, "hash", "_id", "userID", "useCount");
+function cleanApiKey(apiKey: Partial<ApiKey>): Partial<ApiKey> {
+  return _.omit(apiKey, "hash", "_id", "uid", "useCount");
 }
 
 export async function getApiKeys(req: Request): Promise<IronTimerResponse> {
-  const { userID } = req.ctx.decodedToken;
+  const { uid } = req.ctx.decodedToken;
 
-  const apiKeys = await ApiKeysDAL.getApiKeys(userID);
+  const apiKeys = await ApiKeysDAL.getApiKeys(uid);
 
   const cleanedKeys = _(apiKeys).keyBy("_id").mapValues(cleanApiKey).value();
 
@@ -25,11 +23,11 @@ export async function getApiKeys(req: Request): Promise<IronTimerResponse> {
 
 export async function generateApiKey(req: Request): Promise<IronTimerResponse> {
   const { name, enabled } = req.body;
-  const { userID } = req.ctx.decodedToken;
+  const { uid } = req.ctx.decodedToken;
   const { maxKeysPerUser, apiKeyBytes, apiKeySaltRounds } =
     req.ctx.configuration.apiKeys;
 
-  const currentNumberOfApiKeys = await ApiKeysDAL.countApiKeysForUser(userID);
+  const currentNumberOfApiKeys = await ApiKeysDAL.countApiKeysForUser(uid);
 
   if (currentNumberOfApiKeys >= maxKeysPerUser) {
     throw new IronTimerError(
@@ -42,22 +40,19 @@ export async function generateApiKey(req: Request): Promise<IronTimerResponse> {
 
   const saltyHash = await hash(apiKey, apiKeySaltRounds);
 
-  const apiKeyObject = new ApiKey({
+  const apiKeyObject = {
     name,
     enabled,
-    userID,
+    uid,
     hash: saltyHash,
-    createdOn: Date.now(),
-    modifiedOn: Date.now(),
-    lastUsedOn: -1,
     useCount: 0
-  });
+  };
 
-  const apiKeyID = await ApiKeysDAL.addApiKey(apiKeyObject);
+  const apiKeyId = await ApiKeysDAL.addApiKey(apiKeyObject);
 
   const res: GenerateApiKeyResponse = {
-    apiKey: base64UrlEncode(`${apiKeyID}.${apiKey}`),
-    apiKeyID,
+    apiKey: base64UrlEncode(`${apiKeyId}.${apiKey}`),
+    apiKeyId,
     apiKeyDetails: cleanApiKey(apiKeyObject)
   };
 
@@ -65,20 +60,20 @@ export async function generateApiKey(req: Request): Promise<IronTimerResponse> {
 }
 
 export async function editApiKey(req: Request): Promise<IronTimerResponse> {
-  const { apiKeyID } = req.params;
+  const { apiKeyId } = req.params;
   const { name, enabled } = req.body;
-  const { userID } = req.ctx.decodedToken;
+  const { uid } = req.ctx.decodedToken;
 
-  await ApiKeysDAL.editApiKey(userID, apiKeyID, name, enabled);
+  await ApiKeysDAL.editApiKey(uid, apiKeyId, name, enabled);
 
   return new IronTimerResponse("ApiKey updated");
 }
 
 export async function deleteApiKey(req: Request): Promise<IronTimerResponse> {
-  const { apiKeyID } = req.params;
-  const { userID } = req.ctx.decodedToken;
+  const { apiKeyId } = req.params;
+  const { uid } = req.ctx.decodedToken;
 
-  await ApiKeysDAL.deleteApiKey(userID, apiKeyID);
+  await ApiKeysDAL.deleteApiKey(uid, apiKeyId);
 
   return new IronTimerResponse("ApiKey deleted");
 }

@@ -5,13 +5,13 @@ import {
   getAuth,
   signInWithEmailAndPassword
 } from "firebase/auth";
-import { DEFAULT_CONFIG } from "utils";
 import { firebaseConfig } from "../../config/firebase-config";
 import API from "../api-client";
 import { config, setConfig, _setConfig } from "../state/config";
 import Notifications from "../state/notifications";
 import { setCurrentSession, setSessions } from "../state/session";
 import { setIsSavingSolve, setSolves } from "../state/solve";
+import { DEFAULT_CONFIG } from "./defaults";
 
 const firebaseApp = initializeApp(firebaseConfig);
 

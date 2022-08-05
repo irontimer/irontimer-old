@@ -3,7 +3,7 @@ import { Handler, NextFunction, Response } from "express";
 import { Configuration, DecodedToken, Request } from "utils";
 import statuses from "../constants/irontimer-status-codes";
 import { getApiKey, updateLastUsedOn } from "../dal/api-keys";
-import { verifyIDToken } from "../utils/auth";
+import { verifyIdToken } from "../utils/auth";
 import IronTimerError from "../utils/error";
 import Logger from "../utils/logger";
 import { base64UrlDecode } from "../utils/misc";
@@ -43,7 +43,7 @@ function authenticateRequest(authOptions = DEFAULT_OPTIONS): Handler {
       } else if (options.isPublic) {
         token = {
           type: "None",
-          userID: "",
+          uid: "",
           email: ""
         };
       } else if (process.env.MODE === "dev") {
@@ -71,18 +71,18 @@ function authenticateRequest(authOptions = DEFAULT_OPTIONS): Handler {
 }
 
 function authenticateWithBody(body: Request["body"]): DecodedToken {
-  const { userID, email } = body;
+  const { uid, email } = body;
 
-  if (!userID) {
+  if (!uid) {
     throw new IronTimerError(
       401,
-      "Running authorization in dev mode but still no userID was provided"
+      "Running authorization in dev mode but still no uid was provided"
     );
   }
 
   return {
     type: "Bearer",
-    userID,
+    uid,
     email: email ?? ""
   };
 }
@@ -116,11 +116,11 @@ async function authenticateWithBearerToken(
   token: string
 ): Promise<DecodedToken> {
   try {
-    const decodedToken = await verifyIDToken(token);
+    const decodedToken = await verifyIdToken(token);
 
     return {
       type: "Bearer",
-      userID: decodedToken.uid,
+      uid: decodedToken.uid,
       email: decodedToken.email ?? ""
     };
   } catch (error: any) {
@@ -162,9 +162,9 @@ async function authenticateWithApiKey(
 
   try {
     const decodedKey = base64UrlDecode(key);
-    const [apiKeyID, apiKey] = decodedKey.split(".");
+    const [apiKeyId, apiKey] = decodedKey.split(".");
 
-    const targetApiKey = await getApiKey(apiKeyID);
+    const targetApiKey = await getApiKey(apiKeyId);
     if (!targetApiKey) {
       throw new IronTimerError(404, "ApiKey not found");
     }
@@ -176,15 +176,15 @@ async function authenticateWithApiKey(
 
     const isKeyValid = await compare(apiKey, targetApiKey.hash);
     if (!isKeyValid) {
-      const { code, message } = statuses.API_KEY_INVALID;
+      const { code, message } = statuses.API_KEY_INVALId;
       throw new IronTimerError(code, message);
     }
 
-    await updateLastUsedOn(targetApiKey.userID, apiKeyID);
+    await updateLastUsedOn(targetApiKey.uid, apiKeyId);
 
     return {
       type: "ApiKey",
-      userID: targetApiKey.userID,
+      uid: targetApiKey.uid,
       email: ""
     };
   } catch (error) {

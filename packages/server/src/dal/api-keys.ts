@@ -1,87 +1,101 @@
 import _ from "lodash";
-import { FilterQuery, Types } from "mongoose";
-import { ApiKey as IApiKey, MatchKeysAndValues } from "utils";
-import { ApiKey } from "../models/api-key";
+import type { ApiKey, Prisma } from "utils";
+import prisma from "../init/db";
 import IronTimerError from "../utils/error";
 
-function getApiKeyFilter(userID: string, keyID: string): FilterQuery<IApiKey> {
-  return {
-    _id: new Types.ObjectId(keyID),
-    userID
-  };
+export async function getApiKeys(uid: string): Promise<ApiKey[]> {
+  return await prisma.apiKey.findMany({ where: { uid } });
 }
 
-export async function getApiKeys(userID: string): Promise<IApiKey[]> {
-  return await ApiKey.find({ userID });
+export async function getUserApiKey(
+  uid: string,
+  id: string
+): Promise<ApiKey | undefined> {
+  return (await prisma.apiKey.findFirst({ where: { id, uid } })) ?? undefined;
 }
 
-export async function getApiKey(userID: string): Promise<IApiKey | undefined> {
-  return (await ApiKey.findById(userID)) ?? undefined;
+export async function getApiKey(id: string): Promise<ApiKey | undefined> {
+  return (await prisma.apiKey.findFirst({ where: { id } })) ?? undefined;
+  0;
 }
 
-export async function countApiKeysForUser(userID: string): Promise<number> {
-  const apiKeys = await getApiKeys(userID);
+export async function countApiKeysForUser(uid: string): Promise<number> {
+  const apiKeys = await getApiKeys(uid);
 
-  return _.size(apiKeys);
+  return apiKeys.length;
 }
 
-export async function addApiKey(apiKey: IApiKey): Promise<string> {
-  const newApiKey = await ApiKey.create(apiKey);
+export async function addApiKey(
+  data: Prisma.ApiKeyCreateInput
+): Promise<string> {
+  const newApiKey = await prisma.apiKey.create({ data });
 
-  return newApiKey._id.toString();
+  return newApiKey.id;
 }
 
 async function updateApiKey(
-  userID: string,
-  apiKeyID: string,
-  updates: MatchKeysAndValues<IApiKey>
+  uid: string,
+  apiKeyId: string,
+  updates: Partial<ApiKey>
 ): Promise<void> {
-  const updateResult = await ApiKey.updateOne(
-    getApiKeyFilter(userID, apiKeyID),
-    {
-      $inc: { useCount: _.has(updates, "lastUsedOn") ? 1 : 0 },
-      $set: _.pickBy(updates, (value) => !_.isNil(value))
-    }
-  );
+  const existing = await getUserApiKey(uid, apiKeyId);
 
-  if (updateResult.modifiedCount === 0) {
+  if (!existing) {
+    throw new IronTimerError(404, "ApiKey not found");
+  }
+
+  const updateResult = await prisma.apiKey.update({
+    where: {
+      id: apiKeyId
+    },
+    data: {
+      useCount: {
+        increment: _.has(updates, "lastUsedAt") ? 1 : 0
+      },
+      ...updates
+    }
+  });
+
+  if (!updateResult) {
     throw new IronTimerError(404, "ApiKey not found");
   }
 }
 
 export async function editApiKey(
-  userID: string,
-  apiKeyID: string,
+  uid: string,
+  apiKeyId: string,
   name: string,
   enabled: boolean
 ): Promise<void> {
-  const apiKeyUpdates = {
+  await updateApiKey(uid, apiKeyId, {
     name,
-    enabled,
-    modifiedOn: Date.now()
-  };
-
-  await updateApiKey(userID, apiKeyID, apiKeyUpdates);
+    enabled
+  });
 }
 
 export async function updateLastUsedOn(
-  userID: string,
-  apiKeyID: string
+  uid: string,
+  apiKeyId: string
 ): Promise<void> {
-  const apiKeyUpdates = {
-    lastUsedOn: Date.now()
-  };
-
-  await updateApiKey(userID, apiKeyID, apiKeyUpdates);
+  await updateApiKey(uid, apiKeyId, {
+    lastUsedAt: new Date(Date.now())
+  });
 }
 
-export async function deleteApiKey(
-  userID: string,
-  keyID: string
-): Promise<void> {
-  const deletionResult = await ApiKey.deleteOne(getApiKeyFilter(userID, keyID));
+export async function deleteApiKey(uid: string, keyId: string): Promise<void> {
+  const existing = await getUserApiKey(uid, keyId);
 
-  if (deletionResult.deletedCount === 0) {
+  if (!existing) {
+    throw new IronTimerError(404, "ApiKey not found");
+  }
+
+  const deletionResult = await prisma.apiKey.delete({
+    where: {
+      id: keyId
+    }
+  });
+
+  if (!deletionResult) {
     throw new IronTimerError(404, "ApiKey not found");
   }
 }

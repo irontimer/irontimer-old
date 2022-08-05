@@ -1,17 +1,20 @@
-import { PublicStats } from "../models/public-stats";
+import prisma from "../init/db";
 import { roundTo2 } from "../utils/misc";
 
 export async function updateStats(time: number): Promise<boolean> {
-  await PublicStats.updateOne(
-    { type: "stats" },
-    {
-      $inc: {
-        solveCount: 1,
-        timeCubing: roundTo2(time)
-      }
+  await prisma.publicStats.update({
+    where: {
+      type: "stats"
     },
-    { upsert: true }
-  );
+    data: {
+      solveCount: {
+        increment: 1
+      },
+      timeSolving: {
+        increment: roundTo2(time)
+      }
+    }
+  });
 
   return true;
 }

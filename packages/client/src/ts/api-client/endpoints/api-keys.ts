@@ -26,15 +26,15 @@ export default class ApiKeys {
   }
 
   async update(
-    apiKeyID: string,
+    apiKeyId: string,
     updates: { name?: string; enabled?: boolean }
   ): EndpointData<undefined> {
-    return await this.httpClient.patch(`${BASE_PATH}/${apiKeyID}`, {
+    return await this.httpClient.patch(`${BASE_PATH}/${apiKeyId}`, {
       payload: updates
     });
   }
 
-  async delete(apiKeyID: string): EndpointData<undefined> {
-    return await this.httpClient.delete(`${BASE_PATH}/${apiKeyID}`);
+  async delete(apiKeyId: string): EndpointData<undefined> {
+    return await this.httpClient.delete(`${BASE_PATH}/${apiKeyId}`);
   }
 }

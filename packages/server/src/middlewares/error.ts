@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { Request } from "utils";
 import { v4 as uuidv4 } from "uuid";
-import { Error } from "../models/error";
+import prisma from "../init/db";
 import IronTimerError from "../utils/error";
 import {
   handleIronTimerResponse,
@@ -20,8 +20,8 @@ async function errorHandlingMiddleware(
   const ironTimerResponse = new IronTimerResponse();
   ironTimerResponse.status = 500;
   ironTimerResponse.data = {
-    errorID: ironTimerError.errorID ?? uuidv4(),
-    userID: ironTimerError.userID ?? req.ctx?.decodedToken?.userID
+    errorId: ironTimerError.errorId ?? uuidv4(),
+    uid: ironTimerError.uid ?? req.ctx?.decodedToken?.uid
   };
 
   if (/ECONNREFUSED.*27017/i.test(error.message)) {
@@ -34,26 +34,27 @@ async function errorHandlingMiddleware(
     ironTimerResponse.message = error.message;
     ironTimerResponse.status = error.status;
   } else {
-    ironTimerResponse.message = `Oops! Please try again later. - ${ironTimerResponse.data.errorID}`;
+    ironTimerResponse.message = `Oops! Please try again later. - ${ironTimerResponse.data.errorId}`;
   }
 
   if (process.env.MODE !== "dev" && ironTimerResponse.status >= 500) {
-    const { userID, errorID } = ironTimerResponse.data;
+    const { uid, errorId } = ironTimerResponse.data;
 
     try {
       await Logger.logToDb(
         "system_error",
         `${ironTimerResponse.status} ${error.message} ${error.stack}`,
-        userID
+        uid
       );
-      await Error.create({
-        _id: errorID,
-        timestamp: Date.now(),
-        status: ironTimerResponse.status,
-        userID,
-        message: error.message,
-        stack: error.stack,
-        endpoint: req.originalUrl
+      await prisma.error.create({
+        data: {
+          id: errorId,
+          status: ironTimerResponse.status,
+          uid,
+          message: error.message,
+          stack: error.stack,
+          endpoint: req.originalUrl
+        }
       });
     } catch (e: any) {
       Logger.error("Logging to db failed.");

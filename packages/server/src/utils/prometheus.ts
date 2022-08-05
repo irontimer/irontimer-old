@@ -1,5 +1,6 @@
 import { Counter, Histogram } from "prom-client";
-import { Saved, Solve } from "utils";
+import { Solve } from "utils";
+import { getSession } from "../dal/session";
 
 const auth = new Counter({
   name: "api_request_auth_total",
@@ -15,7 +16,7 @@ const solve = new Counter({
 
 const solveSession = new Counter({
   name: "solve_session_total",
-  help: "Counts scramble types",
+  help: "Counts sessions",
   labelNames: ["session"]
 });
 
@@ -32,13 +33,19 @@ export function incrementAuth(type: "Bearer" | "ApiKey" | "None"): void {
   auth.inc({ type });
 }
 
-export function incrementSolve(res: Saved<Solve>): void {
+export async function incrementSolve(res: Solve): Promise<void> {
+  const session = await getSession(res.uid, res.sessionId);
+
+  if (!session) {
+    throw new Error("Session not found");
+  }
+
   solve.inc({
-    session: res.session
+    session: session.name
   });
 
   solveSession.inc({
-    session: res.session
+    session: session.name
   });
 
   solveTime.observe(res.time);

@@ -1,22 +1,13 @@
-import _ from "lodash";
-import { Types } from "mongoose";
-import type {
-  DeleteResult,
-  Saved,
-  Solve as ISolve,
-  UpdateResult,
-  User
-} from "utils";
-import { Solve } from "../models/solve";
+import type { Prisma, Solve, Unsaved, User } from "utils";
+import prisma from "../init/db";
 import IronTimerError from "../utils/error";
-
 import { getUser } from "./user";
 
 export async function addSolve(
-  userID: string,
-  solve: Partial<Saved<ISolve>>
-): Promise<Types.ObjectId> {
-  const user: User | undefined = await getUser(userID, "add solve").catch(
+  uid: string,
+  solve: Unsaved<Solve>
+): Promise<string> {
+  const user: User | undefined = await getUser(uid, "add solve").catch(
     () => undefined
   );
 
@@ -24,36 +15,35 @@ export async function addSolve(
     throw new IronTimerError(404, "User not found", "add solve");
   }
 
-  if (solve.userID === undefined) {
-    solve.userID = userID;
+  if (solve.uid === undefined) {
+    solve.uid = uid;
   }
 
-  const _id = new Types.ObjectId();
-
-  const newSolve = await Solve.create({
-    ...solve,
-    _id
+  const newSolve = await prisma.solve.create({
+    data: solve
   });
 
-  return newSolve._id;
+  return newSolve.id;
 }
 
-export async function deleteAll(userID: string): Promise<DeleteResult> {
-  return await Solve.deleteMany({ userID });
+export async function deleteAll(uid: string): Promise<Prisma.BatchPayload> {
+  return await prisma.solve.deleteMany({ where: { uid } });
 }
 
 export async function deleteSolve(
-  userID: string,
-  solveID: Types.ObjectId
-): Promise<DeleteResult> {
-  return await Solve.deleteOne({ userID, _id: solveID });
+  uid: string,
+  solveId: string
+): Promise<Prisma.BatchPayload> {
+  return await prisma.solve.deleteMany({ where: { uid, id: solveId } });
 }
 
-export async function getSolve(
-  userID: string,
-  id: string
-): Promise<Saved<ISolve>> {
-  const solve = await Solve.findOne({ _id: id, userID });
+export async function getSolve(uid: string, id: string): Promise<Solve> {
+  const solve = await prisma.solve.findFirst({
+    where: {
+      id,
+      uid
+    }
+  });
 
   if (solve === null) {
     throw new IronTimerError(404, "Solve not found");
@@ -62,44 +52,54 @@ export async function getSolve(
   return solve;
 }
 
-export async function getLastSolve(
-  userID: string
-): Promise<Partial<Saved<ISolve>>> {
-  const [lastSolve] = await Solve.find({ userID })
-    .sort({ timestamp: -1 })
-    .limit(1);
+export async function getLastSolve(uid: string): Promise<Solve> {
+  const [lastSolve] = (await prisma.solve.findMany({ where: { uid } })).sort(
+    (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+  );
 
   if (!lastSolve) {
     throw new IronTimerError(404, "No solves found");
   }
 
-  return _.omit(lastSolve, "userID");
+  return lastSolve;
 }
 
 export async function updateSolve(
-  userID: string,
-  solveID: Types.ObjectId,
-  solve: Partial<Saved<ISolve>>
-): Promise<UpdateResult> {
-  return await Solve.updateOne({ _id: solveID, userID }, { $set: solve });
+  uid: string,
+  solveId: string,
+  solve: Partial<Solve>
+): Promise<Solve> {
+  const existing = await getSolve(uid, solveId);
+
+  if (!existing) {
+    throw new IronTimerError(404, "Solve not found");
+  }
+
+  return await prisma.solve.update({
+    where: { id: solveId },
+    data: solve
+  });
 }
 
 export async function getSolveByTimestamp(
-  userID: string,
+  uid: string,
   timestamp: number
-): Promise<Saved<ISolve> | undefined> {
-  return (await Solve.findOne({ userID, timestamp })) ?? undefined;
+): Promise<Solve | undefined> {
+  return (
+    (await prisma.solve.findFirst({
+      where: { uid, createdAt: new Date(timestamp) }
+    })) ?? undefined
+  );
 }
 
 export async function getSolves(
-  userID: string,
+  uid: string,
   start = 0,
   end = 1000
-): Promise<Saved<ISolve>[]> {
-  const solves = await Solve.find({ userID })
-    .sort({ timestamp: -1 })
-    .skip(start)
-    .limit(end); // this needs to be changed to later take patreon into consideration
+): Promise<Solve[]> {
+  const solves = (await prisma.solve.findMany({ where: { uid } }))
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    .slice(start, end); // this needs to be changed to later take patreon into consideration
 
   if (!solves) {
     throw new IronTimerError(404, "Solves not found");

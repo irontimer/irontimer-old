@@ -1,36 +1,32 @@
-import { Types } from "mongoose";
-import type { AlmostSaved, Saved, Session as ISession } from "utils";
-import { Session } from "../models/session";
+import type { Session, Unsaved } from "utils";
+import prisma from "../init/db";
 
-export async function getSessions(userID: string): Promise<Saved<ISession>[]> {
-  return await Session.find({ userID });
+export async function getSessions(uid: string): Promise<Session[]> {
+  return await prisma.session.findMany({ where: { uid } });
 }
 
 export async function getSession(
-  userID: string,
-  sessionName: string
-): Promise<Saved<ISession> | undefined> {
-  return (await Session.findOne({ userID, name: sessionName })) ?? undefined;
+  uid: string,
+  sessionId: string
+): Promise<Session | undefined> {
+  return (
+    (await prisma.session.findFirst({ where: { uid, id: sessionId } })) ??
+    undefined
+  );
 }
 
-export async function addSession(
-  session: AlmostSaved<ISession>
-): Promise<Saved<ISession>> {
-  const _id = new Types.ObjectId();
-
-  const newSession = await Session.create({ ...session, _id });
+export async function addSession(session: Unsaved<Session>): Promise<Session> {
+  const newSession = await prisma.session.create({
+    data: session
+  });
 
   return newSession;
 }
 
-export async function deleteAll(userID: string): Promise<void> {
-  await Session.deleteMany({ userID });
+export async function deleteAll(uid: string): Promise<void> {
+  await prisma.session.deleteMany({ where: { uid } });
 }
 
-export async function deleteSession(
-  _id: string
-): Promise<Types.ObjectId | undefined> {
-  const id = new Types.ObjectId(_id);
-
-  return (await Session.findByIdAndDelete(id))?._id;
+export async function deleteSession(id: string): Promise<string | undefined> {
+  return (await prisma.session.delete({ where: { id } })).id;
 }

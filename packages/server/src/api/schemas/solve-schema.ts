@@ -1,14 +1,24 @@
+import { Penalty, TimerType } from "@prisma/client";
 import joi from "joi";
+import { Solve } from "utils";
+
+const penalties = Object.keys(Penalty);
+const timerTypes = Object.keys(TimerType);
 
 const SOLVE_SCHEMA = joi
-  .object({
-    userID: joi.string().required(),
+  .object<Solve>({
+    uid: joi.string().required(),
     time: joi.number().required(),
-    timestamp: joi.date().timestamp().required(),
     scramble: joi.string().required(),
-    session: joi.string().required(),
-    penalty: joi.string().valid("OK", "+2", "DNF").required(),
-    enteredBy: joi.string().valid("timer", "typing", "stackmat").required(),
+    sessionId: joi.string().required(),
+    penalty: joi
+      .string()
+      .valid(...penalties)
+      .required(),
+    enteredBy: joi
+      .string()
+      .valid(...timerTypes)
+      .required(),
     solution: joi.string().optional()
   })
   .required();

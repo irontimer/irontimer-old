@@ -1,5 +1,5 @@
+import { TimerType } from "@prisma/client";
 import { Component } from "solid-js";
-import { CONFIG_VALUES, TimerType } from "utils";
 import { Section } from "../components/settings/section";
 import { SettingsGroup } from "../components/settings/settings-group";
 import { config, setConfig } from "../state/config";
@@ -21,7 +21,7 @@ export const Settings: Component = () => {
             header="Timer Type"
             description="The type of timer to use when solving."
             type="buttons"
-            values={CONFIG_VALUES.timerType}
+            values={Object.keys(TimerType)}
             onValueChange={(value: TimerType) => setConfig("timerType", value)}
             currentValue={() => config.timerType}
           />
@@ -60,7 +60,11 @@ export const Settings: Component = () => {
             header="Display Averages"
             description="What averages to display on the average list."
             type="select"
-            values={CONFIG_VALUES.displayAverages}
+            values={[
+              [5, 12, 50, 100],
+              [5, 12, 50, 100, 200, 500],
+              [5, 12, 50, 100, 200, 500, 1000]
+            ]}
             onValueChange={(value: number[]) =>
               setConfig("displayAverages", value)
             }

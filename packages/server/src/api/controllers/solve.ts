@@ -1,12 +1,6 @@
+import { ScrambleType } from "@prisma/client";
 import _ from "lodash";
-import { Types } from "mongoose";
-import {
-  DEFAULT_SCRAMBLE_TYPE,
-  Request,
-  Saved,
-  Solve,
-  SolveCreationResult
-} from "utils";
+import { Request, Solve, SolveCreationResult } from "utils";
 import IronTimerStatusCodes from "../../constants/irontimer-status-codes";
 import * as PublicStatsDAL from "../../dal/public-stats";
 import * as SessionDAL from "../../dal/session";
@@ -26,73 +20,73 @@ import { incrementSolve } from "../../utils/prometheus";
 import { isSolveTooFast } from "../../utils/validation";
 
 export async function getSolves(req: Request): Promise<IronTimerResponse> {
-  const { userID } = req.ctx.decodedToken;
+  const { uid } = req.ctx.decodedToken;
 
-  const solves = await SolveDAL.getSolves(userID);
+  const solves = await SolveDAL.getSolves(uid);
 
   return new IronTimerResponse("Solves retrieved", solves);
 }
 
 export async function getLastSolve(req: Request): Promise<IronTimerResponse> {
-  const { userID } = req.ctx.decodedToken;
+  const { uid } = req.ctx.decodedToken;
 
-  const solves = await SolveDAL.getLastSolve(userID);
+  const solves = await SolveDAL.getLastSolve(uid);
 
   return new IronTimerResponse("Solve retrieved", solves);
 }
 
 export async function updateSolve(req: Request): Promise<IronTimerResponse> {
-  const { userID } = req.ctx.decodedToken;
+  const { uid } = req.ctx.decodedToken;
   const { solve } = req.body;
-  const solveID = new Types.ObjectId(req.params.id);
+  const { id } = req.params;
 
   const toChange: Partial<Pick<Solve, "solution" | "penalty">> = _.pickBy(
     solve as Solve,
     (_value, key) => ["solution", "penalty"].includes(key)
   );
 
-  const updateResult = await SolveDAL.updateSolve(userID, solveID, toChange);
+  const updatedSolve = await SolveDAL.updateSolve(uid, id, toChange);
 
-  if (updateResult.modifiedCount === 0) {
+  if (!updatedSolve) {
     throw new IronTimerError(
       404,
-      `Solve not found\nSolve ID: ${solveID}`,
+      `Solve not found\nSolve Id: ${id}`,
       "update solve"
     );
   }
 
-  return new IronTimerResponse("Solve updated", updateResult);
+  return new IronTimerResponse("Solve updated", updatedSolve);
 }
 
 export async function deleteAll(req: Request): Promise<IronTimerResponse> {
-  const { userID } = req.ctx.decodedToken;
+  const { uid } = req.ctx.decodedToken;
 
-  await SolveDAL.deleteAll(userID);
+  await SolveDAL.deleteAll(uid);
 
-  Logger.logToDb("user_solves_deleted", "", userID);
+  Logger.logToDb("user_solves_deleted", "", uid);
 
   return new IronTimerResponse("All solves deleted");
 }
 
 export async function deleteSolve(req: Request): Promise<IronTimerResponse> {
-  const { userID } = req.ctx.decodedToken;
-  const solveID = new Types.ObjectId(req.params.id);
+  const { uid } = req.ctx.decodedToken;
+  const { id } = req.params;
 
-  await SolveDAL.deleteSolve(userID, solveID);
+  await SolveDAL.deleteSolve(uid, id);
 
-  Logger.logToDb("user_solve_deleted", "", userID);
+  Logger.logToDb("user_solve_deleted", "", uid);
 
   return new IronTimerResponse("Solve deleted");
 }
 
 export async function addSolve(req: Request): Promise<IronTimerResponse> {
-  const { userID } = req.ctx.decodedToken;
+  const { uid } = req.ctx.decodedToken;
 
-  const user = await getUser(userID, "add solve");
+  const user = await getUser(uid, "add solve");
 
-  const solve: Saved<Solve> = Object.assign({}, req.body.solve);
+  const solve: Solve = Object.assign({}, req.body.solve);
 
-  const session = await SessionDAL.getSession(userID, solve.session);
+  const session = await SessionDAL.getSession(uid, solve.sessionId);
 
   if (session === undefined) {
     throw new IronTimerError(
@@ -101,7 +95,7 @@ export async function addSolve(req: Request): Promise<IronTimerResponse> {
     );
   }
 
-  solve.userID = userID;
+  solve.uid = uid;
 
   if (isSolveTooFast(solve, session)) {
     const status = IronTimerStatusCodes.SOLVE_TOO_FAST;
@@ -113,8 +107,8 @@ export async function addSolve(req: Request): Promise<IronTimerResponse> {
 
   // Get latest solve's timestamp
   const lastSolveTimestamp = (
-    await SolveDAL.getLastSolve(userID).catch(() => undefined)
-  )?.timestamp;
+    await SolveDAL.getLastSolve(uid).catch(() => undefined)
+  )?.createdAt.getTime();
 
   // Check if now is earlier than last solve plus duration
   const earliestPossible =
@@ -132,53 +126,53 @@ export async function addSolve(req: Request): Promise<IronTimerResponse> {
         time: timeMilliseconds,
         difference: nowMilliseconds - earliestPossible
       },
-      userID
+      uid
     );
 
-    const status = IronTimerStatusCodes.SOLVE_SPACING_INVALID;
+    const status = IronTimerStatusCodes.SOLVE_SPACING_INVALId;
 
     throw new IronTimerError(status.code, "Invalid solve spacing");
   }
 
-  const isPersonalBest = await checkIfPersonalBest(userID, user, solve);
+  const isPersonalBest = await checkIfPersonalBest(uid, user, solve);
 
   if (isPersonalBest) {
     solve.isPersonalBest = true;
   }
 
-  if (session.scrambleType === DEFAULT_SCRAMBLE_TYPE) {
-    incrementCubes(userID, solve);
+  if (session.scrambleType === ScrambleType.cube3) {
+    incrementCubes(uid, solve);
 
-    if (isPersonalBest && user.discordUserID) {
-      Bot.updateDiscordRole(user.discordUserID, actualTime(solve));
+    if (isPersonalBest && user.discordUserId) {
+      Bot.updateDiscordRole(user.discordUserId, actualTime(solve));
     }
   }
 
-  // if (solve.challenge && user.discordUserID) {
-  //   Bot.awardChallenge(user.discordUserID, solve.challenge);
+  // if (solve.challenge && user.discordUserId) {
+  //   Bot.awardChallenge(user.discordUserId, solve.challenge);
   // } else {
   //   delete solve.challenge;
   // }
 
-  updateTypingStats(userID, solve.time);
+  updateTypingStats(uid, solve.time);
   PublicStatsDAL.updateStats(solve.time);
 
-  const addedSolveID = await SolveDAL.addSolve(userID, solve);
+  const addedSolveId = await SolveDAL.addSolve(uid, solve);
 
   if (isPersonalBest) {
     Logger.logToDb(
       "user_new_pb",
       `${session.scrambleType} ${actualTime(solve)} ${
         solve.scramble
-      } (${addedSolveID})`,
-      userID
+      } (${addedSolveId})`,
+      uid
     );
   }
 
   const solveCreationResult: SolveCreationResult = {
     isPersonalBest,
     username: user.username,
-    insertedID: addedSolveID
+    insertedId: addedSolveId
   };
 
   incrementSolve(solve);

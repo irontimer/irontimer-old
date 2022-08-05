@@ -1,4 +1,4 @@
-import { EndpointData, HttpClient, Saved, Session } from "utils";
+import { EndpointData, HttpClient, Session } from "utils";
 
 const BASE_PATH = "/sessions";
 
@@ -7,11 +7,11 @@ export default class Sessions {
     this.httpClient = httpClient;
   }
 
-  async get(): EndpointData<Saved<Session>[]> {
+  async get(): EndpointData<Session[]> {
     return await this.httpClient.get(BASE_PATH);
   }
 
-  async add(session: Session): EndpointData<Saved<Session>> {
+  async add(session: Session): EndpointData<Session> {
     return await this.httpClient.post(BASE_PATH, {
       payload: { session }
     });

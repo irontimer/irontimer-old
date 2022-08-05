@@ -1,6 +1,6 @@
-import { PSA as IPSA } from "utils";
-import { PSA } from "../models/psa";
+import { Psa } from "utils";
+import prisma from "../init/db";
 
-export async function get(): Promise<IPSA[]> {
-  return await PSA.find({});
+export async function get(): Promise<Psa[]> {
+  return await prisma.psa.findMany();
 }

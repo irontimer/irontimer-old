@@ -1,23 +1,13 @@
 {
   "name": "utils",
-  "exports": {
-    ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.d.ts",
   "scripts": {
-    "build": "npx tsup",
+    "build": "yarn workspace utils prisma generate",
     "pretty": "prettier \"src/**/*.{ts,json}\"",
     "pretty-fix": "prettier --write \"src/**/*.{ts,json}\"",
     "lint": "eslint src/**/*.ts",
     "lint-fix": "eslint --fix src/**/*.ts",
     "prisma": "prisma"
-  },
-  "dependencies": {
-    "mongodb": "4.8.0"
   },
   "devDependencies": {
     "prisma": "4.1.1"

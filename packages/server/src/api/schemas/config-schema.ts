@@ -1,8 +1,15 @@
+import { TimerType } from "@prisma/client";
 import joi from "joi";
+import { Config } from "utils";
 
-const CONFIG_SCHEMA = joi.object({
-  timerType: joi.string().valid("timer", "typing", "stackmat").required(),
-  currentSession: joi.string().required(),
+const timerTypes = Object.keys(TimerType);
+
+const CONFIG_SCHEMA = joi.object<Config>({
+  timerType: joi
+    .string()
+    .valid(...timerTypes)
+    .required(),
+  currentSessionId: joi.string().required(),
   displayAverages: joi.array().items(joi.number()).required()
 });
 

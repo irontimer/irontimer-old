@@ -57,16 +57,16 @@ export async function addSolve(
     penalty: isPlusTwo ? "+2" : "OK"
   };
 
-  const userID = user?.uid;
+  const uid = user?.uid;
 
   setSolves((solves) => [...solves, unsavedSolve]);
 
-  if (user !== null && userID !== undefined) {
+  if (user !== null && uid !== undefined) {
     setIsSavingSolve(true);
 
     const almostSavedSolve: AlmostSaved<Solve> = {
       ...unsavedSolve,
-      userID
+      uid
     };
 
     const response = await API.solves.save(almostSavedSolve);
@@ -93,7 +93,7 @@ export async function addSolve(
       return;
     }
 
-    addIDToSolve(unsavedSolve, savedSolve.insertedID, user);
+    addIdToSolve(unsavedSolve, savedSolve.insertedId, user);
 
     setIsSavingSolve(false);
 
@@ -149,12 +149,12 @@ export async function updateSolve(
   }
 }
 
-export function addIDToSolve(
+export function addIdToSolve(
   solve: Solve,
   id: Types.ObjectId,
   user: User | null
 ): void {
-  updateSolve(solve, { _id: id, userID: user?.uid }, user, false);
+  updateSolve(solve, { _id: id, uid: user?.uid }, user, false);
 }
 
 export async function deleteAll(user: User | null): Promise<void> {
@@ -183,5 +183,5 @@ export async function deleteAll(user: User | null): Promise<void> {
 export function isSavedSolve(
   solve: Partial<Saved<Solve>>
 ): solve is Saved<Solve> {
-  return solve._id !== undefined && !!solve.userID;
+  return solve._id !== undefined && !!solve.uid;
 }

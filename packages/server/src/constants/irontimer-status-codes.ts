@@ -8,13 +8,13 @@ interface Status {
 interface Statuses {
   SOLVE_TOO_FAST: Status;
   SESSION_NOT_FOUND: Status;
-  SOLVE_HASH_INVALID: Status;
-  SOLVE_DATA_INVALID: Status;
-  SOLVE_SPACING_INVALID: Status;
+  SOLVE_HASH_INVALId: Status;
+  SOLVE_DATA_INVALId: Status;
+  SOLVE_SPACING_INVALId: Status;
   MISSING_KEY_DATA: Status;
   BOT_DETECTED: Status;
   GIT_GUD: Status;
-  API_KEY_INVALID: Status;
+  API_KEY_INVALId: Status;
   API_KEY_INACTIVE: Status;
   API_KEY_MALFORMED: Status;
 }
@@ -28,15 +28,15 @@ const statuses: Statuses = {
     code: 461,
     message: "Session not found"
   },
-  SOLVE_HASH_INVALID: {
+  SOLVE_HASH_INVALId: {
     code: 461,
     message: "Solve hash invalid"
   },
-  SOLVE_SPACING_INVALID: {
+  SOLVE_SPACING_INVALId: {
     code: 462,
     message: "Solve spacing invalid"
   },
-  SOLVE_DATA_INVALID: {
+  SOLVE_DATA_INVALId: {
     code: 463,
     message: "Solve data invalid"
   },
@@ -52,7 +52,7 @@ const statuses: Statuses = {
     code: 469,
     message: "Git gud scrub"
   },
-  API_KEY_INVALID: {
+  API_KEY_INVALId: {
     code: 470,
     message: "Invalid ApiKey"
   },

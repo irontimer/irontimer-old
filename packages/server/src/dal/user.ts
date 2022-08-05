@@ -1,14 +1,5 @@
-import type {
-  DeleteResult,
-  PersonalBest,
-  Saved,
-  Solve,
-  Theme,
-  UpdateResult,
-  User as IUser,
-  UserStats
-} from "utils";
-import { User } from "../models/user";
+import type { PersonalBest, Solve, Theme, User } from "utils";
+import prisma from "../init/db";
 import { updateUserEmail } from "../utils/auth";
 import IronTimerError from "../utils/error";
 import { actualTime } from "../utils/misc";
@@ -18,43 +9,33 @@ import { isUsernameValid } from "../utils/validation";
 export async function addUser(
   username: string,
   email: string,
-  userID: string
-): Promise<{ insertedID: string }> {
-  const user = await User.findById(userID);
+  uid: string
+): Promise<string> {
+  const user = await prisma.user.findUnique({ where: { id: uid } });
 
   if (user !== null) {
     throw new IronTimerError(409, "User document already exists", "addUser");
   }
 
-  const newUser = await User.create({
-    _id: userID,
-    username,
-    email,
-    addedAt: Date.now(),
-    personalBests: [],
-    canManageApiKeys: false,
-    timeCubing: 0,
-    solveCount: 0,
-    lastNameChange: null,
-    customThemes: []
-  });
-
-  return {
-    insertedID: newUser._id
-  };
+  return (
+    await prisma.user.create({
+      data: {
+        id: uid,
+        username,
+        email
+      }
+    })
+  ).id;
 }
 
-export async function deleteUser(userID: string): Promise<DeleteResult> {
-  return await User.deleteOne({ _id: userID });
+export async function deleteUser(uid: string): Promise<User> {
+  return await prisma.user.delete({ where: { id: uid } });
 }
 
 const DAY_IN_SECONDS = 24 * 60 * 60;
 const THIRTY_DAYS_IN_SECONDS = DAY_IN_SECONDS * 30;
 
-export async function updateName(
-  userID: string,
-  name: string
-): Promise<UpdateResult> {
+export async function updateName(uid: string, name: string): Promise<User> {
   if (!isUsernameValid(name)) {
     throw new IronTimerError(400, "Invalid username");
   }
@@ -63,57 +44,56 @@ export async function updateName(
     throw new IronTimerError(409, "Username unavailable", name);
   }
 
-  const user = await getUser(userID, "update name");
+  const user = await getUser(uid, "update name");
 
-  if (Date.now() - (user.lastNameChange ?? 0) < THIRTY_DAYS_IN_SECONDS) {
+  if (Date.now() - user.lastNameChange.getTime() < THIRTY_DAYS_IN_SECONDS) {
     throw new IronTimerError(
       409,
       "You can change your name once every 30 days"
     );
   }
 
-  return await User.updateOne(
-    { _id: userID },
-    {
-      $set: { name, lastNameChange: Date.now() },
-      $unset: { needsToChangeName: "" }
+  return await prisma.user.update({
+    where: { id: uid },
+    data: {
+      username: name,
+      lastNameChange: new Date(Date.now())
     }
-  );
+  });
 }
 
-export async function clearPersonalBests(
-  userID: string
-): Promise<UpdateResult> {
-  return await User.updateOne(
-    { _id: userID },
-    {
-      $set: {
-        personalBests: []
-      }
+export async function clearPersonalBests(uid: string): Promise<User> {
+  return await prisma.user.update({
+    where: { id: uid },
+    data: {
+      personalBests: []
     }
-  );
+  });
 }
 
 export async function isNameAvailable(username: string): Promise<boolean> {
-  const nameDocs = await User.find({ username })
-    .collation({ locale: "en", strength: 1 })
-    .limit(1);
+  const nameDocs = await prisma.user.findUnique({ where: { username } });
 
-  return nameDocs.length === 0;
+  return nameDocs === null;
 }
 
 export async function updateEmail(
-  userID: string,
+  uid: string,
   email: string
 ): Promise<boolean> {
-  await getUser(userID, "update email"); // To make sure that the user exists
-  await updateUserEmail(userID, email);
-  await User.updateOne({ _id: userID }, { $set: { email } });
+  await getUser(uid, "update email"); // To make sure that the user exists
+
+  await updateUserEmail(uid, email);
+
+  await prisma.user.update({ where: { id: uid }, data: { email } });
+
   return true;
 }
 
-export async function getUser(userID: string, stack: string): Promise<IUser> {
-  const user = await User.findById(userID);
+export async function getUser(uid: string, stack: string): Promise<User> {
+  const user = await prisma.user.findUnique({
+    where: { id: uid }
+  });
 
   if (!user) {
     throw new IronTimerError(404, "User not found", stack);
@@ -122,18 +102,18 @@ export async function getUser(userID: string, stack: string): Promise<IUser> {
   return user;
 }
 
-export async function isDiscordUserIDAvailable(
-  discordUserID: string
+export async function isDiscordUserIdAvailable(
+  discordUserId: string
 ): Promise<boolean> {
-  const user = await User.findOne({ discordUserID });
+  const user = await prisma.user.findUnique({ where: { discordUserId } });
 
   return user === null;
 }
 
 export async function checkIfPersonalBest(
-  userID: string,
-  user: IUser,
-  solve: Saved<Solve>
+  uid: string,
+  user: User,
+  solve: Solve
 ): Promise<boolean> {
   const pb = checkAndUpdatePersonalBest(user.personalBests ?? [], solve);
 
@@ -141,69 +121,69 @@ export async function checkIfPersonalBest(
     return false;
   }
 
-  await User.updateOne(
-    { _id: userID },
-    { $set: { personalBests: pb.personalBests } }
-  );
+  await prisma.user.update({
+    where: { id: uid },
+    data: { personalBests: pb.personalBests }
+  });
 
   return true;
 }
 
-export async function resetPersonalBests(
-  userID: string
-): Promise<UpdateResult> {
-  await getUser(userID, "reset pb");
-  return await User.updateOne(
-    { _id: userID },
-    {
-      $set: {
-        personalBests: []
-      }
-    }
-  );
+export async function resetPersonalBests(uid: string): Promise<User> {
+  await getUser(uid, "reset pb");
+
+  return await prisma.user.update({
+    where: { id: uid },
+    data: { personalBests: [] }
+  });
 }
 
 export async function updateTypingStats(
-  userID: string,
-  timeCubing: number
-): Promise<UpdateResult> {
-  return await User.updateOne(
-    { _id: userID },
-    {
-      $inc: {
-        solveCount: 1,
-        timeCubing
+  uid: string,
+  timeSolving: number
+): Promise<User> {
+  return await prisma.user.update({
+    where: { id: uid },
+    data: {
+      solveCount: {
+        increment: 1
+      },
+      timeSolving: {
+        increment: timeSolving
       }
     }
-  );
+  });
 }
 
 export async function linkDiscord(
-  userID: string,
-  discordUserID: string
-): Promise<UpdateResult> {
-  await getUser(userID, "link discord");
+  uid: string,
+  discordUserId: string
+): Promise<User> {
+  await getUser(uid, "link discord");
 
-  return await User.updateOne({ _id: userID }, { $set: { discordUserID } });
+  return await prisma.user.update({
+    where: { id: uid },
+    data: { discordUserId }
+  });
 }
 
-export async function unlinkDiscord(userID: string): Promise<UpdateResult> {
-  await getUser(userID, "unlink discord");
+export async function unlinkDiscord(uid: string): Promise<User> {
+  await getUser(uid, "unlink discord");
 
-  return await User.updateOne(
-    { _id: userID },
-    { $set: { discordUserID: undefined } }
-  );
+  return await prisma.user.update({
+    where: { id: uid },
+    data: { discordUserId: null }
+  });
 }
 
 export async function incrementCubes(
-  userID: string,
-  solve: Saved<Solve>
-): Promise<UpdateResult | undefined> {
-  const user = await getUser(userID, "increment cubes");
+  uid: string,
+  solve: Solve
+): Promise<User | undefined> {
+  const user = await getUser(uid, "increment cubes");
 
   const personalBest = user.personalBests
-    .filter((pb) => pb.session === solve.session)
+    .filter((pb) => pb.sessionId === solve.sessionId)
     .sort((a, b) => b.time - a.time)[0];
 
   if (
@@ -211,7 +191,14 @@ export async function incrementCubes(
     actualTime(solve) >= personalBest.time * 0.75
   ) {
     // Increment when no record found or wpm is within 25% of the record
-    return await User.updateOne({ _id: userID }, { $inc: { cubes: 1 } });
+    return await prisma.user.update({
+      where: { id: uid },
+      data: {
+        cubes: {
+          increment: 1
+        }
+      }
+    });
   }
 
   return undefined;
@@ -224,88 +211,85 @@ export function themeDoesNotExist(
   return (customThemes ?? []).find((t) => t.name === name) === undefined;
 }
 
-export async function addTheme(userID: string, theme: Theme): Promise<string> {
-  const user = await getUser(userID, "add theme");
+export async function addTheme(uid: string, theme: Theme): Promise<string> {
+  const user = await getUser(uid, "add theme");
 
   if ((user.customThemes ?? []).length >= 10) {
     throw new IronTimerError(409, "Too many custom themes");
   }
 
-  await User.updateOne(
-    { _id: userID },
-    {
-      $push: {
-        customThemes: theme
+  await prisma.user.update({
+    where: { id: uid },
+    data: {
+      customThemes: {
+        push: theme
       }
     }
-  );
+  });
 
   return theme.name;
 }
 
-export async function removeTheme(
-  userID: string,
-  name: string
-): Promise<UpdateResult> {
-  const user = await getUser(userID, "remove theme");
+export async function removeTheme(uid: string, name: string): Promise<User> {
+  const user = await getUser(uid, "remove theme");
 
   if (themeDoesNotExist(user.customThemes ?? [], name)) {
     throw new IronTimerError(404, "Custom theme not found");
   }
 
-  return await User.updateOne(
-    {
-      _id: userID,
-      "customThemes.name": name
-    },
-    { $pull: { customThemes: { name } } }
-  );
+  return await prisma.user.update({
+    where: { id: uid },
+    data: {
+      customThemes: {
+        deleteMany: {
+          where: {
+            name
+          }
+        }
+      }
+    }
+  });
 }
 
 export async function editTheme(
-  userID: string,
+  uid: string,
   name: string,
   theme: Theme
-): Promise<UpdateResult> {
-  const user = await getUser(userID, "edit theme");
+): Promise<User> {
+  const user = await getUser(uid, "edit theme");
 
   if (themeDoesNotExist(user.customThemes ?? [], name)) {
     throw new IronTimerError(404, "Custom Theme not found");
   }
 
-  return await User.updateOne(
-    {
-      _id: userID,
-      "customThemes.name": name
-    },
-    {
-      $set: {
-        "customThemes.$.colors": theme.colors
+  return await prisma.user.update({
+    where: { id: uid },
+    data: {
+      customThemes: {
+        updateMany: {
+          where: {
+            name: theme.name
+          },
+          data: {
+            colors: theme.colors
+          }
+        }
       }
     }
-  );
+  });
 }
 
-export async function getThemes(userID: string): Promise<Theme[]> {
-  const user = await getUser(userID, "get themes");
+export async function getThemes(uid: string): Promise<Theme[]> {
+  const user = await getUser(uid, "get themes");
 
   return user.customThemes ?? [];
 }
 
 export async function getPersonalBests(
-  userID: string,
-  sessionName: string
+  uid: string,
+  sessionId: string
 ): Promise<PersonalBest | undefined> {
-  const user = await getUser(userID, "get personal bests");
+  const user = await getUser(uid, "get personal bests");
 
-  return user.personalBests.find((pb) => pb.session === sessionName);
-}
-
-export async function getStats(userID: string): Promise<UserStats> {
-  const user = await getUser(userID, "get stats");
-
-  return {
-    solveCount: user.solveCount,
-    timeCubing: user.timeCubing
-  };
+  return user.personalBests.find((pb) => pb.sessionId === sessionId);
 }

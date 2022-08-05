@@ -24,7 +24,7 @@ router.post(
   "/",
   validateConfiguration({
     criteria: (configuration) => {
-      return configuration.enableSavingSolves.enabled;
+      return configuration.allowSavingSolves;
     },
     invalidMessage: "Solves are not being saved at this time."
   }),
@@ -42,7 +42,7 @@ router.patch(
   "/:id",
   validateConfiguration({
     criteria: (configuration) => {
-      return configuration.enableSavingSolves.enabled;
+      return configuration.allowSavingSolves;
     }
   }),
   RateLimit.solvesUpdate,

@@ -1,5 +1,5 @@
+import { ScrambleType } from "@prisma/client";
 import { createSignal } from "solid-js";
-import { DEFAULT_SCRAMBLE_TYPE } from "utils";
 import { generateScramble } from "../scramble-generator";
 import { currentSession, setCurrentSession } from "./session";
 
@@ -7,7 +7,7 @@ export const [getPreviousScramble, setPreviousScramble] = createSignal("");
 export const [getScramble, setScramble] = createSignal("");
 
 export function setAndGenerateScramble(
-  scrambleType = currentSession.scrambleType ?? DEFAULT_SCRAMBLE_TYPE
+  scrambleType = currentSession.scrambleType ?? ScrambleType
 ): void {
   if (scrambleType === currentSession.scrambleType) {
     setPreviousScramble(getScramble());

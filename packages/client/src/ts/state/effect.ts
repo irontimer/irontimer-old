@@ -1,5 +1,5 @@
 import { createEffect, on } from "solid-js";
-import { Config, Saved } from "utils";
+import { Config } from "utils";
 import API from "../api-client";
 import { auth } from "../utils/auth";
 import { config, getConfigChange } from "./config";
@@ -18,7 +18,7 @@ createEffect(
       return;
     }
 
-    const response = await API.configs.save(config as Config | Saved<Config>);
+    const response = await API.configs.save(config as Config);
 
     if (response.status !== 200) {
       Notifications.add({

@@ -38,14 +38,14 @@ const customThemeColorsValidation = joi
     "array.length": "The colors array must have 10 colors"
   });
 
-const customThemeIDValidation = joi
+const customThemeIdValidation = joi
   .string()
   .length(24)
   .regex(/^[0-9a-fA-F]+$/)
   .required()
   .messages({
-    "string.length": "The themeID must be 24 characters long",
-    "string.pattern.base": "The themeID must be valid hexadecimal string"
+    "string.length": "The themeId must be 24 characters long",
+    "string.pattern.base": "The themeId must be valid hexadecimal string"
   });
 
 const usernameValidation = joi
@@ -76,7 +76,7 @@ router.post(
     body: {
       email: joi.string().email(),
       username: usernameValidation,
-      userID: joi.string()
+      uid: joi.string()
     }
   }),
   asyncHandler(UserController.createNewUser)
@@ -158,7 +158,7 @@ router.delete(
   authenticateRequest(),
   validateRequest({
     body: {
-      themeID: customThemeIDValidation
+      themeId: customThemeIdValidation
     }
   }),
   asyncHandler(UserController.removeCustomTheme)
@@ -170,7 +170,7 @@ router.patch(
   authenticateRequest(),
   validateRequest({
     body: {
-      themeID: customThemeIDValidation,
+      themeId: customThemeIdValidation,
       theme: {
         name: customThemeNameValidation,
         colors: customThemeColorsValidation
@@ -189,7 +189,7 @@ router.post(
       data: joi.object({
         tokenType: joi.string().required(),
         accessToken: joi.string().required(),
-        userID: joi.string()
+        uid: joi.string()
       })
     }
   }),
@@ -217,16 +217,6 @@ router.get(
     }
   }),
   asyncHandler(UserController.getPersonalBests)
-);
-
-router.get(
-  "/stats",
-  RateLimit.userGet,
-  authenticateRequest({
-    acceptApiKeys: true
-  }),
-  apiRateLimit,
-  asyncHandler(UserController.getStats)
 );
 
 export default router;

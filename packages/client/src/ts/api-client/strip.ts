@@ -1,10 +1,11 @@
-import { Saved } from "utils";
+import { Unsaved } from "utils";
 
-export function strip<T, O>(obj: Saved<T, O> | T): T {
+export function strip<T>(obj: T): Unsaved<T> {
   const newObj: T = {
     ...obj,
-    _id: undefined,
-    __v: undefined
+    id: undefined,
+    createdAt: undefined,
+    updatedAt: undefined
   };
 
   return newObj;

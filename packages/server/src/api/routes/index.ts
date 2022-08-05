@@ -7,13 +7,12 @@ import { recordClientVersion } from "../../utils/prometheus";
 import { version } from "../../version";
 import apiKeys from "./api-keys";
 import configs from "./configs";
-import presets from "./presets";
 import psas from "./psas";
 import sessions from "./sessions";
 import solves from "./solves";
 import users from "./users";
 
-const pathOverride = process.env.API_PATH_OVERRIDE;
+const pathOverride = process.env.API_PATH_OVERRIdE;
 const BASE_ROUTE = pathOverride ? `/${pathOverride}` : "";
 const APP_START_TIME = Date.now();
 
@@ -21,7 +20,6 @@ const API_ROUTE_MAP = {
   "/users": users,
   "/configs": configs,
   "/solves": solves,
-  "/presets": presets,
   "/psas": psas,
   "/api-keys": apiKeys,
   "/sessions": sessions

@@ -1,11 +1,4 @@
-import {
-  EndpointData,
-  HttpClient,
-  Saved,
-  Solve,
-  SolveCreationResult,
-  UpdateResult
-} from "utils";
+import { EndpointData, HttpClient, Solve, SolveCreationResult } from "utils";
 import { strip } from "../strip";
 
 const BASE_PATH = "/solves";
@@ -15,11 +8,11 @@ export default class Solves {
     this.httpClient = httpClient;
   }
 
-  async get(): EndpointData<Saved<Solve>[]> {
+  async get(): EndpointData<Solve[]> {
     return await this.httpClient.get(BASE_PATH);
   }
 
-  async getLast(): EndpointData<Saved<Solve>> {
+  async getLast(): EndpointData<Solve> {
     return await this.httpClient.get(`${BASE_PATH}/last`);
   }
 
@@ -29,16 +22,16 @@ export default class Solves {
     });
   }
 
-  async update(solve: Saved<Solve>): EndpointData<UpdateResult> {
+  async update(solve: Solve): EndpointData<Solve> {
     const strippedSolve = strip(solve);
 
-    return await this.httpClient.patch(`${BASE_PATH}/${solve._id}`, {
+    return await this.httpClient.patch(`${BASE_PATH}/${solve.id}`, {
       payload: { solve: strippedSolve }
     });
   }
 
-  async delete(solve: Saved<Solve>): EndpointData<undefined> {
-    return await this.httpClient.delete(`${BASE_PATH}/${solve._id}`);
+  async delete(solve: Solve): EndpointData<undefined> {
+    return await this.httpClient.delete(`${BASE_PATH}/${solve.id}`);
   }
 
   async deleteAll(): EndpointData<undefined> {
