@@ -29,7 +29,7 @@
     "@types/babel__core": "7.1.19",
     "rollup": "2.75.7",
     "rollup-plugin-visualizer": "5.7.1",
-    "vite": "3.0.2",
+    "vite": "3.2.3",
     "vite-plugin-solid": "2.3.0"
   },
   "packageManager": "yarn@3.2.2"
