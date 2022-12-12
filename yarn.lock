@@ -2578,7 +2578,7 @@ __metadata:
     firebase: 9.9.0
     rollup: 2.75.7
     rollup-plugin-visualizer: 5.7.1
-    sass: 1.53.0
+    sass: 1.56.2
     solid-app-router: 0.4.1
     solid-js: 1.4.8
     stackmat: 1.1.0
@@ -6268,16 +6268,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:1.53.0":
-  version: 1.53.0
-  resolution: "sass@npm:1.53.0"
+"sass@npm:1.56.2":
+  version: 1.56.2
+  resolution: "sass@npm:1.56.2"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 4bcb0617d6a4d1f2c089a1cb5c32f65a9ee874b23559f2742fab07cf8478fb74ad20c0730cf9f93915d7dbfc258901f89970674228c3ac91c3883a0a62a0ddab
+  checksum: 7b1f524d04bc42df3bac6dc5201ff7475635b7df9a1390430ed5bd58b6a73ea1ae58b83ccea8da293cb77b85b4c848faf5f2779ca4b91b9303948c251d0ddca4
   languageName: node
   linkType: hard
 
